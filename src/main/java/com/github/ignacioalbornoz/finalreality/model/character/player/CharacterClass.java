@@ -1,4 +1,4 @@
-package com.github.cc3002.finalreality.model.character.player;
+package com.github.ignacioalbornoz.finalreality.model.character.player;
 
 /**
  * Enumeration of the classes a player character may have.

@@ -3,7 +3,7 @@ ChangeLog
 
 Version 2.0
 -----------
-Write your changes in here
+
 
 Version 1.0
 -----------

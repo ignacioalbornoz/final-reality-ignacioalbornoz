@@ -1,15 +1,16 @@
-package com.github.cc3002.finalreality.model.character;
+package com.github.ignacioalbornoz.finalreality.model.character;
 
-import com.github.cc3002.finalreality.model.character.player.CharacterClass;
+import com.github.ignacioalbornoz.finalreality.model.character.player.CharacterClass;
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
+
 import org.jetbrains.annotations.NotNull;
 
 /**
  * A class that holds all the information of a single enemy of the game.
  *
  * @author Ignacio Slater Muñoz
- * @author <Your name>
+ * @author <Ignacio Albornoz Alfaro>
  */
 public class Enemy extends AbstractCharacter {
 

@@ -1,6 +1,5 @@
 package com.github.ignacioalbornoz.finalreality.model.character;
 
-import com.github.ignacioalbornoz.finalreality.model.character.player.CharacterClass;
 import com.github.ignacioalbornoz.finalreality.model.weapon.IWeapon;
 
 /**
@@ -33,8 +32,7 @@ public interface ICharacter {
    */
   IWeapon getEquippedWeapon();
 
-  /**
-   * Returns this character's class.
-   */
-  CharacterClass getCharacterClass();
+  String getCharacterClass();
 }
+
+

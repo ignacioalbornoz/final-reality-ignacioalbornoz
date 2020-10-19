@@ -1,9 +1,9 @@
 package com.github.ignacioalbornoz.finalreality.model.character;
 
-import com.github.ignacioalbornoz.finalreality.model.character.player.CharacterClass;
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 
+import com.github.ignacioalbornoz.finalreality.model.weapon.IWeapon;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -22,7 +22,7 @@ public class Enemy extends AbstractCharacter {
    */
   public Enemy(@NotNull final String name, final int weight,
       @NotNull final BlockingQueue<ICharacter> turnsQueue) {
-    super(turnsQueue, name, CharacterClass.ENEMY);
+    super(turnsQueue, name);
     this.weight = weight;
   }
 
@@ -48,5 +48,11 @@ public class Enemy extends AbstractCharacter {
   @Override
   public int hashCode() {
     return Objects.hash(getWeight());
+  }
+
+
+  @Override
+  public String getCharacterClass() {
+    return "ENEMY";
   }
 }

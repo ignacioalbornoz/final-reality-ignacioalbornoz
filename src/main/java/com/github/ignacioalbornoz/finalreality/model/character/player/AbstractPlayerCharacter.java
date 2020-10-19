@@ -5,6 +5,7 @@ import com.github.ignacioalbornoz.finalreality.model.character.ICharacter;
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 
+import com.github.ignacioalbornoz.finalreality.model.weapon.IWeapon;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -13,22 +14,10 @@ import org.jetbrains.annotations.NotNull;
  * @author Ignacio Slater Muñoz.
  * @author <Your name>
  */
-public class PlayerCharacter extends AbstractCharacter {
-
-  /**
-   * Creates a new character.
-   *
-   * @param name
-   *     the character's name
-   * @param turnsQueue
-   *     the queue with the characters waiting for their turn
-   * @param characterClass
-   *     the class of this character
-   */
-  public PlayerCharacter(@NotNull String name,
-      @NotNull BlockingQueue<ICharacter> turnsQueue,
-      final CharacterClass characterClass) {
-    super(turnsQueue, name, characterClass);
+public abstract class AbstractPlayerCharacter extends AbstractCharacter {
+  public AbstractPlayerCharacter(@NotNull String name,
+                                 @NotNull BlockingQueue<ICharacter> turnsQueue) {
+    super(turnsQueue, name);
   }
 
   @Override
@@ -41,11 +30,11 @@ public class PlayerCharacter extends AbstractCharacter {
     if (this == o) {
       return true;
     }
-    if (!(o instanceof PlayerCharacter)) {
+    if (!(o instanceof AbstractPlayerCharacter)) {
       return false;
     }
-    final PlayerCharacter that = (PlayerCharacter) o;
-    return getCharacterClass() == that.getCharacterClass()
+    final AbstractPlayerCharacter that = (AbstractPlayerCharacter) o;
+    return getCharacterClass().equals(that.getCharacterClass())
         && getName().equals(that.getName());
   }
 }

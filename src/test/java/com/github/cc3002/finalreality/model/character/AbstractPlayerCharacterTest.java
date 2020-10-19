@@ -5,8 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import com.github.ignacioalbornoz.finalreality.model.character.Enemy;
-import com.github.ignacioalbornoz.finalreality.model.character.player.CharacterClass;
-import com.github.ignacioalbornoz.finalreality.model.character.player.PlayerCharacter;
+import com.github.ignacioalbornoz.finalreality.model.character.player.AbstractPlayerCharacter;
 import java.util.EnumMap;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,9 +16,9 @@ import org.junit.jupiter.api.Test;
  *
  * @author Ignacio Slater Muñoz.
  * @author <Your name>
- * @see PlayerCharacter
+ * @see AbstractPlayerCharacter
  */
-class PlayerCharacterTest extends AbstractCharacterTest {
+class AbstractPlayerCharacterTest extends AbstractCharacterTest {
 
   private static final String BLACK_MAGE_NAME = "Vivi";
   private static final String KNIGHT_NAME = "Adelbert";
@@ -46,7 +45,7 @@ class PlayerCharacterTest extends AbstractCharacterTest {
     for (var characterClass :
         characterNames.keySet()) {
       testCharacters.add(
-          new PlayerCharacter(characterNames.get(characterClass), turns, characterClass));
+          new AbstractPlayerCharacter(characterNames.get(characterClass), turns, characterClass));
     }
   }
 
@@ -60,10 +59,10 @@ class PlayerCharacterTest extends AbstractCharacterTest {
         testCharacters) {
       var characterClass = character.getCharacterClass();
       var characterName = characterNames.get(characterClass);
-      checkConstruction(new PlayerCharacter(characterName, turns, characterClass),
+      checkConstruction(new AbstractPlayerCharacter(characterName, turns, characterClass),
           character,
-          new PlayerCharacter("Test", turns, characterClass),
-          new PlayerCharacter(characterName, turns,
+          new AbstractPlayerCharacter("Test", turns, characterClass),
+          new AbstractPlayerCharacter(characterName, turns,
               characterClass == CharacterClass.THIEF ? CharacterClass.BLACK_MAGE
                   : CharacterClass.THIEF));
       assertNotEquals(character, enemy);

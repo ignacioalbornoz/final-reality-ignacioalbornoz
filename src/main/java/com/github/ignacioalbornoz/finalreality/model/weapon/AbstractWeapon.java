@@ -1,12 +1,8 @@
 package com.github.ignacioalbornoz.finalreality.model.weapon;
 
-import com.github.ignacioalbornoz.finalreality.model.character.ICharacter;
-import com.github.ignacioalbornoz.finalreality.model.character.player.CharacterClass;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ScheduledExecutorService;
 
 public abstract class AbstractWeapon implements IWeapon{
     protected final String name;

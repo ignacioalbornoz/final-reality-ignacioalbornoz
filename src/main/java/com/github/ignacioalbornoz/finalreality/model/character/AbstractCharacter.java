@@ -1,7 +1,6 @@
 package com.github.ignacioalbornoz.finalreality.model.character;
 
-import com.github.ignacioalbornoz.finalreality.model.character.player.CharacterClass;
-import com.github.ignacioalbornoz.finalreality.model.character.player.PlayerCharacter;
+import com.github.ignacioalbornoz.finalreality.model.character.player.AbstractPlayerCharacter;
 import com.github.ignacioalbornoz.finalreality.model.weapon.IWeapon;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
@@ -19,27 +18,30 @@ public abstract class AbstractCharacter implements ICharacter {
 
   protected final BlockingQueue<ICharacter> turnsQueue;
   protected final String name;
-  private final CharacterClass characterClass;
-  private IWeapon equippedWeapon = null;
+  protected IWeapon equippedWeapon = null;
   private ScheduledExecutorService scheduledExecutor;
 
   protected AbstractCharacter(@NotNull BlockingQueue<ICharacter> turnsQueue,
-      @NotNull String name, CharacterClass characterClass) {
+                              @NotNull String name) {
     this.turnsQueue = turnsQueue;
     this.name = name;
-    this.characterClass = characterClass;
+  }
+
+  @Override
+  public IWeapon getEquippedWeapon() {
+    return equippedWeapon;
   }
 
   @Override
   public void waitTurn() {
     scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
-    if (this instanceof PlayerCharacter) {
+    if (this instanceof AbstractPlayerCharacter) {
       scheduledExecutor
-          .schedule(this::addToQueue, equippedWeapon.getWeight() / 10, TimeUnit.SECONDS);
+              .schedule(this::addToQueue, equippedWeapon.getWeight() / 10, TimeUnit.SECONDS);
     } else {
       var enemy = (Enemy) this;
       scheduledExecutor
-          .schedule(this::addToQueue, enemy.getWeight() / 10, TimeUnit.SECONDS);
+              .schedule(this::addToQueue, enemy.getWeight() / 10, TimeUnit.SECONDS);
     }
   }
 
@@ -58,18 +60,10 @@ public abstract class AbstractCharacter implements ICharacter {
 
   @Override
   public void equip(IWeapon weapon) {
-    if (this instanceof PlayerCharacter) {
+    if (this instanceof AbstractPlayerCharacter) {
       this.equippedWeapon = weapon;
     }
   }
 
-  @Override
-  public IWeapon getEquippedWeapon() {
-    return equippedWeapon;
-  }
-
-  @Override
-  public CharacterClass getCharacterClass() {
-    return characterClass;
-  }
 }
+

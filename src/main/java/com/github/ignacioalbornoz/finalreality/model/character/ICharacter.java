@@ -1,7 +1,7 @@
 package com.github.ignacioalbornoz.finalreality.model.character;
 
 import com.github.ignacioalbornoz.finalreality.model.character.player.CharacterClass;
-import com.github.ignacioalbornoz.finalreality.model.weapon.Weapon;
+import com.github.ignacioalbornoz.finalreality.model.weapon.IWeapon;
 
 /**
  * This represents a character from the game.
@@ -26,12 +26,12 @@ public interface ICharacter {
   /**
    * Equips a weapon to the character.
    */
-  void equip(Weapon weapon);
+  void equip(IWeapon weapon);
 
   /**
    * Return this character's equipped weapon.
    */
-  Weapon getEquippedWeapon();
+  IWeapon getEquippedWeapon();
 
   /**
    * Returns this character's class.

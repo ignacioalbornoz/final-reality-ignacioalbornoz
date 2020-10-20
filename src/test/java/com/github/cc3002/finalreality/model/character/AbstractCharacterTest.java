@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+
+import com.github.ignacioalbornoz.finalreality.model.weapon.WeaponAxe;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -64,7 +66,7 @@ public abstract class AbstractCharacterTest {
 
   protected void basicSetUp() {
     turns = new LinkedBlockingQueue<>();
-    testIWeapon = new IWeapon("Test", 15, 10, WeaponType.AXE);
+    testIWeapon = new WeaponAxe("Test", 15, 10);
     testCharacters = new ArrayList<>();
   }
 }

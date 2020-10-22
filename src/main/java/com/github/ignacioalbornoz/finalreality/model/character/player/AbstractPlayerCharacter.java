@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
  * @author Ignacio Slater Muñoz.
  * @author <Your name>
  */
-public abstract class AbstractPlayerCharacter extends AbstractCharacter {
+public abstract class AbstractPlayerCharacter extends AbstractCharacter implements IPlayerCharacter{
   public AbstractPlayerCharacter(@NotNull String name,
                                  @NotNull BlockingQueue<ICharacter> turnsQueue) {
     super(turnsQueue, name);

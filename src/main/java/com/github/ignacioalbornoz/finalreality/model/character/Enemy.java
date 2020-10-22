@@ -1,10 +1,9 @@
 package com.github.ignacioalbornoz.finalreality.model.character;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
-
-import com.github.ignacioalbornoz.finalreality.model.weapon.IWeapon;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * A class that holds all the information of a single enemy of the game.
@@ -12,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
  * @author Ignacio Slater Muñoz
  * @author <Ignacio Albornoz Alfaro>
  */
-public class Enemy extends AbstractCharacter {
+public class Enemy extends AbstractCharacter implements IEnemy{
 
   private final int weight;
 

@@ -20,7 +20,7 @@ public class WeaponBowTest extends AbstractWeaponTest{
     @BeforeEach
     void setUp() {
         testBow = new WeaponBow(BOW_NAME, SPEED, DAMAGE);
-        WeaponTestNot = new WeaponSword("notEquals", SPEED, DAMAGE);
+        WeaponTestNot = new WeaponSword(BOW_NAME, SPEED, DAMAGE);
         weakBow = new WeaponBow(BOW_NAME, SPEED, 1);
         slowBow = new WeaponBow(BOW_NAME, 1, DAMAGE);
         WeaponTestNotName = new WeaponBow("notEquals", SPEED, DAMAGE);
@@ -29,16 +29,23 @@ public class WeaponBowTest extends AbstractWeaponTest{
     @Test
     void constructorTest() {
         var expectedBow = new WeaponBow(BOW_NAME, SPEED, DAMAGE);
+
         assertEquals(testBow, testBow);
+        assertEquals(testBow.hashCode(), testBow.hashCode());
+
         assertEquals(expectedBow, testBow);
         assertEquals(expectedBow.hashCode(), testBow.hashCode());
+
         assertNotEquals(weakBow, testBow);
         assertNotEquals(weakBow.hashCode(), testBow.hashCode());
+
         assertNotEquals(slowBow, testBow);
         assertNotEquals(slowBow.hashCode(), testBow.hashCode());
-        assertNotEquals(WeaponTestNot, testBow);
-        assertNotEquals(WeaponTestNot.hashCode(), testBow.hashCode());
-        assertNotEquals(testBow,WeaponTestNotName);
-        assertNotEquals(testBow.hashCode(),WeaponTestNotName.hashCode());
+
+        assertNotEquals(testBow, WeaponTestNot);
+        assertNotEquals(testBow.hashCode(), WeaponTestNot.hashCode());
+
+        assertNotEquals(testBow, WeaponTestNotName);
+        assertNotEquals(testBow.hashCode(), WeaponTestNotName.hashCode());
     }
 }

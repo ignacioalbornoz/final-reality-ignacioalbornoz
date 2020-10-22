@@ -2,11 +2,12 @@ package com.github.ignacioalbornoz.finalreality.model.character;
 
 import com.github.ignacioalbornoz.finalreality.model.character.player.AbstractPlayerCharacter;
 import com.github.ignacioalbornoz.finalreality.model.weapon.IWeapon;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * An abstract class that holds the common behaviour of all the characters in the game.
@@ -27,10 +28,7 @@ public abstract class AbstractCharacter implements ICharacter {
     this.name = name;
   }
 
-  @Override
-  public IWeapon getEquippedWeapon() {
-    return equippedWeapon;
-  }
+
 
   @Override
   public void waitTurn() {
@@ -55,7 +53,7 @@ public abstract class AbstractCharacter implements ICharacter {
 
   @Override
   public String getName() {
-    return name;
+    return this.name;
   }
 
   @Override
@@ -64,6 +62,13 @@ public abstract class AbstractCharacter implements ICharacter {
       this.equippedWeapon = weapon;
     }
   }
+
+  @Override
+  public IWeapon getEquippedWeapon() {
+
+    return this.equippedWeapon;
+  }
+
 
 }
 

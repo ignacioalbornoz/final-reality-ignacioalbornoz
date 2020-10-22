@@ -30,18 +30,25 @@ public class WeaponStaffTest extends AbstractWeaponTest{
     @Test
     void constructorTest() {
         var expectedStaff = new WeaponStaff(STAFF_NAME, SPEED, DAMAGE);
+
         assertEquals(testStaff, testStaff);
         assertEquals(expectedStaff, testStaff);
+
         assertEquals(expectedStaff.hashCode(), testStaff.hashCode());
         assertNotEquals(weakStaff, testStaff);
+
         assertNotEquals(weakStaff.hashCode(), testStaff.hashCode());
         assertNotEquals(slowStaff, testStaff);
+
         assertNotEquals(slowStaff.hashCode(), testStaff.hashCode());
         assertNotEquals(testSword, testStaff);
+
         assertNotEquals(testSword.hashCode(), testStaff.hashCode());
         assertNotEquals(testStaff, testSword);
+
         assertNotEquals(testStaff.hashCode(), testSword.hashCode());
         assertNotEquals(testStaff, WeaponTestNotName);
+
         assertNotEquals(testStaff.hashCode(), WeaponTestNotName.hashCode());
     }
 }

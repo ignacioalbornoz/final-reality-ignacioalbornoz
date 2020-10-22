@@ -1,6 +1,7 @@
 package com.github.ignacioalbornoz.finalreality.model.character.player;
 
 import com.github.ignacioalbornoz.finalreality.model.character.AbstractCharacter;
+import com.github.ignacioalbornoz.finalreality.model.character.Enemy;
 import com.github.ignacioalbornoz.finalreality.model.character.ICharacter;
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
@@ -19,22 +20,16 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter {
                                  @NotNull BlockingQueue<ICharacter> turnsQueue) {
     super(turnsQueue, name);
   }
-
+  @Override
+  public boolean equals(final Object o) {
+    if (o instanceof ICharacter) {
+      final Enemy that = (Enemy) o;
+      return getName().equals(that.getName()) & getCharacterClass().equals(that.getCharacterClass());
+    }
+    return false;
+  }
   @Override
   public int hashCode() {
     return Objects.hash(getCharacterClass());
-  }
-
-  @Override
-  public boolean equals(final Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (!(o instanceof AbstractPlayerCharacter)) {
-      return false;
-    }
-    final AbstractPlayerCharacter that = (AbstractPlayerCharacter) o;
-    return getCharacterClass().equals(that.getCharacterClass())
-        && getName().equals(that.getName());
   }
 }

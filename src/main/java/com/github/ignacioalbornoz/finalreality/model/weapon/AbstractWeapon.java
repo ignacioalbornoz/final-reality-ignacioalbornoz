@@ -2,6 +2,8 @@ package com.github.ignacioalbornoz.finalreality.model.weapon;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 public abstract class AbstractWeapon implements IWeapon{
     protected final String name;
     protected final int weight;
@@ -27,6 +29,21 @@ public abstract class AbstractWeapon implements IWeapon{
     @Override
     public int getWeight() {
         return this.weight;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof IWeapon) {
+            final IWeapon weapon = (IWeapon) o;
+            return getDamage() == weapon.getDamage() &&
+                    getWeight() == weapon.getWeight() &&
+                    getName().equals(weapon.getName()) && getType().equals(weapon.getType());
+        }
+        return false;
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName(), getWeight(), getDamage(), getType());
     }
 }
 

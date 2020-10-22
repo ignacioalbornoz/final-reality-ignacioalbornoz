@@ -1,6 +1,5 @@
 package com.github.ignacioalbornoz.finalreality.model.character.player;
 
-import com.github.ignacioalbornoz.finalreality.model.character.AbstractCharacter;
 import com.github.ignacioalbornoz.finalreality.model.character.ICharacter;
 import org.jetbrains.annotations.NotNull;
 

@@ -1,6 +1,7 @@
 package com.github.ignacioalbornoz.finalreality.model.character;
 
 import com.github.ignacioalbornoz.finalreality.model.character.player.AbstractPlayerCharacter;
+import com.github.ignacioalbornoz.finalreality.model.character.player.IPlayerCharacter;
 import com.github.ignacioalbornoz.finalreality.model.weapon.IWeapon;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
@@ -18,24 +19,26 @@ public abstract class AbstractCharacter implements ICharacter {
 
   protected final BlockingQueue<ICharacter> turnsQueue;
   protected final String name;
-  protected IWeapon equippedWeapon = null;
   private ScheduledExecutorService scheduledExecutor;
+  private IWeapon equippedWeapon = null;
 
   protected AbstractCharacter(@NotNull BlockingQueue<ICharacter> turnsQueue,
                               @NotNull String name) {
     this.turnsQueue = turnsQueue;
     this.name = name;
+
   }
 
   @Override
-  public IWeapon getEquippedWeapon() {
-    return equippedWeapon;
+  public String getName() {
+    return name;
   }
+
 
   @Override
   public void waitTurn() {
     scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
-    if (this instanceof AbstractPlayerCharacter) {
+    if (this instanceof IPlayerCharacter) {
       scheduledExecutor
               .schedule(this::addToQueue, equippedWeapon.getWeight() / 10, TimeUnit.SECONDS);
     } else {
@@ -54,16 +57,18 @@ public abstract class AbstractCharacter implements ICharacter {
   }
 
   @Override
-  public String getName() {
-    return name;
+  public IWeapon getEquippedWeapon() {
+    return equippedWeapon;
   }
 
   @Override
   public void equip(IWeapon weapon) {
-    if (this instanceof AbstractPlayerCharacter) {
-      this.equippedWeapon = weapon;
-    }
+    this.equippedWeapon = weapon;
   }
 
+
 }
+
+
+
 

@@ -34,19 +34,16 @@ public class Enemy extends AbstractCharacter implements IEnemy{
 
   @Override
   public boolean equals(final Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (!(o instanceof Enemy)) {
-      return false;
-    }
-    final Enemy enemy = (Enemy) o;
-    return getWeight() == enemy.getWeight();
+
+    if ((o instanceof IEnemy)) {
+      final IEnemy enemy = (IEnemy) o;
+      return getWeight() == enemy.getWeight() && getName().equals(enemy.getName());
+    }return false;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(getWeight());
+    return Objects.hash(getWeight(),getName(),getCharacterClass());
   }
 
 

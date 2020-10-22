@@ -1,19 +1,18 @@
 package com.github.cc3002.finalreality.model.character;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-
 import com.github.ignacioalbornoz.finalreality.model.character.ICharacter;
 import com.github.ignacioalbornoz.finalreality.model.weapon.IWeapon;
+import com.github.ignacioalbornoz.finalreality.model.weapon.WeaponAxe;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import com.github.ignacioalbornoz.finalreality.model.weapon.WeaponAxe;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 /**
  * Abstract class containing the common tests for all the types of characters.
@@ -33,8 +32,8 @@ public abstract class AbstractCharacterTest {
    */
   @Test
   void waitTurnTest() {
-    Assertions.assertTrue(turns.isEmpty());
     tryToEquip(testCharacters.get(0));
+    Assertions.assertTrue(turns.isEmpty());
     testCharacters.get(0).waitTurn();
     try {
       // Thread.sleep is not accurate so this values may be changed to adjust the
@@ -49,24 +48,22 @@ public abstract class AbstractCharacterTest {
       e.printStackTrace();
     }
   }
-
-  private void tryToEquip(ICharacter character) {
-    character.equip(testIWeapon);
-  }
-
   protected void checkConstruction(final ICharacter expectedCharacter,
-      final ICharacter testEqualCharacter,
-      final ICharacter sameClassDifferentCharacter,
-      final ICharacter differentClassCharacter) {
+                                   final ICharacter testEqualCharacter,
+                                   final ICharacter sameClassDifferentCharacter,
+                                   final ICharacter differentClassCharacter) {
     assertEquals(expectedCharacter, testEqualCharacter);
     assertNotEquals(sameClassDifferentCharacter, testEqualCharacter);
     assertNotEquals(testEqualCharacter, differentClassCharacter);
     assertEquals(expectedCharacter.hashCode(), testEqualCharacter.hashCode());
   }
-
   protected void basicSetUp() {
     turns = new LinkedBlockingQueue<>();
-    testIWeapon = new WeaponAxe("Test", 15, 10);
     testCharacters = new ArrayList<>();
+    testIWeapon = new WeaponAxe("Test", 15, 10);
+  }
+
+  private void tryToEquip(ICharacter character) {
+    character.equip(testIWeapon);
   }
 }

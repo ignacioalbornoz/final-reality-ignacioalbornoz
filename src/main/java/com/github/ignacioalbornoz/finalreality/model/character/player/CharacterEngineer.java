@@ -6,8 +6,10 @@ import org.jetbrains.annotations.NotNull;
 import java.util.concurrent.BlockingQueue;
 
 public class CharacterEngineer extends AbstractPlayerCharacter implements IPlayerCharacterNonMage{
+
     public CharacterEngineer(@NotNull String name, @NotNull BlockingQueue<ICharacter> turnsQueue) {
         super(name, turnsQueue);
+
     }
 
     @Override

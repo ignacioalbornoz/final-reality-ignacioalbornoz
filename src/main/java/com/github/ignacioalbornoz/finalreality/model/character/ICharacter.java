@@ -22,17 +22,12 @@ public interface ICharacter {
    */
   String getName();
 
-  /**
-   * Equips a weapon to the character.
-   */
-  void equip(IWeapon weapon);
+  String getCharacterClass();
 
-  /**
-   * Return this character's equipped weapon.
-   */
   IWeapon getEquippedWeapon();
 
-  String getCharacterClass();
+  void equip(IWeapon weapon);
+
 }
 
 

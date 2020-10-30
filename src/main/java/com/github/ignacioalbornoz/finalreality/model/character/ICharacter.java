@@ -7,7 +7,7 @@ import com.github.ignacioalbornoz.finalreality.model.weapon.IWeapon;
  * A character can be controlled by the player or by the CPU (an enemy).
  *
  * @author Ignacio Slater Muñoz.
- * @author <Your name>
+ * @author Ignacio Albornoz Alfaro.
  */
 public interface ICharacter {
 
@@ -22,10 +22,19 @@ public interface ICharacter {
    */
   String getName();
 
+  /**
+   * Returns this character's class.
+   */
   String getCharacterClass();
 
+  /**
+   * Returns this character's equipped weapon.
+   */
   IWeapon getEquippedWeapon();
 
+  /**
+   * Equips a weapon to the character.
+   */
   void equip(IWeapon weapon);
 
 }

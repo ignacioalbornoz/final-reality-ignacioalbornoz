@@ -45,5 +45,10 @@ public abstract class AbstractWeapon implements IWeapon{
     public int hashCode() {
         return Objects.hash(getName(), getWeight(), getDamage(), getType());
     }
+
+    @Override
+    public boolean isNull(){
+      return false;
+    }
 }
 

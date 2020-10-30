@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
  * Abstract class containing the common tests for all the types of characters.
  *
  * @author Ignacio Slater Muñoz.
- * @author <Your name>
+ * @author Ignacio Albornoz Alfaro.
  * @see ICharacter
  */
 public abstract class AbstractCharacterTest {

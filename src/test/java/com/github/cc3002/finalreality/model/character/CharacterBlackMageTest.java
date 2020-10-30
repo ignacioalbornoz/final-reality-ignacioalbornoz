@@ -8,8 +8,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CharacterBlackMageTest extends AbstractPlayerCharacterTest{
     private static final String BLACK_MAGE_NAME = "Vivi";
@@ -32,6 +31,7 @@ public class CharacterBlackMageTest extends AbstractPlayerCharacterTest{
     void equipWeaponTest() {
             var character = new CharacterBlackMage(BLACK_MAGE_NAME, turns);
             var testIWeapon = new WeaponAxe("Test", 15, 10);
+            assertTrue(character.getEquippedWeapon().isNull());
             character.equip(testIWeapon);
             assertEquals(testIWeapon, character.getEquippedWeapon());
     }

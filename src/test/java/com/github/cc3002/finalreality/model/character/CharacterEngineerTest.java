@@ -31,6 +31,7 @@ class CharacterEngineerTest extends AbstractPlayerCharacterTest {
     void equipWeaponTest() {
         var testIWeapon = new WeaponAxe("Test", 15, 10);
         var character = new CharacterEngineer(ENGINEER_NAME, turns);
+        assertTrue(character.getEquippedWeapon().isNull());
         character.equip(testIWeapon);
         assertEquals(testIWeapon, character.getEquippedWeapon());
     }

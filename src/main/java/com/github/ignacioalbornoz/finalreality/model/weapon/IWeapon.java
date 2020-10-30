@@ -3,10 +3,10 @@ package com.github.ignacioalbornoz.finalreality.model.weapon;
 import java.util.Objects;
 
 /**
- * A class that holds all the information of a weapon.
+ * This represents a weapon from the game.
  *
  * @author Ignacio Slater Muñoz.
- * @author <Ignacio Albornoz Alfaro.>
+ * @author Ignacio Albornoz Alfaro.
  */
 public interface IWeapon {
 
@@ -17,5 +17,7 @@ public interface IWeapon {
   int getWeight();
 
   String getType();
+
+  boolean isNull();
 
 }

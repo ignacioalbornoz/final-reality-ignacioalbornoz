@@ -2,17 +2,17 @@ package com.github.ignacioalbornoz.finalreality.model.character.player;
 
 import com.github.ignacioalbornoz.finalreality.model.character.AbstractCharacter;
 import com.github.ignacioalbornoz.finalreality.model.character.ICharacter;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 
-import com.github.ignacioalbornoz.finalreality.model.weapon.IWeapon;
-import org.jetbrains.annotations.NotNull;
-
 /**
- * A class that holds all the information of a single character of the game.
+ * An abstract class that contains the common behavior of all player characters in the game.
  *
  * @author Ignacio Slater Muñoz.
- * @author <Your name>
+ * @author Ignacio Albornoz Alfaro.
+ * @version 1.0
  */
 public abstract class AbstractPlayerCharacter extends AbstractCharacter implements IPlayerCharacter{
 
@@ -34,12 +34,25 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
     return false;
   }
 
+  /**
+   * {@inheritDoc}
+   *
+   */
   @Override
   public int hashCode() {
     return Objects.hash(getCharacterClass(),getName());
   }
 
 
+  /**
+   * {@inheritDoc}
+   *
+   */
+  @Override
+  public void respondWaitTurn(){
+    this.waitTurnPlayer();
+
+  }
 
 }
 

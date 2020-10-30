@@ -6,8 +6,7 @@ import com.github.ignacioalbornoz.finalreality.model.weapon.WeaponAxe;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CharacterThiefTest extends AbstractPlayerCharacterTest{
     private static final String THIEF_NAME = "Zidane";
@@ -29,6 +28,7 @@ public class CharacterThiefTest extends AbstractPlayerCharacterTest{
     void equipWeaponTest() {
         var character = new CharacterThief(THIEF_NAME, turns);
         var testIWeapon = new WeaponAxe("Test", 15, 10);
+        assertTrue(character.getEquippedWeapon().isNull());
         character.equip(testIWeapon);
         assertEquals(testIWeapon, character.getEquippedWeapon());
     }

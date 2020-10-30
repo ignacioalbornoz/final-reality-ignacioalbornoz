@@ -5,15 +5,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.BlockingQueue;
 
-public class CharacterThief extends AbstractPlayerCharacterNonMage{
+public abstract class AbstractPlayerCharacterMage extends AbstractPlayerCharacter implements IPlayerCharacterMage{
 
-
-    public CharacterThief(@NotNull String name, @NotNull BlockingQueue<ICharacter> turnsQueue) {
+    public AbstractPlayerCharacterMage(@NotNull String name, @NotNull BlockingQueue<ICharacter> turnsQueue) {
         super(name, turnsQueue);
-    }
-
-    @Override
-    public String getCharacterClass() {
-        return "THIEF";
     }
 }

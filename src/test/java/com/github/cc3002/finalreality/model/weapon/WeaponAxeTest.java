@@ -1,5 +1,6 @@
 package com.github.cc3002.finalreality.model.weapon;
 
+import com.github.ignacioalbornoz.finalreality.model.character.player.CharacterThief;
 import com.github.ignacioalbornoz.finalreality.model.weapon.IWeapon;
 import com.github.ignacioalbornoz.finalreality.model.weapon.WeaponAxe;
 import com.github.ignacioalbornoz.finalreality.model.weapon.WeaponSword;

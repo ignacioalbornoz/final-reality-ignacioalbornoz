@@ -31,7 +31,8 @@ public abstract class AbstractEnemy extends AbstractCharacter implements IEnemy{
 
         if ((o instanceof IEnemy)) {
             final IEnemy enemy = (IEnemy) o;
-            return getWeight() == enemy.getWeight() && getName().equals(enemy.getName());
+            return getWeight() == enemy.getWeight()
+                    && getName().equals(enemy.getName());
         }return false;
     }
 

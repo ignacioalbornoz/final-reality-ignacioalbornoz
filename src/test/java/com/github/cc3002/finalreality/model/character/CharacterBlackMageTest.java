@@ -21,18 +21,25 @@ public class CharacterBlackMageTest extends AbstractPlayerCharacterTest{
     }
 
     @Test
-    void constructorTest() { checkConstruction(new CharacterBlackMage(BLACK_MAGE_NAME, turns),
+    void constructorTest() {
+        checkConstruction(new CharacterBlackMage(BLACK_MAGE_NAME, turns),
             testCharacters.get(0),
             new CharacterBlackMage("NotEquals", turns),
             new CharacterThief("NotEquals", turns));
+
     }
 
     @Test
     void equipWeaponTest() {
-            var character = new CharacterBlackMage(BLACK_MAGE_NAME, turns);
-            var testIWeapon = new WeaponAxe("Test", 15, 10);
-            assertTrue(character.getEquippedWeapon().isNull());
-            character.equip(testIWeapon);
-            assertEquals(testIWeapon, character.getEquippedWeapon());
+        var character = new CharacterBlackMage(BLACK_MAGE_NAME, turns);
+        var testIWeapon = new WeaponAxe("Test", 15, 10);
+        assertNotEquals(character,testIWeapon);
+        assertNotEquals(character.hashCode(),testIWeapon.hashCode());
+        assertNotEquals(testIWeapon,character);
+        assertNotEquals(testIWeapon.hashCode(),character.hashCode());
+        assertTrue(character.getEquippedWeapon().isNull());
+        character.equip(testIWeapon);
+        assertEquals(testIWeapon, character.getEquippedWeapon());
+        assertFalse(character.getEquippedWeapon().isNull());
     }
 }

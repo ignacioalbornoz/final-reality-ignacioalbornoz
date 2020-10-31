@@ -3,7 +3,6 @@ package com.github.ignacioalbornoz.finalreality.model.character.player;
 import com.github.ignacioalbornoz.finalreality.model.character.AbstractCharacter;
 import com.github.ignacioalbornoz.finalreality.model.character.ICharacter;
 import org.jetbrains.annotations.NotNull;
-
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 
@@ -16,15 +15,19 @@ import java.util.concurrent.BlockingQueue;
  */
 public abstract class AbstractPlayerCharacter extends AbstractCharacter implements IPlayerCharacter{
 
-
-
-  public AbstractPlayerCharacter(@NotNull String name,
-                                 @NotNull BlockingQueue<ICharacter> turnsQueue) {
+  /**
+   * Player character's constructor with the common attributes: name and queue with the characters ready to
+   * play.
+   */
+  protected AbstractPlayerCharacter(@NotNull BlockingQueue<ICharacter> turnsQueue,
+                                 @NotNull String name) {
     super(turnsQueue, name);
   }
 
-
-    @Override
+  /**
+   * Compares this object to the specified object and returns true if represents the same player character.
+   */
+  @Override
   public boolean equals(final Object o) {
     if (o instanceof IPlayerCharacter) {
       final IPlayerCharacter that = (IPlayerCharacter) o;
@@ -35,24 +38,19 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
   }
 
   /**
-   * {@inheritDoc}
-   *
+   * Returns the hash code for the name, class of this player character.
    */
   @Override
   public int hashCode() {
     return Objects.hash(getCharacterClass(),getName());
   }
 
-
   /**
    * {@inheritDoc}
-   *
    */
   @Override
   public void respondWaitTurn(){
     this.waitTurnPlayer();
-
   }
-
 }
 

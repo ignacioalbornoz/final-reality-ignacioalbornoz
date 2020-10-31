@@ -1,7 +1,5 @@
 package com.github.cc3002.finalreality.model.character;
 
-import com.github.ignacioalbornoz.finalreality.model.character.Enemy;
-import com.github.ignacioalbornoz.finalreality.model.character.ICharacter;
 import com.github.ignacioalbornoz.finalreality.model.character.player.*;
 import com.github.ignacioalbornoz.finalreality.model.weapon.WeaponAxe;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,26 +16,28 @@ class CharacterEngineerTest extends AbstractPlayerCharacterTest {
     @BeforeEach
     void setUp() {
         basicSetUp();
-        testCharacters.add(new CharacterEngineer(ENGINEER_NAME, turns));
+        testCharacters.add(new CharacterEngineer(turns, ENGINEER_NAME));
     }
 
     @Test
-    void constructorTest() { checkConstruction(new CharacterEngineer(ENGINEER_NAME, turns),
+    void constructorTest() { checkConstruction(new CharacterEngineer(turns, ENGINEER_NAME),
             testCharacters.get(0),
-            new CharacterEngineer("NotEquals", turns),
-            new CharacterThief("NotEquals", turns));
+            new CharacterEngineer(turns, "NotEquals"),
+            new CharacterThief(turns, "NotEquals"));
     }
     @Test
     void equipWeaponTest() {
         var testIWeapon = new WeaponAxe("Test", 15, 10);
-        var character = new CharacterEngineer(ENGINEER_NAME, turns);
-        assertNotEquals(character,testIWeapon);
-        assertNotEquals(character.hashCode(),testIWeapon.hashCode());
-        assertNotEquals(testIWeapon,character);
-        assertNotEquals(testIWeapon.hashCode(),character.hashCode());
+        var character = new CharacterEngineer(turns, ENGINEER_NAME);
+
+
+
         assertTrue(character.getEquippedWeapon().isNull());
         character.equip(testIWeapon);
+
         assertEquals(testIWeapon, character.getEquippedWeapon());
+        assertEquals(testIWeapon.hashCode(), character.getEquippedWeapon().hashCode());
+
         assertFalse(character.getEquippedWeapon().isNull());
     }
 }

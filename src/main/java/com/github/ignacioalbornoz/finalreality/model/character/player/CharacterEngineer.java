@@ -2,14 +2,26 @@ package com.github.ignacioalbornoz.finalreality.model.character.player;
 
 import com.github.ignacioalbornoz.finalreality.model.character.ICharacter;
 import org.jetbrains.annotations.NotNull;
-
 import java.util.concurrent.BlockingQueue;
 
+/**
+ * A class that holds all the information of a single engineer character of the game.
+ *
+ * @author Ignacio Albornoz Alfaro.
+ */
 public class CharacterEngineer extends AbstractPlayerCharacterNonMage{
-    public CharacterEngineer(@NotNull String name, @NotNull BlockingQueue<ICharacter> turnsQueue) {
-        super(name, turnsQueue);
+
+    /**
+     * Creates a new engineer character with a name and the queue with the characters ready to
+     * play.
+     */
+    public CharacterEngineer(@NotNull BlockingQueue<ICharacter> turnsQueue, @NotNull String name) {
+        super(turnsQueue, name);
     }
 
+    /**
+     * Returns the class of the enemy's: "ENGINEER".
+     */
     @Override
     public String getCharacterClass() {
         return "ENGINEER";

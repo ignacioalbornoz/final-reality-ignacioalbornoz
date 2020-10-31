@@ -1,7 +1,6 @@
 package com.github.ignacioalbornoz.finalreality.model.character;
 
 import org.jetbrains.annotations.NotNull;
-
 import java.util.concurrent.BlockingQueue;
 
 /**
@@ -15,12 +14,16 @@ public class Enemy extends AbstractEnemy{
   /**
    * Creates a new enemy with a name, a weight and the queue with the characters ready to
    * play.
-   *
-   * @param name
-   * @param weight
-   * @param turnsQueue
    */
-  public Enemy(@NotNull String name, int weight, @NotNull BlockingQueue<ICharacter> turnsQueue) {
-    super(name, weight, turnsQueue);
+  public Enemy(@NotNull BlockingQueue<ICharacter> turnsQueue, @NotNull String name, int weight) {
+    super(turnsQueue,name, weight);
+  }
+
+  /**
+   * Returns the class of the enemy's: "ENEMY".
+   */
+  @Override
+  public String getCharacterClass() {
+    return "ENEMY";
   }
 }

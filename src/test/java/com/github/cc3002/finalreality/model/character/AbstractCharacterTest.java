@@ -3,14 +3,13 @@ package com.github.cc3002.finalreality.model.character;
 import com.github.ignacioalbornoz.finalreality.model.character.ICharacter;
 import com.github.ignacioalbornoz.finalreality.model.weapon.IWeapon;
 import com.github.ignacioalbornoz.finalreality.model.weapon.WeaponAxe;
+import com.github.ignacioalbornoz.finalreality.model.weapon.WeaponNull;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
@@ -52,12 +51,17 @@ public abstract class AbstractCharacterTest {
                                    final ICharacter testEqualCharacter,
                                    final ICharacter sameClassDifferentCharacter,
                                    final ICharacter differentClassCharacter) {
+
+    assertNotEquals(testEqualCharacter, new WeaponNull());
+    assertNotEquals(testEqualCharacter.hashCode(), new WeaponNull().hashCode());
+
     assertEquals(expectedCharacter, testEqualCharacter);
     assertNotEquals(sameClassDifferentCharacter, testEqualCharacter);
     assertNotEquals(testEqualCharacter, differentClassCharacter);
     assertEquals(expectedCharacter.hashCode(), testEqualCharacter.hashCode());
     assertNotEquals(sameClassDifferentCharacter.hashCode(), testEqualCharacter.hashCode());
     assertNotEquals(testEqualCharacter.hashCode(), differentClassCharacter.hashCode());
+
   }
   protected void basicSetUp() {
     turns = new LinkedBlockingQueue<>();

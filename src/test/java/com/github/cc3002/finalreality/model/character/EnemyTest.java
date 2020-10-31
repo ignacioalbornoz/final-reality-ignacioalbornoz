@@ -2,6 +2,7 @@ package com.github.cc3002.finalreality.model.character;
 
 import com.github.ignacioalbornoz.finalreality.model.character.Enemy;
 import com.github.ignacioalbornoz.finalreality.model.character.player.CharacterThief;
+import com.github.ignacioalbornoz.finalreality.model.weapon.WeaponNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,16 +15,19 @@ class EnemyTest extends AbstractCharacterTest {
   @BeforeEach
   void setUp() {
     basicSetUp();
-    testCharacters.add(new Enemy(ENEMY_NAME, 10, turns));
+    testCharacters.add(new Enemy(turns, ENEMY_NAME, 10));
   }
 
   @Test
   void constructorTest() {
-    checkConstruction(new Enemy(ENEMY_NAME, 10, turns),
+    checkConstruction(new Enemy(turns, ENEMY_NAME, 10),
         testCharacters.get(0),
-        new Enemy(ENEMY_NAME, 11, turns),
-        new CharacterThief(ENEMY_NAME, turns));
-    assertNotEquals(testCharacters.get(0),new Enemy("NAME", 10, turns));
-    assertNotEquals(testCharacters.get(0).hashCode(),new Enemy("NAME", 10, turns).hashCode());
+        new Enemy(turns, ENEMY_NAME, 11),
+        new CharacterThief(turns, ENEMY_NAME));
+    assertNotEquals(testCharacters.get(0),new Enemy(turns, "NAME", 10));
+    assertNotEquals(testCharacters.get(0).hashCode(),new Enemy(turns, "NAME", 10).hashCode());
+
+    assertNotEquals(testCharacters.get(0),new WeaponNull());
+    assertNotEquals(testCharacters.get(0).hashCode(), new WeaponNull().hashCode());
   }
 }

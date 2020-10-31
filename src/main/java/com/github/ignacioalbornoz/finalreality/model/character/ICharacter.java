@@ -36,7 +36,6 @@ public interface ICharacter {
    * Equips a weapon to the character.
    */
   void equip(IWeapon weapon);
-
 }
 
 

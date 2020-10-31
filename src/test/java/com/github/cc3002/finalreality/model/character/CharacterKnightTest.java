@@ -8,34 +8,51 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Class containing the common tests for the knight characters.
+ *
+ * @author Ignacio Albornoz Alfaro.
+ */
+public class CharacterKnightTest extends AbstractCharacterTest{
 
-public class CharacterKnightTest extends AbstractPlayerCharacterTest{
-        private static final String KNIGHT_NAME = "Adelbert";
+    /**
+     * Name to creates a knight character to test.
+     */
+    private static final String KNIGHT_NAME = "Adelbert";
 
+    /**
+     * Creates the variables for the knight character tests.
+     */
     @BeforeEach
         void setUp() {
             super.basicSetUp();
             testCharacters.add(new CharacterKnight(turns, KNIGHT_NAME));
+    }
 
-        }
-
+    /**
+     * {@inheritDoc}
+     */
     @Test
     void constructorTest() { checkConstruction(new CharacterKnight(turns, KNIGHT_NAME),
             testCharacters.get(0),
             new CharacterKnight(turns, "NotEquals"),
             new CharacterThief(turns, "NotEquals"));
     }
-        @Test
-        void equipWeaponTest() {
-            var character = new CharacterKnight(turns, KNIGHT_NAME);
-            var testIWeapon = new WeaponAxe(KNIGHT_NAME, 15, 10);
 
-            assertTrue(character.getEquippedWeapon().isNull());
-            character.equip(testIWeapon);
+    /**
+     * Checks that the weapons equipment works correctly.
+     */
+    @Test
+    void equipWeaponTest() {
+        var character = new CharacterKnight(turns, KNIGHT_NAME);
+        var testIWeapon = new WeaponAxe(KNIGHT_NAME, 15, 10);
 
-            assertEquals(testIWeapon, character.getEquippedWeapon());
-            assertEquals(testIWeapon.hashCode(), character.getEquippedWeapon().hashCode());
+        assertTrue(character.getEquippedWeapon().isNull());
+        character.equip(testIWeapon);
 
-            assertFalse(character.getEquippedWeapon().isNull());
-        }
+        assertEquals(testIWeapon, character.getEquippedWeapon());
+        assertEquals(testIWeapon.hashCode(), character.getEquippedWeapon().hashCode());
+
+        assertFalse(character.getEquippedWeapon().isNull());
+    }
 }

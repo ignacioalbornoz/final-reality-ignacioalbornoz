@@ -5,12 +5,28 @@ import com.github.ignacioalbornoz.finalreality.model.weapon.WeaponNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
+/**
+ * Abstract class containing the common tests for all the types of weapons.
+ *
+ * @author Ignacio Slater Muñoz.
+ * @author Ignacio Albornoz Alfaro.
+ * @see IWeapon
+ */
 public abstract class AbstractWeaponTest{
 
+    /**
+     * Damage to creates weapons to test.
+     */
     static final int DAMAGE = 15;
+
+    /**
+     * Weight to creates weapons to test.
+     */
     static final int SPEED = 10;
 
-
+    /**
+     * Checks that the weapon's constructor works properly.
+     */
     protected void checkConstruction(final IWeapon expectedWeapon,
                                      final IWeapon testEqualWeapon,
                                      final IWeapon differentNameWeapon,
@@ -35,6 +51,5 @@ public abstract class AbstractWeaponTest{
 
         assertNotEquals(testEqualWeapon, differentWeightWeapon);
         assertNotEquals(testEqualWeapon.hashCode(), differentWeightWeapon.hashCode());
-
     }
 }

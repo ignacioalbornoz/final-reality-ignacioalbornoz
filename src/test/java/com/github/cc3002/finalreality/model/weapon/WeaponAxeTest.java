@@ -6,15 +6,46 @@ import com.github.ignacioalbornoz.finalreality.model.weapon.WeaponSword;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Class containing the common tests for the axe weapons.
+ *
+ * @author Ignacio Albornoz Alfaro.
+ */
 public class WeaponAxeTest extends AbstractWeaponTest{
+
+    /**
+     * Name to creates a axe weapon to test.
+     */
     private static final String AXE_NAME = "Test Axe";
+
+    /**
+     * Weapon to test.
+     */
     private IWeapon testAxe;
+
+    /**
+     * Different type weapon to test.
+     */
     private IWeapon WeaponTestNot;
+
+    /**
+     * Different name weapon to test.
+     */
     private IWeapon WeaponTestNotName;
 
+    /**
+     * Lower damage weapon to test.
+     */
     private IWeapon weakAxe;
+
+    /**
+     * Different weight weapon to test.
+     */
     private IWeapon differentWeightWeapon;
 
+    /**
+     * Creates the variables for the axe weapon tests.
+     */
     @BeforeEach
     void setUp() {
         WeaponTestNot = new WeaponSword(AXE_NAME, SPEED, DAMAGE);
@@ -24,6 +55,9 @@ public class WeaponAxeTest extends AbstractWeaponTest{
         differentWeightWeapon = new WeaponAxe(AXE_NAME, 1, DAMAGE);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Test
     void constructorTest() {
         var expectedAxe = new WeaponAxe(AXE_NAME, SPEED, DAMAGE);

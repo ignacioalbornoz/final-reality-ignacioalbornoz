@@ -5,19 +5,32 @@ import com.github.ignacioalbornoz.finalreality.model.character.player.CharacterT
 import com.github.ignacioalbornoz.finalreality.model.weapon.WeaponAxe;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
-public class CharacterBlackMageTest extends AbstractPlayerCharacterTest{
+/**
+ * Class containing the common tests for the black mage characters.
+ *
+ * @author Ignacio Albornoz Alfaro.
+ */
+public class CharacterBlackMageTest extends AbstractCharacterTest{
+
+    /**
+     * Name to creates a black mage character to test.
+     */
     private static final String BLACK_MAGE_NAME = "Vivi";
 
+    /**
+     * Creates the variables for the black mage character tests.
+     */
     @BeforeEach
     void setUp() {
         super.basicSetUp();
         testCharacters.add(new CharacterBlackMage(turns, BLACK_MAGE_NAME));
-
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Test
     void constructorTest() {
         checkConstruction(new CharacterBlackMage(turns, BLACK_MAGE_NAME),
@@ -26,6 +39,9 @@ public class CharacterBlackMageTest extends AbstractPlayerCharacterTest{
             new CharacterThief(turns, "NotEquals"));
     }
 
+    /**
+     * Checks that the weapons equipment works correctly.
+     */
     @Test
     void equipWeaponTest() {
         var character = new CharacterBlackMage(turns, BLACK_MAGE_NAME);

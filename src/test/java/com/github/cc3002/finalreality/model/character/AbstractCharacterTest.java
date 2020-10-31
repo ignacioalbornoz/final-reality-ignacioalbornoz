@@ -22,8 +22,19 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
  */
 public abstract class AbstractCharacterTest {
 
+  /**
+   * List of the characters' turns.
+   */
   protected BlockingQueue<ICharacter> turns;
+
+  /**
+   * List of the characters.
+   */
   protected List<ICharacter> testCharacters;
+
+  /**
+   * Weapon to test.
+   */
   protected IWeapon testIWeapon;
 
   /**
@@ -47,6 +58,10 @@ public abstract class AbstractCharacterTest {
       e.printStackTrace();
     }
   }
+
+  /**
+   * Checks that the character's constructor works properly.
+   */
   protected void checkConstruction(final ICharacter expectedCharacter,
                                    final ICharacter testEqualCharacter,
                                    final ICharacter sameClassDifferentCharacter,
@@ -56,19 +71,27 @@ public abstract class AbstractCharacterTest {
     assertNotEquals(testEqualCharacter.hashCode(), new WeaponNull().hashCode());
 
     assertEquals(expectedCharacter, testEqualCharacter);
-    assertNotEquals(sameClassDifferentCharacter, testEqualCharacter);
-    assertNotEquals(testEqualCharacter, differentClassCharacter);
     assertEquals(expectedCharacter.hashCode(), testEqualCharacter.hashCode());
-    assertNotEquals(sameClassDifferentCharacter.hashCode(), testEqualCharacter.hashCode());
-    assertNotEquals(testEqualCharacter.hashCode(), differentClassCharacter.hashCode());
 
+    assertNotEquals(sameClassDifferentCharacter, testEqualCharacter);
+    assertNotEquals(sameClassDifferentCharacter.hashCode(), testEqualCharacter.hashCode());
+
+    assertNotEquals(testEqualCharacter, differentClassCharacter);
+    assertNotEquals(testEqualCharacter.hashCode(), differentClassCharacter.hashCode());
   }
+
+  /**
+   * Creates the common variables for the character tests.
+   */
   protected void basicSetUp() {
     turns = new LinkedBlockingQueue<>();
     testCharacters = new ArrayList<>();
     testIWeapon = new WeaponAxe("Test", 15, 10);
   }
 
+  /**
+   * Tries to equip a weapon on this character.
+   */
   private void tryToEquip(ICharacter character) {
     character.equip(testIWeapon);
   }

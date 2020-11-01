@@ -1,8 +1,8 @@
 package com.github.cc3002.finalreality.model.weapon;
 
 import com.github.ignacioalbornoz.finalreality.model.weapon.IWeapon;
-import com.github.ignacioalbornoz.finalreality.model.weapon.WeaponAxe;
-import com.github.ignacioalbornoz.finalreality.model.weapon.WeaponSword;
+import com.github.ignacioalbornoz.finalreality.model.weapon.Axe;
+import com.github.ignacioalbornoz.finalreality.model.weapon.Sword;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
  *
  * @author Ignacio Albornoz Alfaro.
  */
-public class WeaponAxeTest extends AbstractWeaponTest{
+public class AxeTest extends AbstractWeaponTest{
 
     /**
      * Name to creates a axe weapon to test.
@@ -48,11 +48,11 @@ public class WeaponAxeTest extends AbstractWeaponTest{
      */
     @BeforeEach
     void setUp() {
-        WeaponTestNot = new WeaponSword(AXE_NAME, SPEED, DAMAGE);
-        testAxe = new WeaponAxe(AXE_NAME, SPEED, DAMAGE);
-        WeaponTestNotName = new WeaponAxe("notEquals", SPEED, DAMAGE);
-        weakAxe = new WeaponAxe(AXE_NAME, SPEED, 1);
-        differentWeightWeapon = new WeaponAxe(AXE_NAME, 1, DAMAGE);
+        WeaponTestNot = new Sword(AXE_NAME, SPEED, DAMAGE);
+        testAxe = new Axe(AXE_NAME, SPEED, DAMAGE);
+        WeaponTestNotName = new Axe("notEquals", SPEED, DAMAGE);
+        weakAxe = new Axe(AXE_NAME, SPEED, 1);
+        differentWeightWeapon = new Axe(AXE_NAME, 1, DAMAGE);
     }
 
     /**
@@ -60,7 +60,7 @@ public class WeaponAxeTest extends AbstractWeaponTest{
      */
     @Test
     void constructorTest() {
-        var expectedAxe = new WeaponAxe(AXE_NAME, SPEED, DAMAGE);
+        var expectedAxe = new Axe(AXE_NAME, SPEED, DAMAGE);
         checkConstruction(expectedAxe,
                 testAxe,
                 WeaponTestNotName,

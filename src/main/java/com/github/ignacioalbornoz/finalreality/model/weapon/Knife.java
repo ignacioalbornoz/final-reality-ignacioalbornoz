@@ -7,13 +7,13 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Ignacio Albornoz Alfaro.
  */
-public class WeaponKnife extends AbstractWeapon{
+public class Knife extends AbstractWeapon{
 
     /**
      * Creates a new weapon with a name, a weight and a damage ready to be equipped on a character.
      *
      */
-    public WeaponKnife(@NotNull String name, int weight, int damage) {
+    public Knife(@NotNull String name, int weight, int damage) {
         super(name, weight, damage);
     }
 

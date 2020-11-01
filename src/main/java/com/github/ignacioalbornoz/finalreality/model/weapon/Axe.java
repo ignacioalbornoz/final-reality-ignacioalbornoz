@@ -8,12 +8,12 @@ import org.jetbrains.annotations.NotNull;
  * @author Ignacio Albornoz Alfaro.
  */
 
-public class WeaponAxe extends AbstractWeapon{
+public class Axe extends AbstractWeapon{
 
     /**
      * Returns "AXE", the weapon's type of this class.
      */
-    public WeaponAxe(@NotNull String name, int weight, int damage) {
+    public Axe(@NotNull String name, int weight, int damage) {
         super(name, weight, damage);
     }
 

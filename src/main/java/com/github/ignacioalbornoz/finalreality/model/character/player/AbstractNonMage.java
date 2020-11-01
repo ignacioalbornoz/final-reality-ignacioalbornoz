@@ -5,16 +5,16 @@ import org.jetbrains.annotations.NotNull;
 import java.util.concurrent.BlockingQueue;
 
 /**
- * An abstract class that holds the common behaviour of all the mage characters in the game.
+ * An abstract class that holds the common behaviour of all the non mage characters in the game.
  *
  * @author Ignacio Albornoz Alfaro.
  */
-public abstract class AbstractPlayerCharacterMage extends AbstractPlayerCharacter implements IPlayerCharacterMage{
+public abstract class AbstractNonMage extends AbstractPlayerCharacter implements INonMage {
 
     /**
      * {@inheritDoc}
      */
-    public AbstractPlayerCharacterMage(@NotNull BlockingQueue<ICharacter> turnsQueue, @NotNull String name) {
+    public AbstractNonMage(@NotNull BlockingQueue<ICharacter> turnsQueue, @NotNull String name) {
         super(turnsQueue, name);
     }
 }

@@ -9,13 +9,13 @@ import java.util.concurrent.BlockingQueue;
  *
  * @author Ignacio Albornoz Alfaro.
  */
-public class CharacterEngineer extends AbstractPlayerCharacterNonMage{
+public class Engineer extends AbstractNonMage {
 
     /**
      * Creates a new engineer character with a name and the queue with the characters ready to
      * play.
      */
-    public CharacterEngineer(@NotNull BlockingQueue<ICharacter> turnsQueue, @NotNull String name) {
+    public Engineer(@NotNull BlockingQueue<ICharacter> turnsQueue, @NotNull String name) {
         super(turnsQueue, name);
     }
 

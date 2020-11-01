@@ -5,5 +5,5 @@ package com.github.ignacioalbornoz.finalreality.model.character.player;
  *
  * @author Ignacio Albornoz Alfaro.
  */
-public interface IPlayerCharacterNonMage extends IPlayerCharacter{
+public interface INonMage extends IPlayerCharacter{
 }

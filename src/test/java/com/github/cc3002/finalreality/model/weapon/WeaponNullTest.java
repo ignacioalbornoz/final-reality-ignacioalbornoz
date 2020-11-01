@@ -27,7 +27,7 @@ public class WeaponNullTest extends AbstractWeaponTest{
     @BeforeEach
     void setUp() {
         testNull = new WeaponNull();
-        WeaponTestNot = new WeaponSword("notEquals", SPEED, DAMAGE);
+        WeaponTestNot = new Sword("notEquals", SPEED, DAMAGE);
     }
 
     /**

@@ -1,8 +1,8 @@
 package com.github.cc3002.finalreality.model.weapon;
 
 import com.github.ignacioalbornoz.finalreality.model.weapon.IWeapon;
-import com.github.ignacioalbornoz.finalreality.model.weapon.WeaponKnife;
-import com.github.ignacioalbornoz.finalreality.model.weapon.WeaponSword;
+import com.github.ignacioalbornoz.finalreality.model.weapon.Knife;
+import com.github.ignacioalbornoz.finalreality.model.weapon.Sword;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
  *
  * @author Ignacio Albornoz Alfaro.
  */
-public class WeaponKnifeTest extends AbstractWeaponTest{
+public class KnifeTest extends AbstractWeaponTest{
 
     /**
      * Name to creates a knife weapon to test.
@@ -48,11 +48,11 @@ public class WeaponKnifeTest extends AbstractWeaponTest{
      */
     @BeforeEach
     void setUp() {
-        testKnife = new WeaponKnife(KNIFE_NAME, SPEED, DAMAGE);
-        WeaponTestNot = new WeaponSword(KNIFE_NAME, SPEED, DAMAGE);
-        weakKnife = new WeaponKnife(KNIFE_NAME, SPEED, 1);
-        WeaponTestNotName = new WeaponKnife("notEquals", SPEED, DAMAGE);
-        differentWeightWeapon = new WeaponKnife(KNIFE_NAME, 1, DAMAGE);
+        testKnife = new Knife(KNIFE_NAME, SPEED, DAMAGE);
+        WeaponTestNot = new Sword(KNIFE_NAME, SPEED, DAMAGE);
+        weakKnife = new Knife(KNIFE_NAME, SPEED, 1);
+        WeaponTestNotName = new Knife("notEquals", SPEED, DAMAGE);
+        differentWeightWeapon = new Knife(KNIFE_NAME, 1, DAMAGE);
     }
 
     /**
@@ -60,7 +60,7 @@ public class WeaponKnifeTest extends AbstractWeaponTest{
      */
     @Test
     void constructorTest() {
-        var expectedKnife = new WeaponKnife(KNIFE_NAME, SPEED, DAMAGE);
+        var expectedKnife = new Knife(KNIFE_NAME, SPEED, DAMAGE);
         checkConstruction(expectedKnife,
                 testKnife,
                 WeaponTestNotName,

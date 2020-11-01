@@ -1,8 +1,8 @@
 package com.github.cc3002.finalreality.model.weapon;
 
 import com.github.ignacioalbornoz.finalreality.model.weapon.IWeapon;
-import com.github.ignacioalbornoz.finalreality.model.weapon.WeaponStaff;
-import com.github.ignacioalbornoz.finalreality.model.weapon.WeaponSword;
+import com.github.ignacioalbornoz.finalreality.model.weapon.Staff;
+import com.github.ignacioalbornoz.finalreality.model.weapon.Sword;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
  *
  * @author Ignacio Albornoz Alfaro.
  */
-public class WeaponStaffTest extends AbstractWeaponTest{
+public class StaffTest extends AbstractWeaponTest{
 
     /**
      * Name to creates a staff weapon to test.
@@ -48,11 +48,11 @@ public class WeaponStaffTest extends AbstractWeaponTest{
      */
     @BeforeEach
     void setUp() {
-        testStaff = new WeaponStaff(STAFF_NAME, SPEED, DAMAGE);
-        WeaponTestNot = new WeaponSword(STAFF_NAME, SPEED, DAMAGE);
-        weakStaff = new WeaponStaff(STAFF_NAME, SPEED, 1);
-        WeaponTestNotName = new WeaponStaff("notEquals", SPEED, DAMAGE);
-        differentWeightWeapon = new WeaponStaff(STAFF_NAME, 1, DAMAGE);
+        testStaff = new Staff(STAFF_NAME, SPEED, DAMAGE);
+        WeaponTestNot = new Sword(STAFF_NAME, SPEED, DAMAGE);
+        weakStaff = new Staff(STAFF_NAME, SPEED, 1);
+        WeaponTestNotName = new Staff("notEquals", SPEED, DAMAGE);
+        differentWeightWeapon = new Staff(STAFF_NAME, 1, DAMAGE);
     }
 
     /**
@@ -60,7 +60,7 @@ public class WeaponStaffTest extends AbstractWeaponTest{
      */
     @Test
     void constructorTest() {
-        var expectedStaff = new WeaponStaff(STAFF_NAME, SPEED, DAMAGE);
+        var expectedStaff = new Staff(STAFF_NAME, SPEED, DAMAGE);
         checkConstruction(expectedStaff,
                 testStaff,
                 WeaponTestNotName,

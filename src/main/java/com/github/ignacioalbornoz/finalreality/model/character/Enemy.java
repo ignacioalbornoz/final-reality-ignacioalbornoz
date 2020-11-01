@@ -9,7 +9,7 @@ import java.util.concurrent.BlockingQueue;
  * @author Ignacio Slater Muñoz.
  * @author Ignacio Albornoz Alfaro.
  */
-public class Enemy extends AbstractEnemy{
+public class Enemy extends AbstractEnemy {
 
   /**
    * Creates a new enemy with a name, a weight and the queue with the characters ready to

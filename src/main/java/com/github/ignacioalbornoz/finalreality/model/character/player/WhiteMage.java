@@ -9,13 +9,13 @@ import java.util.concurrent.BlockingQueue;
  *
  * @author Ignacio Albornoz Alfaro.
  */
-public class CharacterWhiteMage extends AbstractPlayerCharacterMage{
+public class WhiteMage extends AbstractMage {
 
     /**
      * Creates a new white mage character with a name and the queue with the characters ready to
      * play.
      */
-    public CharacterWhiteMage(@NotNull BlockingQueue<ICharacter> turnsQueue, @NotNull String name) {
+    public WhiteMage(@NotNull BlockingQueue<ICharacter> turnsQueue, @NotNull String name) {
         super(turnsQueue, name);
     }
 

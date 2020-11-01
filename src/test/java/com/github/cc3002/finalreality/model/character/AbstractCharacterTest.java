@@ -2,7 +2,7 @@ package com.github.cc3002.finalreality.model.character;
 
 import com.github.ignacioalbornoz.finalreality.model.character.ICharacter;
 import com.github.ignacioalbornoz.finalreality.model.weapon.IWeapon;
-import com.github.ignacioalbornoz.finalreality.model.weapon.WeaponAxe;
+import com.github.ignacioalbornoz.finalreality.model.weapon.Axe;
 import com.github.ignacioalbornoz.finalreality.model.weapon.WeaponNull;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -86,7 +86,7 @@ public abstract class AbstractCharacterTest {
   protected void basicSetUp() {
     turns = new LinkedBlockingQueue<>();
     testCharacters = new ArrayList<>();
-    testIWeapon = new WeaponAxe("Test", 15, 10);
+    testIWeapon = new Axe("Test", 15, 10);
   }
 
   /**

@@ -8,13 +8,13 @@ import org.jetbrains.annotations.NotNull;
  * @author Ignacio Albornoz Alfaro.
  */
 
-public class WeaponStaff extends AbstractWeapon{
+public class Staff extends AbstractWeapon{
 
     /**
      * Creates a new weapon with a name, a weight and a damage ready to be equipped on a character.
      *
      */
-    public WeaponStaff(@NotNull String name, int weight, int damage) {
+    public Staff(@NotNull String name, int weight, int damage) {
         super(name, weight, damage);
     }
 

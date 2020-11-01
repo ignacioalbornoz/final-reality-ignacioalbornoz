@@ -15,7 +15,6 @@ Broadly speaking for the combat the player has a group of characters to control 
 enemies controlled by the computer.
 
 ---
-# Final Reality Proyect
 Proyecto para el curso de Metodologías de Diseño y Programación CC3002, cursado en el semestre de primavera del 2020, FCFM, Universidad de Chile. <br>
 #### Autor: <br>
 Ignacio Albornoz Alfaro <br>

@@ -33,14 +33,6 @@ public abstract class AbstractEnemy extends AbstractCharacter implements IEnemy{
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void respondWaitTurn(){
-        this.waitTurnEnemy();
-    }
-
-    /**
      * Compares this object to the specified object and returns true if represents the same enemy.
      */
     @Override
@@ -49,7 +41,8 @@ public abstract class AbstractEnemy extends AbstractCharacter implements IEnemy{
         if ((o instanceof IEnemy)) {
             final IEnemy enemy = (IEnemy) o;
             return getWeight() == enemy.getWeight()
-                    && getName().equals(enemy.getName());
+                    && getName().equals(enemy.getName())
+                    && getCharacterClass().equals(enemy.getCharacterClass());
         }return false;
     }
 

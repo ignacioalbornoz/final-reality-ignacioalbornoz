@@ -34,7 +34,7 @@ public abstract class AbstractCharacter implements ICharacter {
   /**
    * The character's equipped weapon that initializes as a null weapon.
    */
-  private IWeapon equippedWeapon = new WeaponNull();
+  protected IWeapon equippedWeapon = new WeaponNull();
 
   /**
    * Character's constructor with the common attributes: name and queue with the characters ready to
@@ -74,14 +74,6 @@ public abstract class AbstractCharacter implements ICharacter {
    * {@inheritDoc}
    */
   @Override
-  public void equip(IWeapon weapon) {
-    this.equippedWeapon = weapon;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
   public void waitTurn() {
     scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
     this.respondWaitTurn();
@@ -112,6 +104,20 @@ public abstract class AbstractCharacter implements ICharacter {
    * Responds to the waitTurn method
    */
   public abstract void respondWaitTurn();
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void equip(IWeapon weapon) {
+    this.respondEquip(weapon);}
+
+  public void equipPlayerCharacter(IWeapon weapon){this.equippedWeapon = weapon;}
+
+  public void equipEnemyCharacter(IWeapon weapon){}
+
+  public void respondEquip(IWeapon weapon){}
+
 }
 
 

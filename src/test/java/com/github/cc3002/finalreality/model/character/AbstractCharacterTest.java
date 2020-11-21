@@ -1,6 +1,7 @@
 package com.github.cc3002.finalreality.model.character;
 
 import com.github.ignacioalbornoz.finalreality.model.character.ICharacter;
+import com.github.ignacioalbornoz.finalreality.model.character.player.IPlayerCharacter;
 import com.github.ignacioalbornoz.finalreality.model.weapon.IWeapon;
 import com.github.ignacioalbornoz.finalreality.model.weapon.Axe;
 import com.github.ignacioalbornoz.finalreality.model.weapon.WeaponNull;
@@ -27,10 +28,6 @@ public abstract class AbstractCharacterTest {
    */
   protected BlockingQueue<ICharacter> turns;
 
-  /**
-   * List of the characters.
-   */
-  protected List<ICharacter> testCharacters;
 
   /**
    * Weapon to test.
@@ -38,12 +35,17 @@ public abstract class AbstractCharacterTest {
   protected IWeapon testIWeapon;
 
   /**
+   * List of the characters.
+   */
+  protected List<ICharacter> testCharacters;
+
+  /**
    * Checks that the character waits the appropriate amount of time for it's turn.
    */
   @Test
   void waitTurnTest() {
-    tryToEquip(testCharacters.get(0));
     Assertions.assertTrue(turns.isEmpty());
+    tryToEquip(testCharacters.get(0));
     testCharacters.get(0).waitTurn();
     try {
       // Thread.sleep is not accurate so this values may be changed to adjust the
@@ -57,6 +59,13 @@ public abstract class AbstractCharacterTest {
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
+  }
+
+  /**
+   * Tries to equip a weapon on this character.
+   */
+  private void tryToEquip(ICharacter character) {
+    character.equip(testIWeapon);
   }
 
   /**
@@ -87,12 +96,5 @@ public abstract class AbstractCharacterTest {
     turns = new LinkedBlockingQueue<>();
     testCharacters = new ArrayList<>();
     testIWeapon = new Axe("Test", 15, 10);
-  }
-
-  /**
-   * Tries to equip a weapon on this character.
-   */
-  private void tryToEquip(ICharacter character) {
-    character.equip(testIWeapon);
   }
 }

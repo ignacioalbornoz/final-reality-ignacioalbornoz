@@ -2,6 +2,7 @@ package com.github.ignacioalbornoz.finalreality.model.character.player;
 
 import com.github.ignacioalbornoz.finalreality.model.character.AbstractCharacter;
 import com.github.ignacioalbornoz.finalreality.model.character.ICharacter;
+import com.github.ignacioalbornoz.finalreality.model.weapon.IWeapon;
 import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
@@ -52,5 +53,8 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
   public void respondWaitTurn(){
     this.waitTurnPlayer();
   }
+
+  @Override
+  public void respondEquip(IWeapon weapon){this.equipPlayerCharacter(weapon);}
 }
 

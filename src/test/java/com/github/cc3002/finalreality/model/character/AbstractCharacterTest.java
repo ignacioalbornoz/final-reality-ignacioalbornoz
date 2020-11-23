@@ -95,6 +95,5 @@ public abstract class AbstractCharacterTest {
   protected void basicSetUp() {
     turns = new LinkedBlockingQueue<>();
     testCharacters = new ArrayList<>();
-    testIWeapon = new Axe("Test", 15, 10);
   }
 }

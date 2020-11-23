@@ -11,6 +11,8 @@ import java.util.concurrent.BlockingQueue;
  */
 public abstract class AbstractEnemy extends AbstractCharacter implements IEnemy{
 
+    private final float damage = 1;
+
     /**
      * Weight of an enemy.
      */
@@ -52,5 +54,9 @@ public abstract class AbstractEnemy extends AbstractCharacter implements IEnemy{
     @Override
     public int hashCode() {
         return Objects.hash(getWeight(),getName(),getCharacterClass());
+    }
+
+    public float getDamage() {
+        return damage;
     }
 }

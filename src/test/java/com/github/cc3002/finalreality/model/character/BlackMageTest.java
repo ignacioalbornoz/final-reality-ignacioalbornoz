@@ -4,6 +4,7 @@ import com.github.ignacioalbornoz.finalreality.model.character.ICharacter;
 import com.github.ignacioalbornoz.finalreality.model.character.player.BlackMage;
 import com.github.ignacioalbornoz.finalreality.model.character.player.Thief;
 import com.github.ignacioalbornoz.finalreality.model.weapon.Axe;
+import com.github.ignacioalbornoz.finalreality.model.weapon.Staff;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -26,6 +27,7 @@ public class BlackMageTest extends AbstractCharacterTest{
     @BeforeEach
     void setUp() {
         super.basicSetUp();
+        testIWeapon = new Staff("Test", 10, 15);
         testCharacters.add(new BlackMage(turns, BLACK_MAGE_NAME));
     }
 
@@ -46,7 +48,7 @@ public class BlackMageTest extends AbstractCharacterTest{
     @Test
     void equipWeaponTest() {
         var character = new BlackMage(turns, BLACK_MAGE_NAME);
-        var testIWeapon = new Axe(BLACK_MAGE_NAME, 15, 10);
+        var testIWeapon = new Staff(BLACK_MAGE_NAME, 15, 10);
 
         assertTrue(character.getEquippedWeapon().isNull());
         character.equip(testIWeapon);

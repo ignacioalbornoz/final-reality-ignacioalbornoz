@@ -16,6 +16,7 @@ import java.util.concurrent.BlockingQueue;
  */
 public abstract class AbstractPlayerCharacter extends AbstractCharacter implements IPlayerCharacter{
 
+
   /**
    * Player character's constructor with the common attributes: name and queue with the characters ready to
    * play.
@@ -54,7 +55,5 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
     this.waitTurnPlayer();
   }
 
-  @Override
-  public void respondEquip(IWeapon weapon){this.equipPlayerCharacter(weapon);}
 }
 

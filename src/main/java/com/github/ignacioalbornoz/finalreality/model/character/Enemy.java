@@ -28,6 +28,11 @@ public class Enemy extends AbstractEnemy {
     return "ENEMY";
   }
 
+  @Override
+  public void attack(ICharacter character) {
+    character.attackedByEnemy(this);
+  }
+
   /**
    * {@inheritDoc}
    */
@@ -37,5 +42,5 @@ public class Enemy extends AbstractEnemy {
   }
 
   @Override
-  public void respondEquip(IWeapon weapon){this.equipEnemyCharacter(weapon);}
+  public void respondEquip(IWeapon weapon){this.equipEnemyCharacter();}
 }

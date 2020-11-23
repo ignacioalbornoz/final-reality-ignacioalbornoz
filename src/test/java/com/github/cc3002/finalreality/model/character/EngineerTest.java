@@ -2,6 +2,7 @@ package com.github.cc3002.finalreality.model.character;
 
 import com.github.ignacioalbornoz.finalreality.model.character.player.*;
 import com.github.ignacioalbornoz.finalreality.model.weapon.Axe;
+import com.github.ignacioalbornoz.finalreality.model.weapon.Sword;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,6 +25,7 @@ class EngineerTest extends AbstractCharacterTest {
     @BeforeEach
     void setUp() {
         basicSetUp();
+        testIWeapon = new Axe("Test", 10, 15);
         testCharacters.add(new Engineer(turns, ENGINEER_NAME));
     }
 

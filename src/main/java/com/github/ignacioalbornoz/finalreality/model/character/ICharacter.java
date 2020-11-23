@@ -36,6 +36,20 @@ public interface ICharacter {
    * Equips a weapon to the character.
    */
   void equip(IWeapon weapon);
+
+  void attack(ICharacter character);
+
+  void attackedByBlackMage(ICharacter character);
+
+  void attackedByWhiteMage(ICharacter character);
+
+  void attackedByEngineer(ICharacter character);
+
+  void attackedByKnight(ICharacter character);
+
+  void attackedByThief(ICharacter character);
+
+  void attackedByEnemy(IEnemy enemy);
 }
 
 

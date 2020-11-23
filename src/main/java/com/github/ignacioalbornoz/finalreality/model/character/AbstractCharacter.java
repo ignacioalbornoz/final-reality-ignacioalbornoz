@@ -16,6 +16,12 @@ import java.util.concurrent.TimeUnit;
  */
 public abstract class AbstractCharacter implements ICharacter {
 
+  protected float HP = 100;
+
+  protected float defense = 0;
+
+  protected boolean canContinue = true;
+
   /**
    * List of the characters' turns.
    */
@@ -112,12 +118,85 @@ public abstract class AbstractCharacter implements ICharacter {
   public void equip(IWeapon weapon) {
     this.respondEquip(weapon);}
 
-  public void equipPlayerCharacter(IWeapon weapon){this.equippedWeapon = weapon;}
+  @Override
+  public void attackedByBlackMage(ICharacter character) {
+    this.attackedBy(realDamage(character));
+  }
 
-  public void equipEnemyCharacter(IWeapon weapon){}
+  @Override
+  public void attackedByWhiteMage(ICharacter character) {
+    this.attackedBy(realDamage(character));
+
+  }
+
+  @Override
+  public void attackedByEngineer(ICharacter character) {
+    this.attackedBy(realDamage(character));
+
+  }
+
+  @Override
+  public void attackedByKnight(ICharacter character) {
+    this.attackedBy(realDamage(character));
+
+  }
+
+  @Override
+  public void attackedByThief(ICharacter character) {
+    this.attackedBy(realDamage(character));
+
+  }
+
+  @Override
+  public void attackedByEnemy(IEnemy enemy) {
+    this.attackedBy(realDamageEnemy(enemy));
+  }
+
+  public void equipBlackMageCharacter(IWeapon weapon){
+    if(weapon.getType().equals("KNIFE") || weapon.getType().equals("STAFF")){this.equippedWeapon = weapon;}}
+
+  public void equipWhiteMageCharacter(IWeapon weapon){if(weapon.getType().equals("STAFF")){this.equippedWeapon = weapon;}}
+
+  public void equipEngineerCharacter(IWeapon weapon){if(weapon.getType().equals("AXE") || weapon.getType().equals("BOW")){this.equippedWeapon = weapon;}}
+
+  public void equipKnightCharacter(IWeapon weapon){if(weapon.getType().equals("KNIFE") || weapon.getType().equals("AXE") || weapon.getType().equals("SWORD")){this.equippedWeapon = weapon;}}
+
+  public void equipThiefCharacter(IWeapon weapon){if(weapon.getType().equals("SWORD") || weapon.getType().equals("STAFF") || weapon.getType().equals("BOW")){this.equippedWeapon = weapon;}}
+
+  public void equipEnemyCharacter(){}
 
   public void respondEquip(IWeapon weapon){}
 
+  public float getDefense() {
+    return defense;
+  }
+
+  public float getHP() {
+    return HP;
+  }
+
+  public boolean getCanContinue() {
+    return canContinue;
+  }
+
+  public void setHP(float HP) {
+    this.HP = HP;
+  }
+
+  void attackedBy(float realDamage){
+    if (realDamage>= this.getHP()){
+      this.canContinue = false;
+    }
+    this.setHP(this.getHP()-realDamage);
+  }
+
+  float realDamage(ICharacter character){
+    return character.getEquippedWeapon().getDamage()-this.getDefense();
+  }
+
+  float realDamageEnemy(IEnemy enemy){
+    return enemy.getDamage()-this.getDefense();
+  }
 }
 
 

@@ -1,5 +1,6 @@
 package com.github.ignacioalbornoz.finalreality.model.weapon;
 
+import com.github.ignacioalbornoz.finalreality.model.character.ICharacter;
 import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
@@ -54,6 +55,7 @@ public abstract class AbstractWeapon implements IWeapon{
     public boolean isNull(){
       return false;
     }
+
 
     /**
      * Compares this object to the specified object and returns true if represents the same weapon.

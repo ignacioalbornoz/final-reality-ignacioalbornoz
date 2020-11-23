@@ -3,6 +3,7 @@ package com.github.cc3002.finalreality.model.character;
 import com.github.ignacioalbornoz.finalreality.model.character.player.Thief;
 import com.github.ignacioalbornoz.finalreality.model.character.player.WhiteMage;
 import com.github.ignacioalbornoz.finalreality.model.weapon.Axe;
+import com.github.ignacioalbornoz.finalreality.model.weapon.Staff;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -25,6 +26,7 @@ public class WhiteMageTest extends AbstractCharacterTest{
     @BeforeEach
     void setUp() {
         basicSetUp();
+        testIWeapon = new Staff("Test", 10, 15);
         testCharacters.add(new WhiteMage(turns, WHITE_MAGE_NAME));
     }
 
@@ -44,7 +46,7 @@ public class WhiteMageTest extends AbstractCharacterTest{
     @Test
     void equipWeaponTest() {
         var character = new WhiteMage(turns, WHITE_MAGE_NAME);
-        var testIWeapon = new Axe("Test", 15, 10);
+        var testIWeapon = new Staff("Test", 15, 10);
 
 
         assertTrue(character.getEquippedWeapon().isNull());

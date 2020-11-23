@@ -1,6 +1,7 @@
 package com.github.ignacioalbornoz.finalreality.model.character.player;
 
 import com.github.ignacioalbornoz.finalreality.model.character.ICharacter;
+import com.github.ignacioalbornoz.finalreality.model.weapon.IWeapon;
 import org.jetbrains.annotations.NotNull;
 import java.util.concurrent.BlockingQueue;
 
@@ -26,4 +27,13 @@ public class Thief extends AbstractNonMage {
     public String getCharacterClass() {
         return "THIEF";
     }
+
+    @Override
+    public void attack(ICharacter character) {
+        character.attackedByThief(this);
+
+    }
+
+    @Override
+    public void respondEquip(IWeapon weapon){this.equipThiefCharacter(weapon);}
 }

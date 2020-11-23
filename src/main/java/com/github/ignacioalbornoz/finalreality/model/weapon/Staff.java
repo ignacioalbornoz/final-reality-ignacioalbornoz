@@ -25,5 +25,7 @@ public class Staff extends AbstractWeapon{
     public String getType() {
         return "STAFF";
     }
+
+
 }
 

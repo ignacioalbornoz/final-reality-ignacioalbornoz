@@ -12,4 +12,6 @@ public interface IEnemy extends ICharacter{
      * Returns this enemy's weight.
      */
     int getWeight();
+
+    float getDamage();
 }

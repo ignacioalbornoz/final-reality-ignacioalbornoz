@@ -1,6 +1,7 @@
 package com.github.ignacioalbornoz.finalreality.model.character.player;
 
 import com.github.ignacioalbornoz.finalreality.model.character.ICharacter;
+import com.github.ignacioalbornoz.finalreality.model.weapon.IWeapon;
 import org.jetbrains.annotations.NotNull;
 import java.util.concurrent.BlockingQueue;
 
@@ -26,4 +27,12 @@ public class WhiteMage extends AbstractMage {
     public String getCharacterClass() {
         return "WHITE_MAGE";
     }
+
+    @Override
+    public void attack(ICharacter character) {
+        character.attackedByWhiteMage(this);
+    }
+
+    @Override
+    public void respondEquip(IWeapon weapon){this.equipWhiteMageCharacter(weapon);}
 }

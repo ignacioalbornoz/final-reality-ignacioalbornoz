@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
  *
  * @author Ignacio Albornoz Alfaro.
  */
-public class WhiteMageTest extends AbstractCharacterTest{
+public class WhiteMageTest extends AbstractMageTest{
 
     /**
      * Name to creates a white mage character to test.
@@ -56,5 +56,17 @@ public class WhiteMageTest extends AbstractCharacterTest{
         assertEquals(testIWeapon.hashCode(), character.getEquippedWeapon().hashCode());
 
         assertFalse(character.getEquippedWeapon().isNull());
+    }
+
+    @Test
+    void checkAttackTest() {
+        this.checkAttack(new WhiteMage(turns, WHITE_MAGE_NAME),
+                testCharacters.get(0), new Thief(turns, "NotEquals"));
+    }
+
+    @Test
+    void checkLethalAttackTest() {
+        this.checkLethalAttack(new WhiteMage(turns, WHITE_MAGE_NAME),
+                testCharacters.get(0), new Thief(turns, "NotEquals"));
     }
 }

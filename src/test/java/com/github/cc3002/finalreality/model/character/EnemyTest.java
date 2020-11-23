@@ -3,9 +3,10 @@ package com.github.cc3002.finalreality.model.character;
 import com.github.ignacioalbornoz.finalreality.model.character.Enemy;
 import com.github.ignacioalbornoz.finalreality.model.character.ICharacter;
 import com.github.ignacioalbornoz.finalreality.model.character.player.Thief;
-import com.github.ignacioalbornoz.finalreality.model.weapon.WeaponNull;
+import com.github.ignacioalbornoz.finalreality.model.weapon.Sword;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 /**
@@ -15,12 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
  * @author Ignacio Albornoz Alfaro.
  * @see ICharacter
  */
-class EnemyTest extends AbstractCharacterTest {
-
-  /**
-   * Name to creates a enemy character to test.
-   */
-  private static final String ENEMY_NAME = "Goblin";
+class EnemyTest extends AbstractEnemyTest {
 
   /**
    * Creates the variables for the enemy character tests.
@@ -28,6 +24,7 @@ class EnemyTest extends AbstractCharacterTest {
   @BeforeEach
   void setUp() {
     basicSetUp();
+    testIWeapon = new Sword("Test", 10, 15);
     testCharacters.add(new Enemy(turns, ENEMY_NAME, 10));
   }
 
@@ -44,7 +41,15 @@ class EnemyTest extends AbstractCharacterTest {
     assertNotEquals(testCharacters.get(0),new Enemy(turns, "NAME", 10));
     assertNotEquals(testCharacters.get(0).hashCode(),new Enemy(turns, "NAME", 10).hashCode());
 
-    assertNotEquals(testCharacters.get(0),new WeaponNull());
-    assertNotEquals(testCharacters.get(0).hashCode(), new WeaponNull().hashCode());
+  }
+
+  @Test
+  void checkAttackTest() {
+    this.checkAttack(new Enemy(turns, ENEMY_NAME, 10), testCharacters.get(0), new Thief(turns, ENEMY_NAME));
+  }
+
+  @Test
+  void checkLethalAttackTest() {
+    this.checkLethalAttack(new Enemy(turns, ENEMY_NAME, 10), testCharacters.get(0), new Thief(turns, ENEMY_NAME));
   }
 }

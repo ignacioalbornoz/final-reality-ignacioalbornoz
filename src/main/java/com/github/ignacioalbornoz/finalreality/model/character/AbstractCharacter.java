@@ -1,5 +1,6 @@
 package com.github.ignacioalbornoz.finalreality.model.character;
 
+import com.github.ignacioalbornoz.finalreality.model.character.player.*;
 import com.github.ignacioalbornoz.finalreality.model.weapon.IWeapon;
 import com.github.ignacioalbornoz.finalreality.model.weapon.WeaponNull;
 import org.jetbrains.annotations.NotNull;
@@ -16,9 +17,9 @@ import java.util.concurrent.TimeUnit;
  */
 public abstract class AbstractCharacter implements ICharacter {
 
-  protected float HP = 100;
+  protected int HP = 100;
 
-  protected float defense = 0;
+  protected int defense = 0;
 
   protected boolean canContinue = true;
 
@@ -111,38 +112,32 @@ public abstract class AbstractCharacter implements ICharacter {
    */
   public abstract void respondWaitTurn();
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void equip(IWeapon weapon) {
-    this.respondEquip(weapon);}
 
   @Override
-  public void attackedByBlackMage(ICharacter character) {
+  public void attackedByBlackMage(BlackMage character) {
     this.attackedBy(realDamage(character));
   }
 
   @Override
-  public void attackedByWhiteMage(ICharacter character) {
+  public void attackedByWhiteMage(WhiteMage character) {
     this.attackedBy(realDamage(character));
 
   }
 
   @Override
-  public void attackedByEngineer(ICharacter character) {
+  public void attackedByEngineer(Engineer character) {
     this.attackedBy(realDamage(character));
 
   }
 
   @Override
-  public void attackedByKnight(ICharacter character) {
+  public void attackedByKnight(Knight character) {
     this.attackedBy(realDamage(character));
 
   }
 
   @Override
-  public void attackedByThief(ICharacter character) {
+  public void attackedByThief(Thief character) {
     this.attackedBy(realDamage(character));
 
   }
@@ -152,26 +147,12 @@ public abstract class AbstractCharacter implements ICharacter {
     this.attackedBy(realDamageEnemy(enemy));
   }
 
-  public void equipBlackMageCharacter(IWeapon weapon){
-    if(weapon.getType().equals("KNIFE") || weapon.getType().equals("STAFF")){this.equippedWeapon = weapon;}}
 
-  public void equipWhiteMageCharacter(IWeapon weapon){if(weapon.getType().equals("STAFF")){this.equippedWeapon = weapon;}}
-
-  public void equipEngineerCharacter(IWeapon weapon){if(weapon.getType().equals("AXE") || weapon.getType().equals("BOW")){this.equippedWeapon = weapon;}}
-
-  public void equipKnightCharacter(IWeapon weapon){if(weapon.getType().equals("KNIFE") || weapon.getType().equals("AXE") || weapon.getType().equals("SWORD")){this.equippedWeapon = weapon;}}
-
-  public void equipThiefCharacter(IWeapon weapon){if(weapon.getType().equals("SWORD") || weapon.getType().equals("STAFF") || weapon.getType().equals("BOW")){this.equippedWeapon = weapon;}}
-
-  public void equipEnemyCharacter(){}
-
-  public void respondEquip(IWeapon weapon){}
-
-  public float getDefense() {
+  public int getDefense() {
     return defense;
   }
 
-  public float getHP() {
+  public int getHP() {
     return HP;
   }
 
@@ -179,23 +160,32 @@ public abstract class AbstractCharacter implements ICharacter {
     return canContinue;
   }
 
-  public void setHP(float HP) {
+  public void setHP(int HP) {
     this.HP = HP;
   }
 
-  void attackedBy(float realDamage){
-    if (realDamage>= this.getHP()){
-      this.canContinue = false;
+  void attackedBy(int realDamage){
+    if (realDamage >= this.getHP()){
+      this.setCanContinue(false);
     }
     this.setHP(this.getHP()-realDamage);
   }
 
-  float realDamage(ICharacter character){
-    return character.getEquippedWeapon().getDamage()-this.getDefense();
+  int realDamage(ICharacter character){
+    return ((character.getEquippedWeapon().getDamage())-this.getDefense());
   }
 
-  float realDamageEnemy(IEnemy enemy){
-    return enemy.getDamage()-this.getDefense();
+  int realDamageEnemy(IEnemy enemy){
+    return (enemy.getDamage()-this.getDefense());
+  }
+
+  public void setEquippedWeapon(IWeapon weapon) {
+      this.equippedWeapon = weapon;
+    }
+
+  @Override
+  public void setCanContinue(boolean canContinue) {
+    this.canContinue = canContinue;
   }
 }
 

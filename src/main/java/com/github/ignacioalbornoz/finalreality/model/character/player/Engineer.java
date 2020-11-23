@@ -33,7 +33,7 @@ public class Engineer extends AbstractNonMage {
         character.attackedByEngineer(this);
 
     }
-
     @Override
-    public void respondEquip(IWeapon weapon){this.equipEngineerCharacter(weapon);}
+    public void equip(IWeapon weapon) {
+        weapon.equippedByEngineer(this);}
 }

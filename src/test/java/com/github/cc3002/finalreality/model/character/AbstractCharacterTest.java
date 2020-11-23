@@ -1,16 +1,16 @@
 package com.github.cc3002.finalreality.model.character;
 
 import com.github.ignacioalbornoz.finalreality.model.character.ICharacter;
-import com.github.ignacioalbornoz.finalreality.model.character.player.IPlayerCharacter;
 import com.github.ignacioalbornoz.finalreality.model.weapon.IWeapon;
-import com.github.ignacioalbornoz.finalreality.model.weapon.Axe;
 import com.github.ignacioalbornoz.finalreality.model.weapon.WeaponNull;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
@@ -22,6 +22,9 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
  * @see ICharacter
  */
 public abstract class AbstractCharacterTest {
+
+
+  protected IWeapon weaponNull = new WeaponNull();
 
   /**
    * List of the characters' turns.
@@ -64,7 +67,7 @@ public abstract class AbstractCharacterTest {
   /**
    * Tries to equip a weapon on this character.
    */
-  private void tryToEquip(ICharacter character) {
+  void tryToEquip(ICharacter character) {
     character.equip(testIWeapon);
   }
 
@@ -76,8 +79,8 @@ public abstract class AbstractCharacterTest {
                                    final ICharacter sameClassDifferentCharacter,
                                    final ICharacter differentClassCharacter) {
 
-    assertNotEquals(testEqualCharacter, new WeaponNull());
-    assertNotEquals(testEqualCharacter.hashCode(), new WeaponNull().hashCode());
+    assertNotEquals(testEqualCharacter, weaponNull);
+    assertNotEquals(testEqualCharacter.hashCode(), weaponNull);
 
     assertEquals(expectedCharacter, testEqualCharacter);
     assertEquals(expectedCharacter.hashCode(), testEqualCharacter.hashCode());
@@ -95,5 +98,12 @@ public abstract class AbstractCharacterTest {
   protected void basicSetUp() {
     turns = new LinkedBlockingQueue<>();
     testCharacters = new ArrayList<>();
+  }
+
+  protected void checkAttack(final ICharacter expectedCharacter, final ICharacter testEqualCharacter,final ICharacter differentClassCharacter) {
+  }
+
+  protected void checkLethalAttack(final ICharacter expectedCharacter, final ICharacter testEqualCharacter, final ICharacter differentClassCharacter) {
+
   }
 }

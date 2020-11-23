@@ -35,5 +35,6 @@ public class Knight extends AbstractNonMage {
     }
 
     @Override
-    public void respondEquip(IWeapon weapon){this.equipKnightCharacter(weapon);}
+    public void equip(IWeapon weapon) {
+        weapon.equippedByKnight(this);}
 }

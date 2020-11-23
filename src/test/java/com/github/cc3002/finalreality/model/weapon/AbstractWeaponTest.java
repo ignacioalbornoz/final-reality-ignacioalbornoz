@@ -22,7 +22,7 @@ public abstract class AbstractWeaponTest{
     /**
      * Weight to creates weapons to test.
      */
-    static final int SPEED = 10;
+    static final int WEIGHT = 10;
 
     /**
      * Checks that the weapon's constructor works properly.

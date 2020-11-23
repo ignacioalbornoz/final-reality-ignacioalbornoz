@@ -13,5 +13,5 @@ public interface IEnemy extends ICharacter{
      */
     int getWeight();
 
-    float getDamage();
+    int getDamage();
 }

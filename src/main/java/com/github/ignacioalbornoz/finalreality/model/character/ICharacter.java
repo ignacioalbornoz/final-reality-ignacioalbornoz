@@ -1,5 +1,6 @@
 package com.github.ignacioalbornoz.finalreality.model.character;
 
+import com.github.ignacioalbornoz.finalreality.model.character.player.*;
 import com.github.ignacioalbornoz.finalreality.model.weapon.IWeapon;
 
 /**
@@ -35,19 +36,28 @@ public interface ICharacter {
   /**
    * Equips a weapon to the character.
    */
+
+  void setEquippedWeapon(IWeapon weapon);
+
+  int getHP();
+
+  boolean getCanContinue();
+
+  void setCanContinue(boolean canContinue);
+
   void equip(IWeapon weapon);
 
   void attack(ICharacter character);
 
-  void attackedByBlackMage(ICharacter character);
+  void attackedByBlackMage(BlackMage character);
 
-  void attackedByWhiteMage(ICharacter character);
+  void attackedByWhiteMage(WhiteMage character);
 
-  void attackedByEngineer(ICharacter character);
+  void attackedByEngineer(Engineer character);
 
-  void attackedByKnight(ICharacter character);
+  void attackedByKnight(Knight character);
 
-  void attackedByThief(ICharacter character);
+  void attackedByThief(Thief character);
 
   void attackedByEnemy(IEnemy enemy);
 }

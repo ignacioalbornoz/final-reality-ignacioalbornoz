@@ -48,10 +48,10 @@ public class StaffTest extends AbstractWeaponTest{
      */
     @BeforeEach
     void setUp() {
-        testStaff = new Staff(STAFF_NAME, SPEED, DAMAGE);
-        WeaponTestNot = new Sword(STAFF_NAME, SPEED, DAMAGE);
-        weakStaff = new Staff(STAFF_NAME, SPEED, 1);
-        WeaponTestNotName = new Staff("notEquals", SPEED, DAMAGE);
+        testStaff = new Staff(STAFF_NAME, WEIGHT, DAMAGE);
+        WeaponTestNot = new Sword(STAFF_NAME, WEIGHT, DAMAGE);
+        weakStaff = new Staff(STAFF_NAME, WEIGHT, 1);
+        WeaponTestNotName = new Staff("notEquals", WEIGHT, DAMAGE);
         differentWeightWeapon = new Staff(STAFF_NAME, 1, DAMAGE);
     }
 
@@ -60,7 +60,7 @@ public class StaffTest extends AbstractWeaponTest{
      */
     @Test
     void constructorTest() {
-        var expectedStaff = new Staff(STAFF_NAME, SPEED, DAMAGE);
+        var expectedStaff = new Staff(STAFF_NAME, WEIGHT, DAMAGE);
         checkConstruction(expectedStaff,
                 testStaff,
                 WeaponTestNotName,

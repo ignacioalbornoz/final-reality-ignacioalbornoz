@@ -42,5 +42,6 @@ public class Enemy extends AbstractEnemy {
   }
 
   @Override
-  public void respondEquip(IWeapon weapon){this.equipEnemyCharacter();}
+  public void equip(IWeapon weapon) {
+    }
 }

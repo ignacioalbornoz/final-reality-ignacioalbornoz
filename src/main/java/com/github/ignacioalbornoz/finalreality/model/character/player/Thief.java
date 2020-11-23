@@ -35,5 +35,6 @@ public class Thief extends AbstractNonMage {
     }
 
     @Override
-    public void respondEquip(IWeapon weapon){this.equipThiefCharacter(weapon);}
+    public void equip(IWeapon weapon) {
+        weapon.equippedByThief(this);}
 }

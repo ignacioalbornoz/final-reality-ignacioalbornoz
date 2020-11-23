@@ -1,12 +1,11 @@
 package com.github.cc3002.finalreality.model.character;
 
-import com.github.ignacioalbornoz.finalreality.model.character.ICharacter;
 import com.github.ignacioalbornoz.finalreality.model.character.player.BlackMage;
 import com.github.ignacioalbornoz.finalreality.model.character.player.Thief;
-import com.github.ignacioalbornoz.finalreality.model.weapon.Axe;
 import com.github.ignacioalbornoz.finalreality.model.weapon.Staff;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -14,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
  *
  * @author Ignacio Albornoz Alfaro.
  */
-public class BlackMageTest extends AbstractCharacterTest{
+public class BlackMageTest extends AbstractMageTest{
 
     /**
      * Name to creates a black mage character to test.
@@ -57,5 +56,16 @@ public class BlackMageTest extends AbstractCharacterTest{
         assertEquals(testIWeapon.hashCode(), character.getEquippedWeapon().hashCode());
 
         assertFalse(character.getEquippedWeapon().isNull());
+    }
+
+    @Test
+    void checkAttackTest() {
+        this.checkAttack(new BlackMage(turns, BLACK_MAGE_NAME),
+                testCharacters.get(0),new Thief(turns, "NotEquals"));
+    }
+
+    @Test
+    void checkLethalAttackTest() {
+        this.checkLethalAttack(new BlackMage(turns, BLACK_MAGE_NAME), testCharacters.get(0),new Thief(turns, "NotEquals"));
     }
 }

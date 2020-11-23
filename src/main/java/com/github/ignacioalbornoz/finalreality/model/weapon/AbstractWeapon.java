@@ -1,7 +1,9 @@
 package com.github.ignacioalbornoz.finalreality.model.weapon;
 
 import com.github.ignacioalbornoz.finalreality.model.character.ICharacter;
+import com.github.ignacioalbornoz.finalreality.model.character.player.*;
 import org.jetbrains.annotations.NotNull;
+
 import java.util.Objects;
 
 /**
@@ -55,6 +57,44 @@ public abstract class AbstractWeapon implements IWeapon{
     public boolean isNull(){
       return false;
     }
+
+    @Override
+    public void equippedByBlackMage(BlackMage character) {
+        this.equippedBy(character);
+
+    }
+
+    @Override
+    public void equippedByWhiteMage(WhiteMage character) {
+        this.equippedBy(character);
+
+    }
+
+    @Override
+    public void equippedByEngineer(Engineer character) {
+        this.equippedBy(character);
+
+    }
+
+    @Override
+    public void equippedByKnight(Knight character) {
+        this.equippedBy(character);
+
+    }
+
+    @Override
+    public void equippedByThief(Thief character) {
+        this.equippedBy(character);
+
+    }
+
+    void equippedBy(ICharacter character){
+        if(character.getCanContinue()){
+            character.setEquippedWeapon(this);
+        }
+    }
+
+
 
 
     /**

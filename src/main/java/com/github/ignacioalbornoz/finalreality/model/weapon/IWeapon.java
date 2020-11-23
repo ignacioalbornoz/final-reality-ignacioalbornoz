@@ -1,6 +1,6 @@
 package com.github.ignacioalbornoz.finalreality.model.weapon;
 
-import com.github.ignacioalbornoz.finalreality.model.character.ICharacter;
+import com.github.ignacioalbornoz.finalreality.model.character.player.*;
 
 /**
  * This represents a weapon from the game.
@@ -33,5 +33,16 @@ public interface IWeapon {
    * Returns a boolean indicating whether this weapon is of type "NULL" or not.
    */
   boolean isNull();
+
+
+  void equippedByBlackMage(BlackMage character);
+
+  void equippedByWhiteMage(WhiteMage character);
+
+  void equippedByEngineer(Engineer character);
+
+  void equippedByKnight(Knight character);
+
+  void equippedByThief(Thief character);
 
 }

@@ -1,5 +1,9 @@
 package com.github.ignacioalbornoz.finalreality.model.weapon;
 
+import com.github.ignacioalbornoz.finalreality.model.character.player.BlackMage;
+import com.github.ignacioalbornoz.finalreality.model.character.player.Knight;
+import com.github.ignacioalbornoz.finalreality.model.character.player.Thief;
+import com.github.ignacioalbornoz.finalreality.model.character.player.WhiteMage;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -23,5 +27,17 @@ public class Bow extends AbstractWeapon{
     @Override
     public String getType() {
         return "BOW";
+    }
+
+    @Override
+    public void equippedByBlackMage(BlackMage character) {
+    }
+
+    @Override
+    public void equippedByWhiteMage(WhiteMage character) {
+    }
+
+    @Override
+    public void equippedByKnight(Knight character) {
     }
 }

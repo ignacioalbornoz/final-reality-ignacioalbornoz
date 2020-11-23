@@ -34,5 +34,6 @@ public class WhiteMage extends AbstractMage {
     }
 
     @Override
-    public void respondEquip(IWeapon weapon){this.equipWhiteMageCharacter(weapon);}
+    public void equip(IWeapon weapon) {
+        weapon.equippedByWhiteMage(this);}
 }

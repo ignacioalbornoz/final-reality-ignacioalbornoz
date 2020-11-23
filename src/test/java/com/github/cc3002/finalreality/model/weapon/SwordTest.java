@@ -48,10 +48,10 @@ public class SwordTest extends AbstractWeaponTest{
      */
     @BeforeEach
     void setUp() {
-        testSword = new Sword(SWORD_NAME, SPEED, DAMAGE);
-        weakSword = new Sword(SWORD_NAME, SPEED, 1);
-        WeaponTestNotName = new Sword("notEquals", SPEED, DAMAGE);
-        WeaponTestNot = new Axe(SWORD_NAME, SPEED, DAMAGE);
+        testSword = new Sword(SWORD_NAME, WEIGHT, DAMAGE);
+        weakSword = new Sword(SWORD_NAME, WEIGHT, 1);
+        WeaponTestNotName = new Sword("notEquals", WEIGHT, DAMAGE);
+        WeaponTestNot = new Axe(SWORD_NAME, WEIGHT, DAMAGE);
         differentWeightWeapon = new Sword(SWORD_NAME, 1, DAMAGE);
     }
 
@@ -60,7 +60,7 @@ public class SwordTest extends AbstractWeaponTest{
      */
     @Test
     void constructorTest() {
-        var expectedSword = new Sword(SWORD_NAME, SPEED, DAMAGE);
+        var expectedSword = new Sword(SWORD_NAME, WEIGHT, DAMAGE);
         checkConstruction(expectedSword,
                 testSword,
                 WeaponTestNotName,

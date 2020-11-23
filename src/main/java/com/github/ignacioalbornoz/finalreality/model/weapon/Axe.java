@@ -1,5 +1,9 @@
 package com.github.ignacioalbornoz.finalreality.model.weapon;
 
+import com.github.ignacioalbornoz.finalreality.model.character.ICharacter;
+import com.github.ignacioalbornoz.finalreality.model.character.player.BlackMage;
+import com.github.ignacioalbornoz.finalreality.model.character.player.Thief;
+import com.github.ignacioalbornoz.finalreality.model.character.player.WhiteMage;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -17,6 +21,18 @@ public class Axe extends AbstractWeapon{
         super(name, weight, damage);
     }
 
+    @Override
+    public void equippedByBlackMage(BlackMage character) {
+    }
+
+    @Override
+    public void equippedByWhiteMage(WhiteMage character) {
+    }
+
+    @Override
+    public void equippedByThief(Thief character) {
+    }
+
     /**
      * Returns "AXE", the weapon's type of this class.
      */
@@ -24,4 +40,7 @@ public class Axe extends AbstractWeapon{
     public String getType() {
         return "AXE";
     }
+
+
+
 }

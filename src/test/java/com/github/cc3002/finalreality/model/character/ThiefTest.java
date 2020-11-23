@@ -1,5 +1,6 @@
 package com.github.cc3002.finalreality.model.character;
 
+import com.github.ignacioalbornoz.finalreality.model.character.player.Knight;
 import com.github.ignacioalbornoz.finalreality.model.character.player.Thief;
 import com.github.ignacioalbornoz.finalreality.model.character.player.WhiteMage;
 import com.github.ignacioalbornoz.finalreality.model.weapon.Axe;
@@ -14,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
  *
  * @author Ignacio Albornoz Alfaro.
  */
-public class ThiefTest extends AbstractCharacterTest{
+public class ThiefTest extends AbstractNonMageTest{
 
     /**
      * Name to creates a thief character to test.
@@ -56,5 +57,17 @@ public class ThiefTest extends AbstractCharacterTest{
         assertEquals(testIWeapon.hashCode(), character.getEquippedWeapon().hashCode());
 
         assertFalse(character.getEquippedWeapon().isNull());
+    }
+
+    @Test
+    void checkAttackTest() {
+        this.checkAttack(new Thief(turns, THIEF_NAME),
+                testCharacters.get(0), new Knight(turns, "NotEquals"));
+    }
+
+    @Test
+    void checkLethalAttackTest() {
+        this.checkLethalAttack(new Thief(turns, THIEF_NAME),
+                testCharacters.get(0), new Knight(turns, "NotEquals"));
     }
 }

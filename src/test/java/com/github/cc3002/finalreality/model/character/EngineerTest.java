@@ -1,10 +1,12 @@
 package com.github.cc3002.finalreality.model.character;
 
-import com.github.ignacioalbornoz.finalreality.model.character.player.*;
+import com.github.ignacioalbornoz.finalreality.model.character.player.Engineer;
+import com.github.ignacioalbornoz.finalreality.model.character.player.Knight;
+import com.github.ignacioalbornoz.finalreality.model.character.player.Thief;
 import com.github.ignacioalbornoz.finalreality.model.weapon.Axe;
-import com.github.ignacioalbornoz.finalreality.model.weapon.Sword;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -12,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
  *
  * @author Ignacio Albornoz Alfaro.
  */
-class EngineerTest extends AbstractCharacterTest {
+class EngineerTest extends AbstractNonMageTest {
 
     /**
      * Name to creates a engineer character to test.
@@ -54,6 +56,18 @@ class EngineerTest extends AbstractCharacterTest {
         assertEquals(testIWeapon.hashCode(), character.getEquippedWeapon().hashCode());
 
         assertFalse(character.getEquippedWeapon().isNull());
+    }
+
+    @Test
+    void checkAttackTest() {
+        this.checkAttack(new Engineer(turns, ENGINEER_NAME),
+                testCharacters.get(0), new Knight(turns, "NotEquals"));
+    }
+
+    @Test
+    void checkLethalAttackTest() {
+        this.checkLethalAttack(new Engineer(turns, ENGINEER_NAME),
+                testCharacters.get(0), new Knight(turns, "NotEquals"));
     }
 }
 

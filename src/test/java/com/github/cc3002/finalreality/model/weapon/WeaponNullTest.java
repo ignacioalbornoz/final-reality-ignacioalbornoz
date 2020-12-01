@@ -1,6 +1,8 @@
 package com.github.cc3002.finalreality.model.weapon;
 
-import com.github.ignacioalbornoz.finalreality.model.weapon.*;
+import com.github.ignacioalbornoz.finalreality.model.weapon.IWeapon;
+import com.github.ignacioalbornoz.finalreality.model.weapon.Sword;
+import com.github.ignacioalbornoz.finalreality.model.weapon.WeaponNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

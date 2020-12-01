@@ -1,6 +1,7 @@
 package com.github.ignacioalbornoz.finalreality.model.weapon;
 
-import com.github.ignacioalbornoz.finalreality.model.character.player.*;
+import com.github.ignacioalbornoz.finalreality.model.character.player.Engineer;
+import com.github.ignacioalbornoz.finalreality.model.character.player.Knight;
 import org.jetbrains.annotations.NotNull;
 
 /**

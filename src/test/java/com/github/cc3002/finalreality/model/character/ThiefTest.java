@@ -3,11 +3,10 @@ package com.github.cc3002.finalreality.model.character;
 import com.github.ignacioalbornoz.finalreality.model.character.player.Knight;
 import com.github.ignacioalbornoz.finalreality.model.character.player.Thief;
 import com.github.ignacioalbornoz.finalreality.model.character.player.WhiteMage;
-import com.github.ignacioalbornoz.finalreality.model.weapon.Axe;
-import com.github.ignacioalbornoz.finalreality.model.weapon.Staff;
 import com.github.ignacioalbornoz.finalreality.model.weapon.Sword;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**

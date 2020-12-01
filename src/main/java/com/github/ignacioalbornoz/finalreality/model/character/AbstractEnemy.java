@@ -1,6 +1,7 @@
 package com.github.ignacioalbornoz.finalreality.model.character;
 
 import org.jetbrains.annotations.NotNull;
+
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 

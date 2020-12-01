@@ -1,6 +1,5 @@
 package com.github.cc3002.finalreality.model.character;
 
-import com.github.ignacioalbornoz.finalreality.model.character.player.Engineer;
 import com.github.ignacioalbornoz.finalreality.model.character.player.Knight;
 import com.github.ignacioalbornoz.finalreality.model.character.player.Thief;
 import com.github.ignacioalbornoz.finalreality.model.weapon.Axe;

@@ -1,6 +1,5 @@
 package com.github.ignacioalbornoz.finalreality.model.weapon;
 
-import com.github.ignacioalbornoz.finalreality.model.character.ICharacter;
 import com.github.ignacioalbornoz.finalreality.model.character.player.BlackMage;
 import com.github.ignacioalbornoz.finalreality.model.character.player.Thief;
 import com.github.ignacioalbornoz.finalreality.model.character.player.WhiteMage;

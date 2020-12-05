@@ -3,6 +3,9 @@ package com.github.ignacioalbornoz.finalreality.model.character;
 import com.github.ignacioalbornoz.finalreality.model.character.player.*;
 import com.github.ignacioalbornoz.finalreality.model.weapon.IWeapon;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+
 /**
  * This represents a character from the game.
  * A character can be controlled by the player or by the CPU (an enemy).
@@ -60,6 +63,7 @@ public interface ICharacter {
   void attackedByThief(Thief character);
 
   void attackedByEnemy(IEnemy enemy);
+
 }
 
 

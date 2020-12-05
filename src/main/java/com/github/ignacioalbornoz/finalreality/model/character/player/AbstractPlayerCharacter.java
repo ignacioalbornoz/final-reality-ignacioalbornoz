@@ -4,6 +4,9 @@ import com.github.ignacioalbornoz.finalreality.model.character.AbstractCharacter
 import com.github.ignacioalbornoz.finalreality.model.character.ICharacter;
 import org.jetbrains.annotations.NotNull;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 
@@ -16,6 +19,7 @@ import java.util.concurrent.BlockingQueue;
  */
 public abstract class AbstractPlayerCharacter extends AbstractCharacter implements IPlayerCharacter{
 
+  private final PropertyChangeSupport PlayerCharacterDeathNotification = new PropertyChangeSupport(this);
 
   /**
    * Player character's constructor with the common attributes: name and queue with the characters ready to
@@ -53,6 +57,35 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
   @Override
   public void respondWaitTurn(){
     this.waitTurnPlayer();
+  }
+
+
+  public void addPlayerCharacterDeathListener(PropertyChangeListener listener) {
+    this.PlayerCharacterDeathNotification.addPropertyChangeListener(listener);
+  }
+
+  @Override
+  public void removePlayerCharacterDeathListener(PropertyChangeListener listener) {
+    this.PlayerCharacterDeathNotification.removePropertyChangeListener(listener);
+  }
+
+  @Override
+  public PropertyChangeSupport getPlayerCharacterDeathNotification() {
+    return PlayerCharacterDeathNotification;
+  }
+
+
+  public void fireDeathOfPlayerCharacterEvent() {
+    PlayerCharacterDeathNotification.firePropertyChange(new PropertyChangeEvent(this, "Character has died",
+            null, null));
+  }
+
+  @Override
+  public void setHP(int HP) {
+    if (0 >= HP){
+      this.setCanContinue(false);
+      fireDeathOfPlayerCharacterEvent(); }
+    this.HP = Math.max(HP,0) ;
   }
 
 }

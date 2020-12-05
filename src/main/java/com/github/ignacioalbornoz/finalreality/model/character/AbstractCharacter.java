@@ -5,10 +5,13 @@ import com.github.ignacioalbornoz.finalreality.model.weapon.IWeapon;
 import com.github.ignacioalbornoz.finalreality.model.weapon.WeaponNull;
 import org.jetbrains.annotations.NotNull;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.beans.PropertyChangeSupport;
 
 /**
  * An abstract class that holds the common behaviour of all the characters in the game.
@@ -162,13 +165,12 @@ public abstract class AbstractCharacter implements ICharacter {
   }
 
   public void setHP(int HP) {
-    this.HP = HP;
+    if (0 >= HP){
+      this.setCanContinue(false);}
+    this.HP = Math.max(HP,0) ;
   }
 
   void attackedBy(int realDamage){
-    if (realDamage >= this.getHP()){
-      this.setCanContinue(false);
-    }
     this.setHP(this.getHP()-realDamage);
   }
 
@@ -188,6 +190,7 @@ public abstract class AbstractCharacter implements ICharacter {
   public void setCanContinue(boolean canContinue) {
     this.canContinue = canContinue;
   }
+
 }
 
 

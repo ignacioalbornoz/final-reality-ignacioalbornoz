@@ -1,5 +1,7 @@
 package com.github.ignacioalbornoz.finalreality.model.weapon;
 
+import com.github.ignacioalbornoz.finalreality.model.character.player.Engineer;
+import com.github.ignacioalbornoz.finalreality.model.character.player.Knight;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -25,5 +27,15 @@ public class Staff extends AbstractWeapon{
     public String getType() {
         return "STAFF";
     }
+
+
+    @Override
+    public void equippedByKnight(Knight character) {
+    }
+
+    @Override
+    public void equippedByEngineer(Engineer character) {
+    }
+
 }
 

@@ -1,7 +1,9 @@
 package com.github.ignacioalbornoz.finalreality.model.character.player;
 
 import com.github.ignacioalbornoz.finalreality.model.character.ICharacter;
+import com.github.ignacioalbornoz.finalreality.model.weapon.IWeapon;
 import org.jetbrains.annotations.NotNull;
+
 import java.util.concurrent.BlockingQueue;
 
 /**
@@ -26,4 +28,13 @@ public class Engineer extends AbstractNonMage {
     public String getCharacterClass() {
         return "ENGINEER";
     }
+
+    @Override
+    public void attack(ICharacter character) {
+        character.attackedByEngineer(this);
+
+    }
+    @Override
+    public void equip(IWeapon weapon) {
+        weapon.equippedByEngineer(this);}
 }

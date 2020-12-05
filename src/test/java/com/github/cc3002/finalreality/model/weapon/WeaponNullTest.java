@@ -1,6 +1,8 @@
 package com.github.cc3002.finalreality.model.weapon;
 
-import com.github.ignacioalbornoz.finalreality.model.weapon.*;
+import com.github.ignacioalbornoz.finalreality.model.weapon.IWeapon;
+import com.github.ignacioalbornoz.finalreality.model.weapon.Sword;
+import com.github.ignacioalbornoz.finalreality.model.weapon.WeaponNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -27,7 +29,7 @@ public class WeaponNullTest extends AbstractWeaponTest{
     @BeforeEach
     void setUp() {
         testNull = new WeaponNull();
-        WeaponTestNot = new Sword("notEquals", SPEED, DAMAGE);
+        WeaponTestNot = new Sword("notEquals", WEIGHT, DAMAGE);
     }
 
     /**

@@ -2,9 +2,10 @@ package com.github.cc3002.finalreality.model.character;
 
 import com.github.ignacioalbornoz.finalreality.model.character.player.Thief;
 import com.github.ignacioalbornoz.finalreality.model.character.player.WhiteMage;
-import com.github.ignacioalbornoz.finalreality.model.weapon.Axe;
+import com.github.ignacioalbornoz.finalreality.model.weapon.Staff;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -12,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
  *
  * @author Ignacio Albornoz Alfaro.
  */
-public class WhiteMageTest extends AbstractCharacterTest{
+public class WhiteMageTest extends AbstractMageTest{
 
     /**
      * Name to creates a white mage character to test.
@@ -25,6 +26,7 @@ public class WhiteMageTest extends AbstractCharacterTest{
     @BeforeEach
     void setUp() {
         basicSetUp();
+        testIWeapon = new Staff("Test", 10, 15);
         testCharacters.add(new WhiteMage(turns, WHITE_MAGE_NAME));
     }
 
@@ -44,7 +46,7 @@ public class WhiteMageTest extends AbstractCharacterTest{
     @Test
     void equipWeaponTest() {
         var character = new WhiteMage(turns, WHITE_MAGE_NAME);
-        var testIWeapon = new Axe("Test", 15, 10);
+        var testIWeapon = new Staff("Test", 15, 10);
 
 
         assertTrue(character.getEquippedWeapon().isNull());
@@ -54,5 +56,17 @@ public class WhiteMageTest extends AbstractCharacterTest{
         assertEquals(testIWeapon.hashCode(), character.getEquippedWeapon().hashCode());
 
         assertFalse(character.getEquippedWeapon().isNull());
+    }
+
+    @Test
+    void checkAttackTest() {
+        this.checkAttack(new WhiteMage(turns, WHITE_MAGE_NAME),
+                testCharacters.get(0), new Thief(turns, "NotEquals"));
+    }
+
+    @Test
+    void checkLethalAttackTest() {
+        this.checkLethalAttack(new WhiteMage(turns, WHITE_MAGE_NAME),
+                testCharacters.get(0), new Thief(turns, "NotEquals"));
     }
 }

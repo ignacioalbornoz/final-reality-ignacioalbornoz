@@ -2,14 +2,15 @@ package com.github.cc3002.finalreality.model.character;
 
 import com.github.ignacioalbornoz.finalreality.model.character.ICharacter;
 import com.github.ignacioalbornoz.finalreality.model.weapon.IWeapon;
-import com.github.ignacioalbornoz.finalreality.model.weapon.Axe;
 import com.github.ignacioalbornoz.finalreality.model.weapon.WeaponNull;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
@@ -22,15 +23,14 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
  */
 public abstract class AbstractCharacterTest {
 
+
+  protected IWeapon weaponNull = new WeaponNull();
+
   /**
    * List of the characters' turns.
    */
   protected BlockingQueue<ICharacter> turns;
 
-  /**
-   * List of the characters.
-   */
-  protected List<ICharacter> testCharacters;
 
   /**
    * Weapon to test.
@@ -38,12 +38,17 @@ public abstract class AbstractCharacterTest {
   protected IWeapon testIWeapon;
 
   /**
+   * List of the characters.
+   */
+  protected List<ICharacter> testCharacters;
+
+  /**
    * Checks that the character waits the appropriate amount of time for it's turn.
    */
   @Test
   void waitTurnTest() {
-    tryToEquip(testCharacters.get(0));
     Assertions.assertTrue(turns.isEmpty());
+    tryToEquip(testCharacters.get(0));
     testCharacters.get(0).waitTurn();
     try {
       // Thread.sleep is not accurate so this values may be changed to adjust the
@@ -60,6 +65,13 @@ public abstract class AbstractCharacterTest {
   }
 
   /**
+   * Tries to equip a weapon on this character.
+   */
+  void tryToEquip(ICharacter character) {
+    character.equip(testIWeapon);
+  }
+
+  /**
    * Checks that the character's constructor works properly.
    */
   protected void checkConstruction(final ICharacter expectedCharacter,
@@ -67,8 +79,8 @@ public abstract class AbstractCharacterTest {
                                    final ICharacter sameClassDifferentCharacter,
                                    final ICharacter differentClassCharacter) {
 
-    assertNotEquals(testEqualCharacter, new WeaponNull());
-    assertNotEquals(testEqualCharacter.hashCode(), new WeaponNull().hashCode());
+    assertNotEquals(testEqualCharacter, weaponNull);
+    assertNotEquals(testEqualCharacter.hashCode(), weaponNull);
 
     assertEquals(expectedCharacter, testEqualCharacter);
     assertEquals(expectedCharacter.hashCode(), testEqualCharacter.hashCode());
@@ -86,13 +98,12 @@ public abstract class AbstractCharacterTest {
   protected void basicSetUp() {
     turns = new LinkedBlockingQueue<>();
     testCharacters = new ArrayList<>();
-    testIWeapon = new Axe("Test", 15, 10);
   }
 
-  /**
-   * Tries to equip a weapon on this character.
-   */
-  private void tryToEquip(ICharacter character) {
-    character.equip(testIWeapon);
+  protected void checkAttack(final ICharacter expectedCharacter, final ICharacter testEqualCharacter,final ICharacter differentClassCharacter) {
+  }
+
+  protected void checkLethalAttack(final ICharacter expectedCharacter, final ICharacter testEqualCharacter, final ICharacter differentClassCharacter) {
+
   }
 }

@@ -1,6 +1,8 @@
 package com.github.ignacioalbornoz.finalreality.model.character;
 
+import com.github.ignacioalbornoz.finalreality.model.weapon.IWeapon;
 import org.jetbrains.annotations.NotNull;
+
 import java.util.concurrent.BlockingQueue;
 
 /**
@@ -26,4 +28,21 @@ public class Enemy extends AbstractEnemy {
   public String getCharacterClass() {
     return "ENEMY";
   }
+
+  @Override
+  public void attack(ICharacter character) {
+    character.attackedByEnemy(this);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void respondWaitTurn(){
+    this.waitTurnEnemy();
+  }
+
+  @Override
+  public void equip(IWeapon weapon) {
+    }
 }

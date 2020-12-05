@@ -3,6 +3,7 @@ package com.github.cc3002.finalreality.model.character;
 import com.github.ignacioalbornoz.finalreality.model.character.player.Knight;
 import com.github.ignacioalbornoz.finalreality.model.character.player.Thief;
 import com.github.ignacioalbornoz.finalreality.model.weapon.Axe;
+import com.github.ignacioalbornoz.finalreality.model.weapon.Sword;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
  *
  * @author Ignacio Albornoz Alfaro.
  */
-public class KnightTest extends AbstractCharacterTest{
+public class KnightTest extends AbstractNonMageTest{
 
     /**
      * Name to creates a knight character to test.
@@ -26,6 +27,7 @@ public class KnightTest extends AbstractCharacterTest{
     @BeforeEach
         void setUp() {
             super.basicSetUp();
+            testIWeapon = new Sword("Test", 10, 15);
             testCharacters.add(new Knight(turns, KNIGHT_NAME));
     }
 
@@ -54,5 +56,17 @@ public class KnightTest extends AbstractCharacterTest{
         assertEquals(testIWeapon.hashCode(), character.getEquippedWeapon().hashCode());
 
         assertFalse(character.getEquippedWeapon().isNull());
+    }
+
+    @Test
+    void checkAttackTest() {
+        this.checkAttack(new Knight(turns, KNIGHT_NAME),
+                testCharacters.get(0), new Thief(turns, "NotEquals"));
+    }
+
+    @Test
+    void checkLethalAttackTest() {
+        this.checkLethalAttack(new Knight(turns, KNIGHT_NAME),
+                testCharacters.get(0), new Thief(turns, "NotEquals"));
     }
 }

@@ -1,7 +1,7 @@
 package com.github.cc3002.finalreality.model.weapon;
 
-import com.github.ignacioalbornoz.finalreality.model.weapon.IWeapon;
 import com.github.ignacioalbornoz.finalreality.model.weapon.Bow;
+import com.github.ignacioalbornoz.finalreality.model.weapon.IWeapon;
 import com.github.ignacioalbornoz.finalreality.model.weapon.Sword;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -48,10 +48,10 @@ public class BowTest extends AbstractWeaponTest{
      */
     @BeforeEach
     void setUp() {
-        testBow = new Bow(BOW_NAME, SPEED, DAMAGE);
-        WeaponTestNot = new Sword(BOW_NAME, SPEED, DAMAGE);
-        weakBow = new Bow(BOW_NAME, SPEED, 1);
-        WeaponTestNotName = new Bow("notEquals", SPEED, DAMAGE);
+        testBow = new Bow(BOW_NAME, WEIGHT, DAMAGE);
+        WeaponTestNot = new Sword(BOW_NAME, WEIGHT, DAMAGE);
+        weakBow = new Bow(BOW_NAME, WEIGHT, 1);
+        WeaponTestNotName = new Bow("notEquals", WEIGHT, DAMAGE);
         differentWeightWeapon = new Bow(BOW_NAME, 1, DAMAGE);
     }
 
@@ -60,7 +60,7 @@ public class BowTest extends AbstractWeaponTest{
      */
     @Test
     void constructorTest() {
-        var expectedBow = new Bow(BOW_NAME, SPEED, DAMAGE);
+        var expectedBow = new Bow(BOW_NAME, WEIGHT, DAMAGE);
         checkConstruction(expectedBow,
                 testBow,
                 WeaponTestNotName,

@@ -1,6 +1,10 @@
 package com.github.ignacioalbornoz.finalreality.model.character;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 
@@ -10,6 +14,10 @@ import java.util.concurrent.BlockingQueue;
  * @author Ignacio Albornoz Alfaro.
  */
 public abstract class AbstractEnemy extends AbstractCharacter implements IEnemy{
+
+    private final PropertyChangeSupport EnemyDeathNotification = new PropertyChangeSupport(this);
+
+    private final int damage = 1;
 
     /**
      * Weight of an enemy.
@@ -33,14 +41,6 @@ public abstract class AbstractEnemy extends AbstractCharacter implements IEnemy{
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void respondWaitTurn(){
-        this.waitTurnEnemy();
-    }
-
-    /**
      * Compares this object to the specified object and returns true if represents the same enemy.
      */
     @Override
@@ -59,5 +59,38 @@ public abstract class AbstractEnemy extends AbstractCharacter implements IEnemy{
     @Override
     public int hashCode() {
         return Objects.hash(getWeight(),getName(),getCharacterClass());
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    @Override
+    public void addEnemyDeathListener(PropertyChangeListener listener) {
+        this.EnemyDeathNotification.addPropertyChangeListener(listener);
+    }
+
+    @Override
+    public void removeEnemyDeathListener(PropertyChangeListener listener) {
+        this.EnemyDeathNotification.removePropertyChangeListener(listener);
+    }
+
+    @Override
+    public PropertyChangeSupport getEnemyDeathNotification() {
+        return EnemyDeathNotification;
+    }
+
+
+    public void fireDeathOfEnemyEvent() {
+        EnemyDeathNotification.firePropertyChange(new PropertyChangeEvent(this, "Character has died",
+                null, null));
+    }
+
+    @Override
+    public void setHP(int HP) {
+        if (0 >= HP){
+            this.setCanContinue(false);
+            fireDeathOfEnemyEvent(); }
+        this.HP = Math.max(HP,0) ;
     }
 }

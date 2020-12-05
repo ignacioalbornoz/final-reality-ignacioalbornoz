@@ -1,6 +1,10 @@
 package com.github.ignacioalbornoz.finalreality.model.character;
 
+import com.github.ignacioalbornoz.finalreality.model.character.player.*;
 import com.github.ignacioalbornoz.finalreality.model.weapon.IWeapon;
+
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 
 /**
  * This represents a character from the game.
@@ -35,7 +39,31 @@ public interface ICharacter {
   /**
    * Equips a weapon to the character.
    */
+
+  void setEquippedWeapon(IWeapon weapon);
+
+  int getHP();
+
+  boolean getCanContinue();
+
+  void setCanContinue(boolean canContinue);
+
   void equip(IWeapon weapon);
+
+  void attack(ICharacter character);
+
+  void attackedByBlackMage(BlackMage character);
+
+  void attackedByWhiteMage(WhiteMage character);
+
+  void attackedByEngineer(Engineer character);
+
+  void attackedByKnight(Knight character);
+
+  void attackedByThief(Thief character);
+
+  void attackedByEnemy(IEnemy enemy);
+
 }
 
 

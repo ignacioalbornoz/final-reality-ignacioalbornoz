@@ -113,7 +113,7 @@ Luego, las versiones utilizadas corresponen a:
 - Versión de JUnit: 5.1
 - Entorno de ejecución: IntelliJ IDEA Ultimate versión 2020.2 
 
-Luego, una vez se cumpla con estas especificaciones, se tiene que se debe abrir el proyecto con IntelliJ, una vez realizado esto, se debieran observar las carpetas `main` y`test` dentro de `src`, en primer lugar se debe configurar crear una carpeta con el nombre `out` y asignarla como carpeta de salida, para que en ella estén los archivos `.class`. Además, se debe asegurar que JUnit fue agregado como librería al proyecto, esto en general lo sugiere IntelliJ al notar que hay comandos que requieren de ella.
+Luego, una vez se cumpla con estas especificaciones, se tiene que se debe abrir el proyecto con IntelliJ, una vez realizado esto, se debieran observar las carpetas `main` y`test` dentro de `src`. Se debe asegurar que JUnit fue agregado como librería al proyecto, esto en general lo sugiere IntelliJ al notar que hay comandos que requieren de ella.
 
 Una vez realizado lo anterior, y chequeando que no existe ningún error señalado por el IDE, en caso contrario contactar al autor, se debe proceder a ejecutar los tests. Para ello, basta con visualizar el menu desplegable (click derecho) sobre la carpeta `test`, dentro de las opciones hay dos que son de interés:
 - **Run 'All Tests'**: Ejecuta todos los tests señalando la cantidad de estos, el tiempo que tomó y en caso de existir un error de implementación o compilación señalarlo.

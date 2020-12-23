@@ -1,5 +1,6 @@
 package com.github.ignacioalbornoz.finalreality.model.character.player;
 
+import com.github.ignacioalbornoz.finalreality.controller.FinalRealityController;
 import com.github.ignacioalbornoz.finalreality.model.character.AbstractCharacter;
 import com.github.ignacioalbornoz.finalreality.model.character.ICharacter;
 import org.jetbrains.annotations.NotNull;
@@ -76,9 +77,8 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
 
 
   public void fireDeathOfPlayerCharacterEvent() {
-    PlayerCharacterDeathNotification.firePropertyChange(new PropertyChangeEvent(this, "Character has died",
-            null, null));
-  }
+      PlayerCharacterDeathNotification.firePropertyChange(new PropertyChangeEvent(this,
+              "Your character has died", null,null));}
 
   @Override
   public void setHP(int HP) {
@@ -87,6 +87,5 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
       fireDeathOfPlayerCharacterEvent(); }
     this.HP = Math.max(HP,0) ;
   }
-
 }
 

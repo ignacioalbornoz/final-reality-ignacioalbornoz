@@ -3,8 +3,7 @@ package com.github.cc3002.finalreality.model.controller;
 import com.github.ignacioalbornoz.finalreality.controller.FinalRealityController;
 import com.github.ignacioalbornoz.finalreality.model.character.Enemy;
 import com.github.ignacioalbornoz.finalreality.model.character.ICharacter;
-import com.github.ignacioalbornoz.finalreality.model.character.player.BlackMage;
-import com.github.ignacioalbornoz.finalreality.model.character.player.Thief;
+import com.github.ignacioalbornoz.finalreality.model.character.player.IPlayerCharacter;
 import com.github.ignacioalbornoz.finalreality.model.weapon.Staff;
 import com.github.ignacioalbornoz.finalreality.model.weapon.WeaponNull;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,12 +28,12 @@ public class FinalRealityControllerTest {
 
     @Test
     void constructorTest(){
-        assertTrue(controllerTest.getCollectionOfCharacter().isEmpty());
+        assertTrue(controllerTest.getCollectionOfPlayerCharacters().isEmpty());
         assertTrue(controllerTest.getCollectionOfEnemy().isEmpty());
         assertTrue(controllerTest.getCollectionOfWeapon().isEmpty());
         assertTrue(controllerTest.getCollectionOfEquippedWeapons().isEmpty());
-        assertTrue(controllerTest.getSetOfCharacterNames().isEmpty());
-        assertTrue(controllerTest.getSetOfEnemyNames().isEmpty());
+        assertTrue(controllerTest.getCopyOfSetOfPlayerCharacterNames().isEmpty());
+        assertTrue(controllerTest.getCopyOfSetOfEnemyNames().isEmpty());
         assertTrue(controllerTest.getSetOfWeaponNames().isEmpty());
         assertTrue(controllerTest.getSetOfPlayerCharacterEquippedNames().isEmpty());
 
@@ -46,8 +45,8 @@ public class FinalRealityControllerTest {
         controllerTest.createEnemy("EnemyTest",10);
         controllerTest.createBlackMage("Test");
         controllerTest.weaponCreateStaff("TestWeapon",10,10);
-        var testPlayerCharacter = controllerTest.getCharacter("Test");
-        var testEnemy = controllerTest.getEnemy("EnemyTest");
+        var testPlayerCharacter = controllerTest.getAlivePlayerCharacter("Test");
+        var testEnemy = controllerTest.getEnemyFromEnemyList("EnemyTest");
         var testWeapon = controllerTest.getWeapon("TestWeapon");
         controllerTest.equipController(testPlayerCharacter,testWeapon);
         assertEquals(testWeapon,controllerTest.getEquippedWeaponController(testPlayerCharacter));
@@ -90,9 +89,9 @@ public class FinalRealityControllerTest {
         controllerTest.createEnemy("EnemyTest",10);
         controllerTest.createWhiteMage("Test");
         controllerTest.weaponCreateStaff("TestWeapon",10,10);
-        var testPlayerCharacter = controllerTest.getCharacter("Test");
+        var testPlayerCharacter = controllerTest.getAlivePlayerCharacter("Test");
         var testWeapon = controllerTest.getWeapon("TestWeapon");
-        var testEnemy = controllerTest.getEnemy("EnemyTest");
+        var testEnemy = controllerTest.getEnemyFromEnemyList("EnemyTest");
         controllerTest.equipController(testPlayerCharacter,testWeapon);
         assertEquals(testWeapon,controllerTest.getEquippedWeaponController(testPlayerCharacter));
 
@@ -109,9 +108,9 @@ public class FinalRealityControllerTest {
         controllerTest.createEnemy("EnemyTest",10);
         controllerTest.createEngineer("Test");
         controllerTest.weaponCreateAxe("TestWeapon",10,10);
-        var testPlayerCharacter = controllerTest.getCharacter("Test");
+        var testPlayerCharacter = controllerTest.getAlivePlayerCharacter("Test");
         var testWeapon = controllerTest.getWeapon("TestWeapon");
-        var testEnemy = controllerTest.getEnemy("EnemyTest");
+        var testEnemy = controllerTest.getEnemyFromEnemyList("EnemyTest");
         controllerTest.equipController(testPlayerCharacter,testWeapon);
         assertEquals(testWeapon,controllerTest.getEquippedWeaponController(testPlayerCharacter));
 
@@ -128,9 +127,9 @@ public class FinalRealityControllerTest {
         controllerTest.createEnemy("EnemyTest",10);
         controllerTest.createKnight("Test");
         controllerTest.weaponCreateAxe("TestWeapon",10,10);
-        var testPlayerCharacter = controllerTest.getCharacter("Test");
+        var testPlayerCharacter = controllerTest.getAlivePlayerCharacter("Test");
         var testWeapon = controllerTest.getWeapon("TestWeapon");
-        var testEnemy = controllerTest.getEnemy("EnemyTest");
+        var testEnemy = controllerTest.getEnemyFromEnemyList("EnemyTest");
         controllerTest.equipController(testPlayerCharacter,testWeapon);
         assertEquals(testWeapon,controllerTest.getEquippedWeaponController(testPlayerCharacter));
 
@@ -147,9 +146,9 @@ public class FinalRealityControllerTest {
         controllerTest.createEnemy("EnemyTest",10);
         controllerTest.createThief("Test");
         controllerTest.weaponCreateSword("TestWeapon",10,10);
-        var testPlayerCharacter = controllerTest.getCharacter("Test");
+        var testPlayerCharacter = controllerTest.getAlivePlayerCharacter("Test");
         var testWeapon = controllerTest.getWeapon("TestWeapon");
-        var testEnemy = controllerTest.getEnemy("EnemyTest");
+        var testEnemy = controllerTest.getEnemyFromEnemyList("EnemyTest");
         controllerTest.equipController(testPlayerCharacter,testWeapon);
         assertEquals(testWeapon,controllerTest.getEquippedWeaponController(testPlayerCharacter));
 
@@ -178,9 +177,9 @@ public class FinalRealityControllerTest {
         controllerTest.createEnemy("TestWeapon",10);
         controllerTest.createBlackMage("TestPlayerCharacter");
         controllerTest.weaponCreateStaff("TestWeapon",10,10);
-        var playerTest = controllerTest.getCharacter("Test");
+        var playerTest = controllerTest.getAlivePlayerCharacter("Test");
         var namePlayer = controllerTest.getNameControllerCharacter(playerTest);
-        var enemyTest = controllerTest.getEnemy("Test");
+        var enemyTest = controllerTest.getEnemyFromEnemyList("Test");
         var nameEnemy = controllerTest.getNameControllerCharacter(enemyTest);
         var weaponTest = controllerTest.getWeapon("Test");
         var nameWeapon = controllerTest.getNameControllerWeapon(weaponTest);
@@ -231,15 +230,20 @@ public class FinalRealityControllerTest {
 
     @Test
     void checkControllerAttack(){
+
         controllerTest.createEnemy("EnemyTest",10);
         controllerTest.createEnemy("EnemyTestTwo",10);
         controllerTest.createBlackMage("Test");
         controllerTest.weaponCreateStaff("TestWeapon",10,10);
-        var playerCharacterTest = controllerTest.getCharacter("Test");
+        var playerCharacterTest = controllerTest.getAlivePlayerCharacter("Test");
+
         var weaponTest = controllerTest.getWeapon("TestWeapon");
         controllerTest.equipController(playerCharacterTest,weaponTest);
-        var enemyTest = controllerTest.getEnemy("EnemyTest");
-        var enemyTestTwo = controllerTest.getEnemy("EnemyTestTwo");
+
+        var enemyTest = controllerTest.getAliveEnemy("EnemyTest");
+        var enemyTestTwo = controllerTest.getAliveEnemy("EnemyTestTwo");
+
+
         controllerTest.controllerAttack(enemyTest,enemyTestTwo);
         assertEquals(controllerTest.controllerGetHP(enemyTestTwo),100-enemyTest.getDamage());
 
@@ -251,11 +255,11 @@ public class FinalRealityControllerTest {
         controllerTest.createEnemy("EnemyTest",10);
         controllerTest.createBlackMage("Test");
         controllerTest.weaponCreateStaff("TestWeapon",10,10);
-        controllerTest.equipController(controllerTest.getCharacter("Test"),controllerTest.getWeapon("TestWeapon"));
-        assertEquals(new Staff("TestWeapon",10,10),controllerTest.getEquippedWeaponController(controllerTest.getCharacter("Test")));
-        controllerTest.unEquipController(controllerTest.getCharacter("Test"));
-        assertEquals(new WeaponNull(), controllerTest.getEquippedWeaponController(controllerTest.getCharacter("Test")));
-        assertNotEquals(controllerTest.getEnemy("EnemyTest"),new Enemy(turnsTest,"EnemyTestDos",10));
+        controllerTest.equipController(controllerTest.getAlivePlayerCharacter("Test"),controllerTest.getWeapon("TestWeapon"));
+        assertEquals(new Staff("TestWeapon",10,10),controllerTest.getEquippedWeaponController(controllerTest.getAlivePlayerCharacter("Test")));
+        controllerTest.unEquipController(controllerTest.getAlivePlayerCharacter("Test"));
+        assertEquals(new WeaponNull(), controllerTest.getEquippedWeaponController(controllerTest.getAlivePlayerCharacter("Test")));
+        assertNotEquals(controllerTest.getEnemyFromEnemyList("EnemyTest"),new Enemy(turnsTest,"EnemyTestDos",10));
     }
 
     @Test
@@ -264,9 +268,9 @@ public class FinalRealityControllerTest {
         controllerTest.weaponCreateStaff("TestWeapon",10,10);
         controllerTest.createEnemy("TestEnemy",10);
 
-        var testPlayerCharacter = controllerTest.getCharacter("TestPlayerCharacter");
+        var testPlayerCharacter = controllerTest.getAlivePlayerCharacter("TestPlayerCharacter");
         var testWeapon = controllerTest.getWeapon("TestWeapon");
-        var testEnemy = controllerTest.getEnemy("TestEnemy");
+        var testEnemy = controllerTest.getEnemyFromEnemyList("TestEnemy");
 
 
         assertTrue(controllerTest.isInEnemyList(testEnemy));
@@ -283,9 +287,9 @@ public class FinalRealityControllerTest {
         controllerTest.weaponCreateStaff("TestWeapon",10,10);
         controllerTest.createEnemy("TestEnemy",10);
 
-        var testPlayerCharacter = controllerTest.getCharacter("TestPlayerCharacter");
+        var testPlayerCharacter = controllerTest.getAlivePlayerCharacter("TestPlayerCharacter");
         var testWeapon = controllerTest.getWeapon("TestWeapon");
-        var testEnemy = controllerTest.getEnemy("TestEnemy");
+        var testEnemy = controllerTest.getEnemyFromEnemyList("TestEnemy");
 
         var playerCharacterName = controllerTest.getNameControllerCharacter(testPlayerCharacter);
         var weaponName = controllerTest.getNameControllerWeapon(testWeapon);
@@ -310,14 +314,14 @@ public class FinalRealityControllerTest {
         controllerTest.deletePlayerCharacter("Test");
         controllerTest.deleteEnemy("EnemyTest");
         controllerTest.deleteWeapon("TestWeapon");
-        assertTrue(controllerTest.getCollectionOfCharacter().isEmpty());
+        assertTrue(controllerTest.getCollectionOfPlayerCharacters().isEmpty());
         assertTrue(controllerTest.getCollectionOfEnemy().isEmpty());
 
         assertTrue(controllerTest.getCollectionOfWeapon().isEmpty());
         assertTrue(controllerTest.getCollectionOfEquippedWeapons().isEmpty());
 
-        assertTrue(controllerTest.getSetOfCharacterNames().isEmpty());
-        assertTrue(controllerTest.getSetOfEnemyNames().isEmpty());
+        assertTrue(controllerTest.getCopyOfSetOfPlayerCharacterNames().isEmpty());
+        assertTrue(controllerTest.getCopyOfSetOfEnemyNames().isEmpty());
         assertTrue(controllerTest.getSetOfWeaponNames().isEmpty());
 
 
@@ -327,7 +331,7 @@ public class FinalRealityControllerTest {
         controllerTest.createBlackMage("Test");
         controllerTest.weaponCreateStaff("TestWeapon",10,10);
 
-        var testPlayerCharacter = controllerTest.getCharacter("Test");
+        var testPlayerCharacter = controllerTest.getAlivePlayerCharacter("Test");
         var testWeapon = controllerTest.getWeapon("TestWeapon");
         controllerTest.equipController(testPlayerCharacter,testWeapon);
 
@@ -340,31 +344,130 @@ public class FinalRealityControllerTest {
     }
 
     @Test
-    void checkListeners(){
+    void checkDeathListeners(){
         controllerTest.createBlackMage("TestPlayerCharacter");
+        controllerTest.createEnemy("TestEnemy",10);
+        controllerTest.createBlackMage("TestPlayerCharacterTwo");
         controllerTest.weaponCreateStaff("TestWeapon",10,10);
+
+        var testPlayerCharacter = controllerTest.getAlivePlayerCharacter("TestPlayerCharacter");
+        var testEnemy = controllerTest.getEnemyFromEnemyList("TestEnemy");
+        var testPlayerCharacterTwo = controllerTest.getAlivePlayerCharacter("TestPlayerCharacterTwo");
+
+        var testWeapon = controllerTest.getWeapon("TestWeapon");
+        controllerTest.equipController(testPlayerCharacter,testWeapon);
+        controllerTest.equipController(testPlayerCharacterTwo,testWeapon);
+
+
+        while(testEnemy.getCanContinue()) controllerTest.controllerAttack(testPlayerCharacter,testEnemy);
+        assertFalse(controllerTest.isInAliveEnemyList(testEnemy));
+
+        while(testPlayerCharacter.getCanContinue()) controllerTest.controllerAttack(testPlayerCharacterTwo,testPlayerCharacter);
+        assertFalse(controllerTest.isInAlivePlayerCharacterList(testPlayerCharacter));
+
+        assertEquals(controllerTest.getAliveEnemyList().size(),0);
+        while(testPlayerCharacterTwo.getCanContinue()) controllerTest.controllerAttack(testPlayerCharacterTwo,testPlayerCharacterTwo);
+        assertFalse(controllerTest.isInAlivePlayerCharacterList(testPlayerCharacterTwo));
+        assertEquals(controllerTest.getAlivePlayerCharacterList().size(),0);
+    }
+
+    @Test
+    void checkPlayerCharacterAllDeadListenerAndPlayerLost(){
+        controllerTest.createBlackMage("TestPlayerCharacter");
+        controllerTest.createEnemy("TestEnemy",10);
+        controllerTest.createBlackMage("TestPlayerCharacterTwo");
+        controllerTest.weaponCreateStaff("TestWeapon",10,10);
+
+        var testPlayerCharacter = controllerTest.getAlivePlayerCharacter("TestPlayerCharacter");
+        var testEnemy = controllerTest.getEnemyFromEnemyList("TestEnemy");
+        var testPlayerCharacterTwo = controllerTest.getAlivePlayerCharacter("TestPlayerCharacterTwo");
+
+        var testWeapon = controllerTest.getWeapon("TestWeapon");
+
+        controllerTest.equipController(testPlayerCharacter,testWeapon);
+        controllerTest.equipController(testPlayerCharacterTwo,testWeapon);
+
+
+
+        controllerTest.controllerTurns();
+        while(testPlayerCharacter.getCanContinue()) controllerTest.controllerAttack(testEnemy,testPlayerCharacter);
+        assertFalse(controllerTest.isInAlivePlayerCharacterList(testPlayerCharacter));
+
+        while(testPlayerCharacterTwo.getCanContinue()) controllerTest.controllerAttack(testPlayerCharacterTwo,testPlayerCharacterTwo);
+        assertFalse(controllerTest.isInAlivePlayerCharacterList(testPlayerCharacterTwo));
+
+        assertEquals(controllerTest.getAlivePlayerCharacterList().size(),0);
+        assertTrue(controllerTest.getGameOver());
+    }
+
+    @Test
+    void checkCloneMaps(){
+        controllerTest.createBlackMage("TestPlayerCharacter");
         controllerTest.createEnemy("TestEnemy",10);
         controllerTest.createBlackMage("TestPlayerCharacterTwo");
 
-        var testPlayerCharacter = controllerTest.getCharacter("TestPlayerCharacter");
+        var testMap= controllerTest.cloneAndShuffleMap(controllerTest.getAlivePlayerCharacterList(),controllerTest.getAliveEnemyList());
+
+        assertTrue(testMap.containsKey("TestPlayerCharacter"));
+        assertTrue(testMap.containsKey("TestPlayerCharacterTwo"));
+        assertTrue(testMap.containsKey("TestEnemy"));
+    }
+
+    @Test
+    void checkGamePhases(){
+        controllerTest.createBlackMage("TestPlayerCharacter");
+        controllerTest.createEnemy("TestEnemy",10);
+        controllerTest.createBlackMage("TestPlayerCharacterTwo");
+        controllerTest.weaponCreateStaff("TestWeapon",10,10);
+        controllerTest.weaponCreateStaff("TestWeaponTwo",10,10);
+
+        var testPlayerCharacter = controllerTest.getAlivePlayerCharacter("TestPlayerCharacter");
+        var testEnemy = controllerTest.getAliveEnemy("TestEnemy");
+
         var testWeapon = controllerTest.getWeapon("TestWeapon");
-        var testEnemy = controllerTest.getEnemy("TestEnemy");
+        var testWeaponTwo = controllerTest.getWeapon("TestWeaponTwo");
 
-        var testPlayerCharacterTwo = controllerTest.getCharacter("TestPlayerCharacterTwo");
+        controllerTest.equipController(testPlayerCharacter,testWeapon);
+        controllerTest.equipController(testPlayerCharacter,testWeaponTwo);
 
-        testPlayerCharacter.equip(testWeapon);
-        testPlayerCharacterTwo.equip(testWeapon);
-
-
-        while(testEnemy.getCanContinue()) testPlayerCharacter.attack(testEnemy);
-
-        assertFalse(controllerTest.isInEnemyList(testEnemy));
-        while(testPlayerCharacter.getCanContinue()) testPlayerCharacterTwo.attack(testPlayerCharacter);
-        assertFalse(controllerTest.isInParty(testPlayerCharacter));
-
+        controllerTest.doPhaseAction();
+        assertTrue(controllerTest.getGameStarted());
+        controllerTest.doPhaseAction();
+        assertEquals(controllerTest.getControllerTurnsQueue().peek(),controllerTest.getCharacterInTurn());
+        controllerTest.doPhaseAction();
     }
 
 
+    @Test
+    void checkGamePhasesUntilGameOver(){
+        controllerTest.createBlackMage("TestPlayerCharacter");
+        controllerTest.createEnemy("TestEnemy",10);
+        controllerTest.createBlackMage("TestPlayerCharacterTwo");
+        controllerTest.weaponCreateStaff("TestWeapon",10,10);
+        controllerTest.weaponCreateStaff("TestWeaponTwo",10,10);
+        controllerTest.weaponCreateStaff("TestWeaponThree",1,50);
+
+        var testPlayerCharacter = controllerTest.getAlivePlayerCharacter("TestPlayerCharacter");
+        var testEnemy = controllerTest.getAliveEnemy("TestEnemy");
+
+        var testWeapon = controllerTest.getWeapon("TestWeapon");
+        var testWeaponTwo = controllerTest.getWeapon("TestWeaponTwo");
+        var testWeaponThree = controllerTest.getWeapon("TestWeaponThree");
+        controllerTest.equipController(testPlayerCharacter,testWeapon);
+        controllerTest.equipController(testPlayerCharacter,testWeaponTwo);
+
+
+        while (!controllerTest.getGameOver()){
+            controllerTest.doPhaseAction();
+            if (controllerTest.getGamePhase().getType().equals("SelectingAttackTargetPhase")){
+                var testCharacterToEquip = controllerTest.getCharacterInTurn();
+                controllerTest.equipController((IPlayerCharacter) testCharacterToEquip,testWeaponThree);
+                controllerTest.controllerAttack(testCharacterToEquip,testEnemy);
+            }
+        }
+
+        assertEquals(controllerTest.getAliveEnemyList().size(),0);
+    }
 
 
 }

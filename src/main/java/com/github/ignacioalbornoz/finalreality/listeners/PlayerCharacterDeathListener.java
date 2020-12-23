@@ -16,6 +16,6 @@ public class PlayerCharacterDeathListener implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         IPlayerCharacter playerCharacter =  (IPlayerCharacter) evt.getSource();
-        controller.deletePlayerCharacter(playerCharacter.getName());
+        controller.removeAlivePlayerCharacter(playerCharacter.getName());
     }
 }

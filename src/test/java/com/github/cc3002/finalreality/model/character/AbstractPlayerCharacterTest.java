@@ -22,17 +22,21 @@ public abstract class AbstractPlayerCharacterTest extends AbstractCharacterTest{
     }
 
     @Override
-    protected void checkLethalAttack(final ICharacter expectedCharacter,final ICharacter testEqualCharacter, final ICharacter differentClassCharacter) {
+    protected void checkLethalAttack(final ICharacter expectedCharacter,
+                                     final ICharacter testEqualCharacter,
+                                     final ICharacter differentClassCharacter) {
+
+
         expectedCharacter.equip(testIWeapon);
         testEqualCharacter.equip(testIWeapon);
         differentClassCharacter.equip(testIWeapon);
 
+        while(testEqualCharacter.getCanContinue()) {
+            differentClassCharacter.attack(testEqualCharacter);}
 
-        while(testEqualCharacter.getCanContinue()) differentClassCharacter.attack(testEqualCharacter);
+        while(differentClassCharacter.getCanContinue()) {expectedCharacter.attack(differentClassCharacter);}
 
-        while(differentClassCharacter.getCanContinue()) testEqualCharacter.attack(differentClassCharacter);
-
-        while(expectedCharacter.getCanContinue()) expectedCharacter.attack(expectedCharacter);
+        while(expectedCharacter.getCanContinue()) {expectedCharacter.attack(expectedCharacter);}
 
 
         assertFalse(differentClassCharacter.getCanContinue());

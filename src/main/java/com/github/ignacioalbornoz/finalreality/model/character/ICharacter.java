@@ -39,7 +39,6 @@ public interface ICharacter {
   /**
    * Equips a weapon to the character.
    */
-
   void setEquippedWeapon(IWeapon weapon);
 
   int getHP();

@@ -1,21 +1,14 @@
 package com.github.ignacioalbornoz.finalreality.gui;
 
 import com.github.ignacioalbornoz.finalreality.controller.FinalRealityController;
-import com.github.ignacioalbornoz.finalreality.model.character.player.IPlayerCharacter;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
-import java.io.FileInputStream;
 import java.util.Set;
 
 /**
@@ -39,6 +32,8 @@ public class FinalReality extends Application {
   private final Label totalEnemyCharactersLabel = new Label();
   private final Label aliveEnemyCharactersLabel = new Label();
   private final Label gameOver = new Label();
+  private final Label guiCharacterInTurn = new Label();
+  private final Label guiEquippedWeaponOfCharacterInTurn = new Label();
 
   public static void main(String[] args) {
     launch(args);
@@ -52,6 +47,14 @@ public class FinalReality extends Application {
     Scene scene = new Scene(root, 1280, 720);
 
 
+
+    guiEquippedWeaponOfCharacterInTurn.setLayoutY(30);
+    guiEquippedWeaponOfCharacterInTurn.setLayoutX(800);
+    root.getChildren().add(guiEquippedWeaponOfCharacterInTurn);
+
+    guiCharacterInTurn.setLayoutY(10);
+    guiCharacterInTurn.setLayoutX(800);
+    root.getChildren().add(guiCharacterInTurn);
 
 
     gamePhase.setLayoutY(10);
@@ -80,6 +83,7 @@ public class FinalReality extends Application {
     root.getChildren().add(aliveEnemyCharactersLabel);
     root.getChildren().add(gamePhase);
     root.getChildren().add(gameOver);
+
 
     Button next = new Button("Next");
     next.setLayoutY(130);
@@ -282,11 +286,28 @@ public class FinalReality extends Application {
         totalPlayerCharactersLabel.setText("Total Player characters: " +totalPlayerCharacters);
 
         String stringGamePhase = controller.getGamePhase().getType();
-
         boolean stringGameOver = controller.getGameOver();
+        String stringGuiCharacterInTurn = "Null";
+        String stringGuiEquippedWeaponOfCharacterInTurn = "Null";
+
+
+        if (controller.getCharacterInTurn()!=null){
+          stringGuiCharacterInTurn =  controller.getNameControllerCharacter(controller.getCharacterInTurn());
+          var equippedWeapon = controller.getEquippedWeaponController(
+                  controller.getAlivePlayerCharacter(
+                          controller.getNameControllerCharacter(
+                                  controller.getCharacterInTurn())));
+
+          if (!controller.getControllerWeaponType(equippedWeapon).equals("NULL")){
+            stringGuiEquippedWeaponOfCharacterInTurn = controller.getNameControllerWeapon(equippedWeapon);}
+        }
 
         gamePhase.setText("Game Phase: " +stringGamePhase);
         gameOver.setText("Game Over: " +stringGameOver);
+        guiCharacterInTurn.setText("Game Character in Turn: " +stringGuiCharacterInTurn);
+        guiEquippedWeaponOfCharacterInTurn.setText("Equipped Weapon Of Character In Turn: " +stringGuiEquippedWeaponOfCharacterInTurn);
+
+
 
 
         Set<String> setTotalEnemyCharacters = controller.getCopyOfSetOfEnemyNames();

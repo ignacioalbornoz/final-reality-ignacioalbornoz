@@ -84,19 +84,18 @@ public class FinalRealityController {
     }
 
 
-
     private void setTrueGameStarted(){
         this.gameStarted = true; }
 
     public void actionIfHeadEnemy(IEnemy enemy){
-        if (isInEnemyList(enemy)){
+        if (isInAliveEnemyList(enemy)){
             enemyRandomTarget(enemy);
         }
     }
 
 
     public void enemyRandomTarget(IEnemy enemy){
-        Map.Entry<String,IPlayerCharacter> entry = playerCharacterList.entrySet().iterator().next();
+        Map.Entry<String,IPlayerCharacter> entry = alivePlayerCharacterList.entrySet().iterator().next();
         IPlayerCharacter value = entry.getValue();
         controllerAttack(enemy,value);
     }
@@ -131,7 +130,7 @@ public class FinalRealityController {
 
 
     public void controllerTurns(){
-        var shuffleMap = cloneAndShuffleMap(this.playerCharacterList,this.enemyList);
+        var shuffleMap = cloneAndShuffleMap(this.alivePlayerCharacterList,this.aliveEnemyList);
         waitTurnShuffleMap(shuffleMap);
         this.subscribeToPlayerCharacterAllDeadNotification();
         this.subscribeToEnemyAllDeadNotification();
@@ -193,7 +192,10 @@ public class FinalRealityController {
         }
         else if(isInAlivePlayerCharacterList(characterInTurn)){
             setGamePhase(new SelectingAttackTargetPhase());
+        }else{
+            turnEnds();
         }
+
 
     }
 
@@ -206,11 +208,17 @@ public class FinalRealityController {
         var character = controllerTurnsQueue.poll();
         characterInTurn = null;
         if (character !=null){
-            this.controllerWaitTurn(character);}
+            if (isAlive(character)){
+                this.controllerWaitTurn(character);}
+        }
         this.setGamePhase(new FirstPhase());
     }
 
-    public void doPhaseAction(){
+    public boolean isAlive(ICharacter character){
+        return isInAliveEnemyList(character) || isInAlivePlayerCharacterList(character);
+    }
+
+    public void doPhaseAction() throws InvalidTransitionException {
         this.getGamePhase().doPhaseAction();
     }
 
@@ -253,8 +261,6 @@ public class FinalRealityController {
     public PropertyChangeSupport getEnemyAllDeadNotification() {
         return EnemyAllDeadNotification;
     }
-
-
 
 
 
@@ -530,12 +536,14 @@ public class FinalRealityController {
 
 
     public void deletePlayerCharacter(String playerCharacterName){
+        unsubscribeToPlayerCharacterDeathNotification(alivePlayerCharacterList.get(playerCharacterName));
         unsubscribeToPlayerCharacterDeathNotification(playerCharacterList.get(playerCharacterName));
         playerCharacterList.remove(playerCharacterName);
         alivePlayerCharacterList.remove(playerCharacterName);
     }
 
     public void deleteEnemy(String enemyName){
+        unsubscribeToEnemyDeathNotification(aliveEnemyList.get(enemyName));
         unsubscribeToEnemyDeathNotification(enemyList.get(enemyName));
         enemyList.remove(enemyName);
         aliveEnemyList.remove(enemyName);
@@ -546,11 +554,13 @@ public class FinalRealityController {
     }
 
     public void removeAliveEnemy(String enemyName){
+        unsubscribeToEnemyDeathNotification(enemyList.get(enemyName));
         aliveEnemyList.remove(enemyName);
         this.checkGameStatus();
     }
 
     public void removeAlivePlayerCharacter(String playerCharacterName){
+        unsubscribeToPlayerCharacterDeathNotification(alivePlayerCharacterList.get(playerCharacterName));
         alivePlayerCharacterList.remove(playerCharacterName);
         this.checkGameStatus();
     }
@@ -571,11 +581,6 @@ public class FinalRealityController {
     public boolean isInAlivePlayerCharacterList(ICharacter playerCharacter) {
         return alivePlayerCharacterList.containsKey(playerCharacter.getName());
     }
-
-
-
-
-
 
 
 
@@ -609,6 +614,10 @@ public class FinalRealityController {
 
     public boolean getGameStarted() {
         return this.gameStarted;
+    }
+
+    public void controllerSetEnemyDamage(IEnemy enemy,int damage) {
+        enemy.setDamage(damage);
     }
 
 

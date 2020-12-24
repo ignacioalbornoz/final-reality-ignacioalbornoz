@@ -23,4 +23,6 @@ public interface IEnemy extends ICharacter{
     void removeEnemyDeathListener(PropertyChangeListener listener);
 
     PropertyChangeSupport getEnemyDeathNotification();
+
+    void setDamage(int damage);
 }

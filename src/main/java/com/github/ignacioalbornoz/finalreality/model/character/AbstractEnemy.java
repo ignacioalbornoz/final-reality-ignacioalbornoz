@@ -18,7 +18,7 @@ public abstract class AbstractEnemy extends AbstractCharacter implements IEnemy{
 
     private final PropertyChangeSupport EnemyDeathNotification = new PropertyChangeSupport(this);
 
-    private final int damage = 1;
+    private int damage = 1;
 
     /**
      * Weight of an enemy.
@@ -92,5 +92,10 @@ public abstract class AbstractEnemy extends AbstractCharacter implements IEnemy{
             this.setCanContinue(false);
             fireDeathOfEnemyEvent(); }
         this.HP = Math.max(HP,0) ;
+    }
+
+    @Override
+    public void setDamage(int damage) {
+        this.damage = damage;
     }
 }

@@ -119,3 +119,22 @@ Una vez realizado lo anterior, y chequeando que no existe ningún error señalad
 - **Run 'All Tests'**: Ejecuta todos los tests señalando la cantidad de estos, el tiempo que tomó y en caso de existir un error de implementación o compilación señalarlo.
 - **Run 'All Tests´ with Coverage**: Ejecuta todo los tests señalando la cantidad de estos, el tiempo que tomó y en caso de existir un error de implementación o compilación señalarlo, además agrega el porcentaje de *Coverage* de métodos y líneas del código, señalando en cada clase que métodos y líneas fueron testeados y cuales no.
 
+
+## Controller
+El controller conecta la vista(gui) con el modelo, replicando todas las funcionalidades del modelo para poder 
+utilizarlas en la vista. Paralelo al controlador se crea el package listeners, para que el programa este pendiente de las muertes de 
+los personajes y el fin del juego. Finalmente dentro del package controller se crea el package gamephases, con las phases del juego, desde que la etapa que se crean los personajes hasta que mueren todos los personajes del jugador o todos los enemigos y se da por finalizado el juego.
+
+
+
+## GUI
+
+El "background" <a href="http://www.freepik.com">Designed by upklyak / Freepik</a>, fue modificado en cuanto a tamaño 
+por lo que está dentro de los usos permitidos por la licencia gratuita.
+
+Luego existen botones para las funcionalidades del juego y "labels" con información al respecto,
+Para jugar se debe apretar el botón derecho del mousesobre la clase FinalReality que se encuentra en:
+**source/main/java/com.github.ignacioalbornoz.finalreality/gui**
+
+Posteriormente se debe seguir las instrucciones,utilizando los botones para las distintas funcionalidades del 
+juego y oprimiendo **Next** cuando se quiera avanzar de fase y se cumpla con los requisitos para poder hacerlo.

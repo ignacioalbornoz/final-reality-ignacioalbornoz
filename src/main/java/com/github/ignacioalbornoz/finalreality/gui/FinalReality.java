@@ -275,7 +275,7 @@ public class FinalReality extends Application {
 
 
 
-    Button addEquippedWhiteMage = new Button("Add White Mage");
+    Button addEquippedWhiteMage = new Button("Add Equipped White Mage");
     addEquippedWhiteMage.setLayoutY(480);
     addEquippedWhiteMage.setLayoutX(10);
     addEquippedWhiteMage.setOnAction(event -> {
@@ -290,7 +290,7 @@ public class FinalReality extends Application {
     root.getChildren().add(addEquippedWhiteMage);
 
 
-    Button addEquippedEngineer = new Button("Add Engineer");
+    Button addEquippedEngineer = new Button("Add Equipped Engineer");
     addEquippedEngineer.setLayoutY(510);
     addEquippedEngineer.setLayoutX(10);
     addEquippedEngineer.setOnAction(event -> {

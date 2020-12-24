@@ -1,5 +1,6 @@
 package com.github.ignacioalbornoz.finalreality.model.character;
 
+import com.github.ignacioalbornoz.finalreality.controller.FinalRealityController;
 import org.jetbrains.annotations.NotNull;
 
 import java.beans.PropertyChangeEvent;
@@ -82,9 +83,8 @@ public abstract class AbstractEnemy extends AbstractCharacter implements IEnemy{
 
 
     public void fireDeathOfEnemyEvent() {
-        EnemyDeathNotification.firePropertyChange(new PropertyChangeEvent(this, "Character has died",
-                null, null));
-    }
+        EnemyDeathNotification.firePropertyChange(new PropertyChangeEvent(this,
+                "Enemy character has died",null, null));}
 
     @Override
     public void setHP(int HP) {

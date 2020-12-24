@@ -5,13 +5,10 @@ import com.github.ignacioalbornoz.finalreality.model.weapon.IWeapon;
 import com.github.ignacioalbornoz.finalreality.model.weapon.WeaponNull;
 import org.jetbrains.annotations.NotNull;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.beans.PropertyChangeSupport;
 
 /**
  * An abstract class that holds the common behaviour of all the characters in the game.
@@ -96,8 +93,9 @@ public abstract class AbstractCharacter implements ICharacter {
    */
   public void waitTurnPlayer(){
     scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
+    var playerCharacter = (IPlayerCharacter) this;
     scheduledExecutor
-          .schedule(this::addToQueue, equippedWeapon.getWeight() / 10, TimeUnit.SECONDS);
+          .schedule(this::addToQueue, playerCharacter.getEquippedWeapon().getWeight() / 10, TimeUnit.SECONDS);
   }
 
   /**

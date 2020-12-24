@@ -6,7 +6,7 @@ public interface IGamePhase {
 
     void setController(FinalRealityController controller);
 
-    void doPhaseAction();
+    void doPhaseAction() throws InvalidTransitionException;
 
     FinalRealityController getController();
 

@@ -1,6 +1,7 @@
 package com.github.cc3002.finalreality.model.controller;
 
 import com.github.ignacioalbornoz.finalreality.controller.FinalRealityController;
+import com.github.ignacioalbornoz.finalreality.controller.gamephases.InvalidTransitionException;
 import com.github.ignacioalbornoz.finalreality.model.character.Enemy;
 import com.github.ignacioalbornoz.finalreality.model.character.ICharacter;
 import com.github.ignacioalbornoz.finalreality.model.character.player.IPlayerCharacter;
@@ -166,6 +167,26 @@ public class FinalRealityControllerTest {
         controllerTest.equipController(testPlayerCharacter,testBow);
         assertEquals(testBow,controllerTest.getEquippedWeaponController(testPlayerCharacter));
 
+    }
+
+    @Test
+    void checkCreateAndModifyEnemy() {
+
+        controllerTest.createEnemy("EnemyTest",10);
+
+        var testEnemy = controllerTest.getEnemyFromEnemyList("EnemyTest");
+
+
+        var testDifferentEnemy = new Enemy(turnsTest,"EnemyTestDos",10);
+
+        assertNotEquals(testEnemy,testDifferentEnemy);
+        assertEquals(controllerTest.controllerGetDamage(testEnemy),controllerTest.controllerGetDamage(testDifferentEnemy));
+
+        controllerTest.controllerSetEnemyDamage(testEnemy,55);
+        controllerTest.controllerSetEnemyDamage(testDifferentEnemy,55);
+
+        assertNotEquals(testEnemy,testDifferentEnemy);
+        assertEquals(controllerTest.controllerGetDamage(testEnemy),controllerTest.controllerGetDamage(testDifferentEnemy));
     }
 
 
@@ -414,8 +435,11 @@ public class FinalRealityControllerTest {
     }
 
     @Test
-    void checkGamePhases(){
+    void checkGamePhases() throws InvalidTransitionException {
+
         controllerTest.createBlackMage("TestPlayerCharacter");
+
+
         controllerTest.createEnemy("TestEnemy",10);
         controllerTest.createBlackMage("TestPlayerCharacterTwo");
         controllerTest.weaponCreateStaff("TestWeapon",10,10);
@@ -439,9 +463,9 @@ public class FinalRealityControllerTest {
 
 
     @Test
-    void checkGamePhasesUntilGameOver(){
-        controllerTest.createBlackMage("TestPlayerCharacter");
+    void checkGamePhasesUntilGameOver() throws InvalidTransitionException {
         controllerTest.createEnemy("TestEnemy",10);
+        controllerTest.createBlackMage("TestPlayerCharacter");
         controllerTest.createBlackMage("TestPlayerCharacterTwo");
         controllerTest.weaponCreateStaff("TestWeapon",10,10);
         controllerTest.weaponCreateStaff("TestWeaponTwo",10,10);
@@ -469,5 +493,68 @@ public class FinalRealityControllerTest {
         assertEquals(controllerTest.getAliveEnemyList().size(),0);
     }
 
+    @Test
+    void checkInvalidTransitionException() throws InvalidTransitionException {
+
+        assertEquals(controllerTest.getGamePhase().getType(),"PreGameStartedPhase");
+
+        controllerTest.createEnemy("TestEnemy",10);
+
+        assertEquals(controllerTest.getGamePhase().getType(),"PreGameStartedPhase");
+
+
+        controllerTest.createBlackMage("TestPlayerCharacter");
+        controllerTest.weaponCreateStaff("TestWeapon",10,10);
+        var testPlayerCharacter = controllerTest.getAlivePlayerCharacter("TestPlayerCharacter");
+        var testWeapon = controllerTest.getWeapon("TestWeapon");
+        controllerTest.equipController(testPlayerCharacter,testWeapon);
+
+        controllerTest.doPhaseAction();
+        assertNotEquals(controllerTest.getGamePhase().getType(),"PreGameStartedPhase");
+
+    }
+
+    @Test
+    public void whenExceptionThrown_thenAssertionSucceeds() {
+        Exception exception = assertThrows(InvalidTransitionException.class, () -> {
+            controllerTest.doPhaseAction();
+        });
+
+        String expectedMessage = "You must create your characters and the enemies";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
+    public void whenExceptionThrown_thenAssertionSucceedsTwo() {
+        Exception exception = assertThrows(InvalidTransitionException.class, () -> {
+            controllerTest.createBlackMage("TestPlayerCharacter");
+            controllerTest.weaponCreateStaff("TestWeapon",10,10);
+            var testPlayerCharacter = controllerTest.getAlivePlayerCharacter("TestPlayerCharacter");
+            var testWeapon = controllerTest.getWeapon("TestWeapon");
+            controllerTest.equipController(testPlayerCharacter,testWeapon);
+            controllerTest.doPhaseAction();
+        });
+
+        String expectedMessage = "You must create your characters and the enemies";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+
+    @Test
+    public void whenExceptionThrown_thenAssertionSucceedsThree() {
+        Exception exception = assertThrows(InvalidTransitionException.class, () -> {
+            controllerTest.createEnemy("TestEnemy",10);
+            controllerTest.doPhaseAction();
+        });
+
+        String expectedMessage = "You must create your characters and the enemies";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
 
 }

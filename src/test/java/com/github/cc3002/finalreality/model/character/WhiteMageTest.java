@@ -1,5 +1,7 @@
 package com.github.cc3002.finalreality.model.character;
 
+import com.github.ignacioalbornoz.finalreality.model.character.player.BlackMage;
+import com.github.ignacioalbornoz.finalreality.model.character.player.IPlayerCharacter;
 import com.github.ignacioalbornoz.finalreality.model.character.player.Thief;
 import com.github.ignacioalbornoz.finalreality.model.character.player.WhiteMage;
 import com.github.ignacioalbornoz.finalreality.model.weapon.Staff;
@@ -69,4 +71,10 @@ public class WhiteMageTest extends AbstractMageTest{
         this.checkLethalAttack(new WhiteMage(turns, WHITE_MAGE_NAME),
                 testCharacters.get(0), new Thief(turns, "NotEquals"));
     }
+
+    @Test
+    void checkDeathNotificationTest() {
+        this.checkDeathNotification(new WhiteMage(turns, WHITE_MAGE_NAME), (IPlayerCharacter) testCharacters.get(0));
+    }
+
 }

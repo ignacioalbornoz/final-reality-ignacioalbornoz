@@ -1,8 +1,6 @@
 package com.github.cc3002.finalreality.model.character;
 
-import com.github.ignacioalbornoz.finalreality.model.character.player.Engineer;
-import com.github.ignacioalbornoz.finalreality.model.character.player.Knight;
-import com.github.ignacioalbornoz.finalreality.model.character.player.Thief;
+import com.github.ignacioalbornoz.finalreality.model.character.player.*;
 import com.github.ignacioalbornoz.finalreality.model.weapon.Axe;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -68,6 +66,11 @@ class EngineerTest extends AbstractNonMageTest {
     void checkLethalAttackTest() {
         this.checkLethalAttack(new Engineer(turns, ENGINEER_NAME),
                 testCharacters.get(0), new Knight(turns, "NotEquals"));
+    }
+
+    @Test
+    void checkDeathNotificationTest() {
+        this.checkDeathNotification(new Engineer(turns, ENGINEER_NAME), (IPlayerCharacter) testCharacters.get(0));
     }
 }
 

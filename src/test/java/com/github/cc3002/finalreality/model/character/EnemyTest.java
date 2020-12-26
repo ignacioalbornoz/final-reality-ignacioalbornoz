@@ -2,6 +2,8 @@ package com.github.cc3002.finalreality.model.character;
 
 import com.github.ignacioalbornoz.finalreality.model.character.Enemy;
 import com.github.ignacioalbornoz.finalreality.model.character.ICharacter;
+import com.github.ignacioalbornoz.finalreality.model.character.IEnemy;
+import com.github.ignacioalbornoz.finalreality.model.character.player.BlackMage;
 import com.github.ignacioalbornoz.finalreality.model.character.player.Thief;
 import com.github.ignacioalbornoz.finalreality.model.weapon.Sword;
 import org.junit.jupiter.api.BeforeEach;
@@ -52,4 +54,11 @@ class EnemyTest extends AbstractEnemyTest {
   void checkLethalAttackTest() {
     this.checkLethalAttack(new Enemy(turns, ENEMY_NAME, 10), testCharacters.get(0), new Thief(turns, ENEMY_NAME));
   }
+
+  @Test
+  void checkEnemyDeathNotification(){
+    this.checkDeathNotification(new Enemy(turns, ENEMY_NAME, 10), (IEnemy)testCharacters.get(0));
+  }
+
+
 }

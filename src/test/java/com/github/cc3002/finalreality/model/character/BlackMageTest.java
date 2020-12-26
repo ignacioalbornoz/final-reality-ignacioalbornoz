@@ -1,6 +1,8 @@
 package com.github.cc3002.finalreality.model.character;
 
+import com.github.ignacioalbornoz.finalreality.model.character.ICharacter;
 import com.github.ignacioalbornoz.finalreality.model.character.player.BlackMage;
+import com.github.ignacioalbornoz.finalreality.model.character.player.IPlayerCharacter;
 import com.github.ignacioalbornoz.finalreality.model.character.player.Thief;
 import com.github.ignacioalbornoz.finalreality.model.weapon.Staff;
 import org.junit.jupiter.api.BeforeEach;
@@ -66,6 +68,12 @@ public class BlackMageTest extends AbstractMageTest{
 
     @Test
     void checkLethalAttackTest() {
-        this.checkLethalAttack(new BlackMage(turns, BLACK_MAGE_NAME), testCharacters.get(0),new Thief(turns, "NotEquals"));
+        this.checkLethalAttack(new BlackMage(turns, BLACK_MAGE_NAME), testCharacters.get(0),
+                new Thief(turns, "NotEquals"));
+    }
+
+    @Test
+    void checkDeathNotificationTest() {
+        this.checkDeathNotification(new BlackMage(turns, BLACK_MAGE_NAME), (IPlayerCharacter) testCharacters.get(0));
     }
 }

@@ -1,8 +1,6 @@
 package com.github.cc3002.finalreality.model.character;
 
-import com.github.ignacioalbornoz.finalreality.model.character.player.Knight;
-import com.github.ignacioalbornoz.finalreality.model.character.player.Thief;
-import com.github.ignacioalbornoz.finalreality.model.character.player.WhiteMage;
+import com.github.ignacioalbornoz.finalreality.model.character.player.*;
 import com.github.ignacioalbornoz.finalreality.model.weapon.Sword;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -68,5 +66,10 @@ public class ThiefTest extends AbstractNonMageTest{
     void checkLethalAttackTest() {
         this.checkLethalAttack(new Thief(turns, THIEF_NAME),
                 testCharacters.get(0), new Knight(turns, "NotEquals"));
+    }
+
+    @Test
+    void checkDeathNotificationTest() {
+        this.checkDeathNotification(new Thief(turns, THIEF_NAME), (IPlayerCharacter) testCharacters.get(0));
     }
 }

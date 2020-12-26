@@ -1,9 +1,9 @@
 package com.github.cc3002.finalreality.model.character;
 
 import com.github.ignacioalbornoz.finalreality.model.character.ICharacter;
+import com.github.ignacioalbornoz.finalreality.model.character.IEnemy;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 public abstract class AbstractEnemyTest extends AbstractCharacterTest{
     /**
@@ -12,7 +12,8 @@ public abstract class AbstractEnemyTest extends AbstractCharacterTest{
     protected static final String ENEMY_NAME = "Goblin";
 
     @Override
-    protected void checkAttack(final ICharacter expectedCharacter, final ICharacter testEqualCharacter, final ICharacter differentClassCharacter) {
+    protected void checkAttack(final ICharacter expectedCharacter, final ICharacter testEqualCharacter,
+                               final ICharacter differentClassCharacter) {
         differentClassCharacter.equip(testIWeapon);
         expectedCharacter.attack(testEqualCharacter);
         testEqualCharacter.attack(expectedCharacter);
@@ -23,7 +24,8 @@ public abstract class AbstractEnemyTest extends AbstractCharacterTest{
     }
 
     @Override
-    protected void checkLethalAttack(final ICharacter expectedCharacter,final ICharacter testEqualCharacter, final ICharacter differentClassCharacter) {
+    protected void checkLethalAttack(final ICharacter expectedCharacter,final ICharacter testEqualCharacter,
+                                     final ICharacter differentClassCharacter) {
         differentClassCharacter.equip(testIWeapon);
         while(testEqualCharacter.getCanContinue()){differentClassCharacter.attack(testEqualCharacter);}
         while(differentClassCharacter.getCanContinue()){testEqualCharacter.attack(differentClassCharacter);}
@@ -32,6 +34,13 @@ public abstract class AbstractEnemyTest extends AbstractCharacterTest{
         assertFalse(differentClassCharacter.getCanContinue());
         assertFalse(testEqualCharacter.getCanContinue());
         assertFalse(expectedCharacter.getCanContinue());
+
+    }
+
+    protected void checkDeathNotification(final IEnemy expectedCharacter,final IEnemy testEqualCharacter){
+        assertNotNull(expectedCharacter.getEnemyDeathNotification());
+        assertNotNull(testEqualCharacter.getEnemyDeathNotification());
+        assertNotEquals(expectedCharacter.getEnemyDeathNotification(),testEqualCharacter.getEnemyDeathNotification());
 
     }
 }

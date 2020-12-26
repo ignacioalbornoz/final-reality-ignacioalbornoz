@@ -163,9 +163,6 @@ public abstract class AbstractCharacter implements ICharacter {
   }
 
   public void setHP(int HP) {
-    if (0 >= HP){
-      this.setCanContinue(false);}
-    this.HP = Math.max(HP,0) ;
   }
 
   void attackedBy(int realDamage){

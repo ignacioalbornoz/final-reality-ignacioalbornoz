@@ -1,5 +1,7 @@
 package com.github.cc3002.finalreality.model.character;
 
+import com.github.ignacioalbornoz.finalreality.model.character.player.BlackMage;
+import com.github.ignacioalbornoz.finalreality.model.character.player.IPlayerCharacter;
 import com.github.ignacioalbornoz.finalreality.model.character.player.Knight;
 import com.github.ignacioalbornoz.finalreality.model.character.player.Thief;
 import com.github.ignacioalbornoz.finalreality.model.weapon.Axe;
@@ -68,5 +70,10 @@ public class KnightTest extends AbstractNonMageTest{
     void checkLethalAttackTest() {
         this.checkLethalAttack(new Knight(turns, KNIGHT_NAME),
                 testCharacters.get(0), new Thief(turns, "NotEquals"));
+    }
+
+    @Test
+    void checkDeathNotificationTest() {
+        this.checkDeathNotification(new Knight(turns, KNIGHT_NAME), (IPlayerCharacter) testCharacters.get(0));
     }
 }

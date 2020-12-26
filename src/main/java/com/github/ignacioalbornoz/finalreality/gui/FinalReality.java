@@ -1,7 +1,9 @@
 package com.github.ignacioalbornoz.finalreality.gui;
 
 import com.github.ignacioalbornoz.finalreality.controller.FinalRealityController;
-import com.github.ignacioalbornoz.finalreality.controller.gamephases.InvalidTransitionException;
+import com.github.ignacioalbornoz.finalreality.controller.gamephases.*;
+import com.github.ignacioalbornoz.finalreality.model.character.IEnemy;
+import com.github.ignacioalbornoz.finalreality.model.character.player.IPlayerCharacter;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -41,6 +43,8 @@ public class FinalReality extends Application {
   private final Label guiEquippedWeaponOfCharacterInTurn = new Label();
   private final Label guiHpOfCharacterInTurn = new Label();
   private final Label guiPotencialDamageOfCharacterInTurn = new Label();
+  private final Label guiEnemySelected = new Label();
+
 
   public static void main(String[] args) {
     launch(args);
@@ -140,6 +144,10 @@ public class FinalReality extends Application {
     guiPotencialDamageOfCharacterInTurn.setLayoutX(950);
     root.getChildren().add(guiPotencialDamageOfCharacterInTurn);
 
+    guiEnemySelected.setLayoutY(120);
+    guiEnemySelected.setLayoutX(950);
+    root.getChildren().add(guiEnemySelected);
+
 
     gamePhase.setLayoutY(190);
     gamePhase.setLayoutX(20);
@@ -176,7 +184,7 @@ public class FinalReality extends Application {
       try {
         controller.doPhaseAction();
       } catch (InvalidTransitionException e) {
-        System.out.print("You must do something before moving on to the next phase. Remember to read the instructions.\n");
+        System.out.println(e.getMessage());
       }
     });
     root.getChildren().add(next);
@@ -184,16 +192,16 @@ public class FinalReality extends Application {
 
 
 
-    Button equipPowerfulWeapons = new Button("Equip Powerful Weapons ");
+    Button equipPowerfulWeapons = new Button("Equip Powerful Weapon ");
     equipPowerfulWeapons.setLayoutY(40);
     equipPowerfulWeapons.setLayoutX(10);
     equipPowerfulWeapons.setOnAction(event -> {
       if (controller.getGamePhase().getType().equals("SelectingAttackTargetPhase")){
-        var StaffWhiteMagePowerful = controller.getWeapon("StaffWhiteMagePowerful");
-        var StaffBlackMagePowerful = controller.getWeapon("StaffBlackMagePowerful");
-        var AxeEngineerPowerful = controller.getWeapon("AxeEngineerPowerful");
-        var AxeKnightPowerful = controller.getWeapon("AxeKnightPowerful");
-        var SwordThiefPowerful = controller.getWeapon("SwordThiefPowerful");
+        var StaffWhiteMagePowerful = controller.getWeaponFromList("StaffWhiteMagePowerful");
+        var StaffBlackMagePowerful = controller.getWeaponFromList("StaffBlackMagePowerful");
+        var AxeEngineerPowerful = controller.getWeaponFromList("AxeEngineerPowerful");
+        var AxeKnightPowerful = controller.getWeaponFromList("AxeKnightPowerful");
+        var SwordThiefPowerful = controller.getWeaponFromList("SwordThiefPowerful");
 
         var nameOfCharacter = controller.getNameControllerCharacter(controller.getCharacterInTurn());
 
@@ -233,28 +241,34 @@ public class FinalReality extends Application {
     attackEnemy.setLayoutY(70);
     attackEnemy.setLayoutX(10);
     attackEnemy.setOnAction(event -> {
-      if (controller.getGamePhase().getType().equals("SelectingAttackTargetPhase")){
-        if(controller.isInAliveEnemyList(controller.getEnemyFromEnemyList("TestEnemy"))){
-          var nameOfCharacter = controller.getNameControllerCharacter(controller.getCharacterInTurn());
-          var testEnemy = controller.getAliveEnemy("TestEnemy");
-          controller.controllerAttack(controller.getAlivePlayerCharacter(nameOfCharacter),testEnemy);}}
+      String nameOfCharacter = null;
+      try {
+        nameOfCharacter = controller.getGamePhase().getNameOfCharacterInTurn();
+      } catch (InvalidPhaseException | InvalidCharacterException e) {
+        System.out.println(e.getMessage());
+      }
+      IPlayerCharacter playerCharacterAttacker = null;
+      try {
+        playerCharacterAttacker = controller.getGamePhase().getAlivePlayerCharacter(nameOfCharacter);
+      } catch (InvalidAliveCharacterException | InvalidCharacterException | InvalidTransitionException e) {
+        System.out.println(e.getMessage());
+      }
+      IEnemy testEnemy = null;
+      try {
+        testEnemy = controller.getGamePhase().getAliveEnemy(controller.getEnemySelected());
+      } catch (InvalidAliveCharacterException | InvalidCharacterException | InvalidTransitionException e) {
+        System.out.println(e.getMessage());
+      }
+      try {
+        controller.getGamePhase().attack(playerCharacterAttacker,testEnemy);
+      } catch (InvalidTargetException | InvalidAliveCharacterException | InvalidCharacterException | InvalidTransitionException | InvalidPhaseException e) {
+        System.out.println(e.getMessage());
+      }
     });
+
+
     root.getChildren().add(attackEnemy);
 
-
-
-
-    Button attackPowerfulEnemy = new Button("Attack the Powerful Enemy");
-    attackPowerfulEnemy.setLayoutY(100);
-    attackPowerfulEnemy.setLayoutX(10);
-    attackPowerfulEnemy.setOnAction(event -> {
-      if (controller.getGamePhase().getType().equals("SelectingAttackTargetPhase")){
-        if(controller.isInAliveEnemyList(controller.getEnemyFromEnemyList("PowerfulEnemy"))){
-          var nameOfCharacter = controller.getNameControllerCharacter(controller.getCharacterInTurn());
-          var PowerfulEnemy = controller.getAliveEnemy("PowerfulEnemy");
-          controller.controllerAttack(controller.getAlivePlayerCharacter(nameOfCharacter),PowerfulEnemy);}}
-    });
-    root.getChildren().add(attackPowerfulEnemy);
 
 
     Label addCharactersInstructions = new Label("Instructions:");
@@ -274,6 +288,36 @@ public class FinalReality extends Application {
 
 
 
+    Button nextEnemy = new Button("nextEnemy ");
+    nextEnemy .setLayoutY(480);
+    nextEnemy .setLayoutX(700);
+    nextEnemy .setOnAction(event -> {
+      try {
+        controller.getGamePhase().setNextEnemy();
+      } catch (InvalidAliveCharacterException e) {
+        System.out.println(e.getMessage());
+      }
+    });
+    root.getChildren().add(nextEnemy);
+
+
+    Button previousEnemy = new Button("previousEnemy");
+    previousEnemy.setLayoutY(510);
+    previousEnemy.setLayoutX(700);
+    previousEnemy.setOnAction(event -> {
+      try {
+        controller.getGamePhase().setPreviousEnemy();
+      } catch (InvalidAliveCharacterException e) {
+        System.out.println(e.getMessage());
+      }
+
+    });
+    root.getChildren().add(previousEnemy);
+
+
+
+
+
 
     Button addEquippedWhiteMage = new Button("Add Equipped White Mage");
     addEquippedWhiteMage.setLayoutY(480);
@@ -282,9 +326,9 @@ public class FinalReality extends Application {
       if (controller.getGamePhase().getType().equals("PreGameStartedPhase")){
         controller.createWhiteMage("WhiteMageOne");
         controller.weaponCreateStaff("StaffWhiteMage",10,10);
-        controller.weaponCreateStaff("StaffWhiteMagePowerful",10,55);
+        controller.weaponCreateStaff("StaffWhiteMagePowerful",20,55);
         var WhiteMageOne = controller.getAlivePlayerCharacter("WhiteMageOne");
-        var StaffWhiteMage = controller.getWeapon("StaffWhiteMage");
+        var StaffWhiteMage = controller.getWeaponFromList("StaffWhiteMage");
         controller.equipController(WhiteMageOne,StaffWhiteMage);}
     });
     root.getChildren().add(addEquippedWhiteMage);
@@ -297,9 +341,9 @@ public class FinalReality extends Application {
       if (controller.getGamePhase().getType().equals("PreGameStartedPhase")){
         controller.createEngineer("EngineerOne");
         controller.weaponCreateAxe("AxeEngineer",10,10);
-        controller.weaponCreateAxe("AxeEngineerPowerful",10,55);
+        controller.weaponCreateAxe("AxeEngineerPowerful",20,55);
         var EngineerOne = controller.getAlivePlayerCharacter("EngineerOne");
-        var AxeEngineer = controller.getWeapon("AxeEngineer");
+        var AxeEngineer = controller.getWeaponFromList("AxeEngineer");
         controller.equipController(EngineerOne,AxeEngineer);}
 
     });
@@ -314,9 +358,9 @@ public class FinalReality extends Application {
       if (controller.getGamePhase().getType().equals("PreGameStartedPhase")){
         controller.createKnight("KnightOne");
         controller.weaponCreateAxe("AxeKnight",10,10);
-        controller.weaponCreateAxe("AxeKnightPowerful",10,55);
+        controller.weaponCreateAxe("AxeKnightPowerful",20,55);
         var KnightOne = controller.getAlivePlayerCharacter("KnightOne");
-        var AxeKnight = controller.getWeapon("AxeKnight");
+        var AxeKnight = controller.getWeaponFromList("AxeKnight");
         controller.equipController(KnightOne,AxeKnight);}
 
     });
@@ -333,9 +377,9 @@ public class FinalReality extends Application {
       if (controller.getGamePhase().getType().equals("PreGameStartedPhase")){
         controller.createThief("ThiefOne");
         controller.weaponCreateSword("SwordThief",10,10);
-        controller.weaponCreateSword("SwordThiefPowerful",10,55);
+        controller.weaponCreateSword("SwordThiefPowerful",20,55);
         var ThiefOne = controller.getAlivePlayerCharacter("ThiefOne");
-        var SwordThief = controller.getWeapon("SwordThief");
+        var SwordThief = controller.getWeaponFromList("SwordThief");
         controller.equipController(ThiefOne,SwordThief);
       }
 
@@ -345,16 +389,16 @@ public class FinalReality extends Application {
 
 
 
-    Button addEquippedBlackMage = new Button("Add Black Mage");
+    Button addEquippedBlackMage = new Button("Add Equipped Black Mage");
     addEquippedBlackMage.setLayoutY(600);
     addEquippedBlackMage.setLayoutX(10);
     addEquippedBlackMage.setOnAction(event -> {
       if (controller.getGamePhase().getType().equals("PreGameStartedPhase")){
         controller.createBlackMage("BlackMageOne");
         controller.weaponCreateStaff("StaffBlackMage",10,10);
-        controller.weaponCreateStaff("StaffBlackMagePowerful",10,55);
+        controller.weaponCreateStaff("StaffBlackMagePowerful",20,55);
         var BlackMageOne = controller.getAlivePlayerCharacter("BlackMageOne");
-        var StaffBlackMage = controller.getWeapon("StaffBlackMage");
+        var StaffBlackMage = controller.getWeaponFromList("StaffBlackMage");
         controller.equipController(BlackMageOne,StaffBlackMage);
       }
     });
@@ -368,24 +412,40 @@ public class FinalReality extends Application {
     addEnemy.setLayoutY(630);
     addEnemy.setLayoutX(10);
     addEnemy.setOnAction(event -> {
-      if (controller.getGamePhase().getType().equals("PreGameStartedPhase")){
-        controller.createEnemy("TestEnemy",10);}
-    });
+      var sizeOfEnemyList = controller.getAliveEnemyList().size();
+              try {
+                controller.getGamePhase().createEnemy("Enemy "+sizeOfEnemyList,10);
+              } catch (InvalidPhaseException e) {
+                System.out.println(e.getMessage());
+              }
+            }
+    );
     root.getChildren().add(addEnemy);
 
 
 
-    Button addEnemyPowerful = new Button("Add Powerful Enemy");
+    Button addEnemyPowerful = new Button("Convert selected enemy into powerful enemy.");
     addEnemyPowerful.setLayoutY(660);
     addEnemyPowerful.setLayoutX(10);
     addEnemyPowerful.setOnAction(event -> {
-      if (controller.getGamePhase().getType().equals("PreGameStartedPhase")) {
-        controller.createEnemy("PowerfulEnemy", 2);
-        controller.controllerSetEnemyDamage(controller.getAliveEnemy("PowerfulEnemy"), 101);
+      var enemy = controller.getEnemySelected();
+      try {
+        controller.controllerSetEnemyDamage(controller.getGamePhase().getAliveEnemy(enemy), 101);
+      } catch (InvalidAliveCharacterException | InvalidCharacterException | InvalidTransitionException e) {
+        System.out.println(e.getMessage());
       }
     });
-
     root.getChildren().add(addEnemyPowerful);
+
+    Button equipWeapon = new Button("Equip Weapon To Player Character");
+    equipWeapon.setLayoutY(690);
+    equipWeapon.setLayoutX(10);
+    equipWeapon.setOnAction(event -> {
+
+    });
+    root.getChildren().add(equipWeapon);
+
+
 
 
     setupTimer();
@@ -401,12 +461,19 @@ public class FinalReality extends Application {
         int alivePlayerCharacters = setAlivePlayerCharacters.size();
         alivePlayerCharactersLabel.setText("Alive Player characters: " +alivePlayerCharacters);
 
-        Set<String> setTotalPlayerCharacters = controller.getCopyOfSetOfPlayerCharacterNames();
+        Set<String> setTotalPlayerCharacters = controller.getGamePhase().getCopyOfSetOfPlayerCharacterNames();
         int totalPlayerCharacters = setTotalPlayerCharacters.size();
         totalPlayerCharactersLabel.setText("Total Player characters: " +totalPlayerCharacters);
 
-        String stringGamePhase = controller.getGamePhase().getType();
-        boolean stringGameOver = controller.getGameOver();
+        Set<String> setTotalEnemyCharacters = controller.getGamePhase().getCopyOfSetOfEnemyNames();
+        int totalEnemyCharacters = setTotalEnemyCharacters.size();
+        totalEnemyCharactersLabel.setText("Total Enemy characters: " +totalEnemyCharacters);
+
+        Set<String> setAliveEnemyCharacters = controller.getCopyOfSetOfAliveEnemyCharacters();
+        int aliveEnemyCharacters = setAliveEnemyCharacters.size();
+        aliveEnemyCharactersLabel.setText("Alive Enemy characters: " +aliveEnemyCharacters);
+
+
 
         String stringGuiCharacterInTurn = "";
         String stringGuiEquippedWeaponOfCharacterInTurn = "";
@@ -438,11 +505,17 @@ public class FinalReality extends Application {
             int guiPotencialDamageOfCharacterInTurn = controller.controllerGetDamage(realCharacterInTurn);
             stringGuiPotencialDamageOfCharacterInTurn = String.valueOf(guiPotencialDamageOfCharacterInTurn);
 
-          }
 
+          }
         }
 
 
+
+        String stringGamePhase = controller.getGamePhase().getType();
+        boolean stringGameOver = controller.getGameOver();
+
+        String stringEnemyToAttack = controller.getEnemySelected();
+        guiEnemySelected.setText("Selected Enemy: " +stringEnemyToAttack );
 
         gamePhase.setText("Game Phase: " +stringGamePhase);
         gameOver.setText("Game Over: " +stringGameOver);
@@ -451,14 +524,6 @@ public class FinalReality extends Application {
         guiHpOfCharacterInTurn.setText("HP: " +stringGuiHpOfCharacterInTurn );
         guiPotencialDamageOfCharacterInTurn.setText("Potencial Damage: " +stringGuiPotencialDamageOfCharacterInTurn );
 
-
-        Set<String> setTotalEnemyCharacters = controller.getCopyOfSetOfEnemyNames();
-        int totalEnemyCharacters = setTotalEnemyCharacters.size();
-        totalEnemyCharactersLabel.setText("Total Enemy characters: " +totalEnemyCharacters);
-
-        Set<String> setAliveEnemyCharacters = controller.getCopyOfSetOfAliveEnemyCharacters();
-        int aliveEnemyCharacters = setAliveEnemyCharacters.size();
-        aliveEnemyCharactersLabel.setText("Alive Enemy characters: " +aliveEnemyCharacters);
       }
     };
     timer.start();

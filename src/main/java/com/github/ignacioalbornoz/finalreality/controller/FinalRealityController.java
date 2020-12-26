@@ -12,7 +12,6 @@ import com.github.ignacioalbornoz.finalreality.listeners.EnemyDeathListener;
 import com.github.ignacioalbornoz.finalreality.listeners.PlayerCharacterAllDeadListener;
 import com.github.ignacioalbornoz.finalreality.listeners.EnemyAllDeadListener;
 import org.jetbrains.annotations.Unmodifiable;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -22,56 +21,47 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class FinalRealityController {
 
-    private final Map<String,IPlayerCharacter> playerCharacterList;
-    private final Map<String,IEnemy> enemyList;
-    private final Map<String,IWeapon> weaponList;
-
-
-
+    private final Map<String, IPlayerCharacter> initialPlayerCharacterList;
+    private final Map<String, IEnemy> initialEnemyList;
+    private final Map<String, IWeapon> weaponList;
     private final Map<String,String> charactersEquippedList;
-
 
 
     private final Map<String,IEnemy> aliveEnemyList;
     private final Map<String,IPlayerCharacter> alivePlayerCharacterList;
 
 
-
     private final BlockingQueue<ICharacter> controllerTurnsQueue;
+
+
     private final PropertyChangeSupport PlayerCharacterAllDeadNotification = new PropertyChangeSupport(this);
     private final PropertyChangeSupport EnemyAllDeadNotification = new PropertyChangeSupport(this);
-
-
-
-
-    private final PropertyChangeListener PlayerCharacterDeathListener = new PlayerCharacterDeathListener(
-            this);
-
+    private final PropertyChangeListener PlayerCharacterDeathListener = new PlayerCharacterDeathListener(this);
     private final PropertyChangeListener EnemyDeathListener = new EnemyDeathListener(this);
-
     private final PropertyChangeListener EnemyAllDeadListener = new EnemyAllDeadListener(this);
-    private final PropertyChangeListener PlayerCharacterAllDeadListener = new PlayerCharacterAllDeadListener(
-            this);
+    private final PropertyChangeListener PlayerCharacterAllDeadListener = new PlayerCharacterAllDeadListener(this);
+
 
     private Boolean gameOver;
     private Boolean gameStarted;
 
+    private ICharacter characterInTurn;
 
+    private String enemySelected;
+    private int numberOfEnemySelected;
 
+    private String weaponSelected;
+    private int numberOfWeaponSelected;
 
-    private  ICharacter characterInTurn;
-
-
-
+    private String characterSelected;
+    private int numberOfCharacterSelected;
 
     private IGamePhase gamePhase;
 
-
-
     public FinalRealityController() {
-        playerCharacterList = new HashMap<>();
+        initialPlayerCharacterList = new HashMap<>();
         weaponList = new HashMap<>();
-        enemyList = new HashMap<>();
+        initialEnemyList = new HashMap<>();
         charactersEquippedList = new HashMap<>();
         controllerTurnsQueue = new LinkedBlockingQueue<>();
         characterInTurn = null;
@@ -80,21 +70,52 @@ public class FinalRealityController {
         gameOver = false;
         gameStarted = false;
         setGamePhase(new PreGameStartedPhase());
+        enemySelected = "Select an enemy";
+        numberOfEnemySelected = 1;
 
     }
 
+
+    private List<String> getSortedListAliveEnemy() {
+        List<String> list = new ArrayList<String>(this.getCopyOfSetOfAliveEnemyCharacters());
+        Collections.sort(list);
+        return list;
+    }
+
+    public void setPreviousEnemy() {
+        List<String> list = getSortedListAliveEnemy();
+        var i = numberOfEnemySelected;
+        if (i>0){
+            i = i-1;
+            enemySelected = list.get(i);
+            numberOfEnemySelected = i;}
+    }
+
+    public void setNextEnemy() {
+        List<String> list = getSortedListAliveEnemy();
+        var i = numberOfEnemySelected;
+        if (i <list.size()-1){
+            i = i+1;
+            enemySelected = list.get(i);
+            numberOfEnemySelected = i;}
+    }
+
+    public String getEnemySelected() {
+        return this.enemySelected;
+    }
 
     private void setTrueGameStarted(){
         this.gameStarted = true; }
 
-    public void actionIfHeadEnemy(IEnemy enemy){
-        if (isInAliveEnemyList(enemy)){
-            enemyRandomTarget(enemy);
+    private void actionIfHeadEnemy(IEnemy enemy){
+        enemyRandomTarget(enemy);
+        if (!this.getGameOver()){
+            this.setGamePhase(new SecondPhase());
         }
     }
 
 
-    public void enemyRandomTarget(IEnemy enemy){
+    private void enemyRandomTarget(IEnemy enemy){
         Map.Entry<String,IPlayerCharacter> entry = alivePlayerCharacterList.entrySet().iterator().next();
         IPlayerCharacter value = entry.getValue();
         controllerAttack(enemy,value);
@@ -103,7 +124,7 @@ public class FinalRealityController {
 
 
 
-    public Map<String,ICharacter> cloneAndShuffleMap(Map<String,IPlayerCharacter> map, Map<String,IEnemy> mapTwo ){
+    public Map<String,ICharacter> cloneAndShuffleMap(Map<String, IPlayerCharacter> map, Map<String, IEnemy> mapTwo){
 
         var myObjectListA = new HashMap<String,ICharacter>(map);
 
@@ -123,7 +144,7 @@ public class FinalRealityController {
 
 
 
-    public void waitTurnShuffleMap(Map<String,ICharacter> shuffleMap){
+    private void waitTurnShuffleMap(Map<String,ICharacter> shuffleMap){
         for (Map.Entry<String,ICharacter> me : shuffleMap.entrySet()) {
            controllerWaitTurn(me.getValue());}
     }
@@ -139,7 +160,7 @@ public class FinalRealityController {
 
 
 
-    public void controllerWaitTurn(ICharacter character){
+    private void controllerWaitTurn(ICharacter character){
         character.waitTurn();
     }
 
@@ -158,6 +179,10 @@ public class FinalRealityController {
         return characterInTurn;
     }
 
+    public String getNameOfCharacterInTurn() {
+        return characterInTurn.getName();
+    }
+
 
     public void setGamePhase(IGamePhase gamePhase) {
         this.gamePhase = gamePhase;
@@ -171,6 +196,7 @@ public class FinalRealityController {
 
 
     private void gameOver() {
+        setGamePhase(new GameOverPhase());
         this.gameOver = true;
     }
 
@@ -188,7 +214,6 @@ public class FinalRealityController {
         ICharacter characterInTurn = getCharacterInTurn();
         if (isInAliveEnemyList(characterInTurn)){
             actionIfHeadEnemy((IEnemy) characterInTurn);
-            setGamePhase(new SecondPhase());
         }
         else if(isInAlivePlayerCharacterList(characterInTurn)){
             setGamePhase(new SelectingAttackTargetPhase());
@@ -214,7 +239,7 @@ public class FinalRealityController {
         this.setGamePhase(new FirstPhase());
     }
 
-    public boolean isAlive(ICharacter character){
+    private boolean isAlive(ICharacter character){
         return isInAliveEnemyList(character) || isInAlivePlayerCharacterList(character);
     }
 
@@ -254,22 +279,22 @@ public class FinalRealityController {
     }
 
 
-    public PropertyChangeSupport getPlayerCharacterAllDeadNotification() {
+    private PropertyChangeSupport getPlayerCharacterAllDeadNotification() {
         return PlayerCharacterAllDeadNotification;
     }
 
-    public PropertyChangeSupport getEnemyAllDeadNotification() {
+    private PropertyChangeSupport getEnemyAllDeadNotification() {
         return EnemyAllDeadNotification;
     }
 
 
 
 
-    public void firePlayerCharacterAllDeadEvent() {
+    private void firePlayerCharacterAllDeadEvent() {
         PlayerCharacterAllDeadNotification.firePropertyChange(new PropertyChangeEvent(this,
                 "You lost the game", null,null));}
 
-    public void fireEnemyAllDeadEvent() {
+    private void fireEnemyAllDeadEvent() {
         EnemyAllDeadNotification.firePropertyChange(new PropertyChangeEvent(this,
                 "You won the game", null,null));}
 
@@ -296,49 +321,36 @@ public class FinalRealityController {
 
     public void createBlackMage(@NotNull String name){
         IPlayerCharacter newCharacter = new BlackMage(controllerTurnsQueue, name);
-        playerCharacterList.put(newCharacter.getName(),newCharacter);
-        alivePlayerCharacterList.put(newCharacter.getName(),newCharacter);
         subscribeToPlayerCharacterDeathNotification(newCharacter);
+        alivePlayerCharacterList.put(newCharacter.getName(),newCharacter);
     }
 
     public void createEngineer(@NotNull String name){
         IPlayerCharacter newCharacter = new Engineer(controllerTurnsQueue, name);
-        playerCharacterList.put(newCharacter.getName(),newCharacter);
-        alivePlayerCharacterList.put(newCharacter.getName(),newCharacter);
         subscribeToPlayerCharacterDeathNotification(newCharacter);
-
+        alivePlayerCharacterList.put(newCharacter.getName(),newCharacter);
     }
     public void createKnight(@NotNull String name){
         IPlayerCharacter newCharacter = new Knight(controllerTurnsQueue, name);
-        playerCharacterList.put(newCharacter.getName(),newCharacter);
-        alivePlayerCharacterList.put(newCharacter.getName(),newCharacter);
         subscribeToPlayerCharacterDeathNotification(newCharacter);
-
+        alivePlayerCharacterList.put(newCharacter.getName(),newCharacter);
     }
     public void createThief(@NotNull String name){
         IPlayerCharacter newCharacter = new Thief(controllerTurnsQueue, name);
-        playerCharacterList.put(newCharacter.getName(),newCharacter);
-        alivePlayerCharacterList.put(newCharacter.getName(),newCharacter);
         subscribeToPlayerCharacterDeathNotification(newCharacter);
-
+        alivePlayerCharacterList.put(newCharacter.getName(),newCharacter);
     }
     public void createWhiteMage(@NotNull String name){
         IPlayerCharacter newCharacter = new WhiteMage(controllerTurnsQueue, name);
-        playerCharacterList.put(newCharacter.getName(),newCharacter);
-        alivePlayerCharacterList.put(newCharacter.getName(),newCharacter);
         subscribeToPlayerCharacterDeathNotification(newCharacter);
+        alivePlayerCharacterList.put(newCharacter.getName(),newCharacter);
     }
 
     public void createEnemy(@NotNull String name, int weight){
         IEnemy newEnemy = new Enemy(controllerTurnsQueue,name,weight);
-        enemyList.put(newEnemy.getName(),newEnemy);
-        aliveEnemyList.put(newEnemy.getName(),newEnemy);
         subscribeToEnemyDeathNotification(newEnemy);
+        aliveEnemyList.put(newEnemy.getName(),newEnemy);
     }
-
-
-
-
 
 
     public void weaponCreateAxe(@NotNull String name, int weight, int damage){
@@ -361,19 +373,15 @@ public class FinalRealityController {
         IWeapon newWeapon = new Sword(name,weight,damage);
         weaponList.put(newWeapon.getName(),newWeapon);
     }
-
-
-
-
-    public IPlayerCharacter getPlayerCharacterFromParty(String nameCharacter){
-        return playerCharacterList.get(nameCharacter);
+    public IPlayerCharacter getPlayerCharacterFromInitialList(String namePlayerCharacter){
+        return initialPlayerCharacterList.get(namePlayerCharacter);
     }
 
-    public IEnemy getEnemyFromEnemyList(String nameEnemy){
-        return enemyList.get(nameEnemy);
+    public IEnemy getEnemyFromInitialList(String nameEnemy){
+        return initialEnemyList.get(nameEnemy);
     }
 
-    public IWeapon getWeapon(String nameWeapon) {
+    public IWeapon getWeaponFromList(String nameWeapon) {
         return weaponList.get(nameWeapon);
     }
 
@@ -387,20 +395,20 @@ public class FinalRealityController {
 
 
     public Collection<IPlayerCharacter> getCollectionOfPlayerCharacters(){
-        return playerCharacterList.values();
+        return initialPlayerCharacterList.values();
     }
 
 
     public @Unmodifiable Set<String> getCopyOfSetOfPlayerCharacterNames(){
-        return new HashSet<>(playerCharacterList.keySet());
+        return new HashSet<>(initialPlayerCharacterList.keySet());
     }
 
     public Collection<IEnemy> getCollectionOfEnemy(){
-        return enemyList.values();
+        return initialEnemyList.values();
     }
 
     public @Unmodifiable Set<String> getCopyOfSetOfEnemyNames(){
-        return new HashSet<>(enemyList.keySet());
+        return new HashSet<>(initialEnemyList.keySet());
     }
 
     public Collection<IWeapon> getCollectionOfWeapon(){
@@ -428,9 +436,6 @@ public class FinalRealityController {
         return new HashSet<>(alivePlayerCharacterList.keySet());
     }
 
-
-
-
     public void equipController(IPlayerCharacter playerCharacter, IWeapon weapon){
         if (playerCharacter.getEquippedWeapon().isNull()){
             playerCharacter.equip(weapon);
@@ -448,11 +453,6 @@ public class FinalRealityController {
         return playerCharacter.getEquippedWeapon();
     }
 
-
-
-
-
-
     public String getNameControllerCharacter(ICharacter character) {
         return character.getName();
     }
@@ -460,7 +460,6 @@ public class FinalRealityController {
     public String getNameControllerWeapon(IWeapon weapon) {
         return weapon.getName();
     }
-
 
     public String getControllerCharacterClass(ICharacter character) {
         return character.getCharacterClass();
@@ -502,11 +501,11 @@ public class FinalRealityController {
     }
 
     public boolean isInParty(IPlayerCharacter character){
-        return playerCharacterList.containsValue(character);
+        return initialPlayerCharacterList.containsValue(character);
     }
 
     public boolean isInEnemyList(IEnemy enemy){
-        return enemyList.containsValue(enemy);
+        return initialEnemyList.containsValue(enemy);
     }
 
     public boolean isInWeaponList(IWeapon weapon){
@@ -523,11 +522,11 @@ public class FinalRealityController {
 
 
     public boolean isNamePlayerCharacterDisponible(String name){
-        return !playerCharacterList.containsKey(name);
+        return !initialPlayerCharacterList.containsKey(name);
     }
 
     public boolean isNameEnemyDisponible(String name){
-        return !enemyList.containsKey(name);
+        return !initialEnemyList.containsKey(name);
     }
 
     public boolean isNameWeaponDisponible(String name){
@@ -535,18 +534,14 @@ public class FinalRealityController {
     }
 
 
-    public void deletePlayerCharacter(String playerCharacterName){
-        unsubscribeToPlayerCharacterDeathNotification(alivePlayerCharacterList.get(playerCharacterName));
-        unsubscribeToPlayerCharacterDeathNotification(playerCharacterList.get(playerCharacterName));
-        playerCharacterList.remove(playerCharacterName);
-        alivePlayerCharacterList.remove(playerCharacterName);
+    public void deletePlayerCharacterFromInitialList(String playerCharacterName){
+        unsubscribeToPlayerCharacterDeathNotification(initialPlayerCharacterList.get(playerCharacterName));
+        initialPlayerCharacterList.remove(playerCharacterName);
     }
 
-    public void deleteEnemy(String enemyName){
-        unsubscribeToEnemyDeathNotification(aliveEnemyList.get(enemyName));
-        unsubscribeToEnemyDeathNotification(enemyList.get(enemyName));
-        enemyList.remove(enemyName);
-        aliveEnemyList.remove(enemyName);
+    public void deleteEnemyFromInitialList(String enemyName){
+        unsubscribeToEnemyDeathNotification(initialEnemyList.get(enemyName));
+        initialEnemyList.remove(enemyName);
     }
 
     public void deleteWeapon(String weaponName){
@@ -554,7 +549,7 @@ public class FinalRealityController {
     }
 
     public void removeAliveEnemy(String enemyName){
-        unsubscribeToEnemyDeathNotification(enemyList.get(enemyName));
+        unsubscribeToEnemyDeathNotification(initialEnemyList.get(enemyName));
         aliveEnemyList.remove(enemyName);
         this.checkGameStatus();
     }
@@ -564,6 +559,10 @@ public class FinalRealityController {
         alivePlayerCharacterList.remove(playerCharacterName);
         this.checkGameStatus();
     }
+
+
+
+
 
     public Map<String, IPlayerCharacter> getAlivePlayerCharacterList() {
         return alivePlayerCharacterList;
@@ -582,10 +581,7 @@ public class FinalRealityController {
         return alivePlayerCharacterList.containsKey(playerCharacter.getName());
     }
 
-
-
-
-    public void checkGameStatus() {
+    private void checkGameStatus() {
         if (getAliveEnemyList().size()==0){
             fireEnemyAllDeadEvent();
         }
@@ -595,10 +591,12 @@ public class FinalRealityController {
     }
 
     public void endGamePlayerLost() {
+        System.out.println("You lost the game.");
         this.endGame();
     }
 
     public void endGamePlayerWon() {
+        System.out.println("You won the game.");
         this.endGame();
     }
 
@@ -606,6 +604,7 @@ public class FinalRealityController {
         unsubscribeToPlayerCharacterAllDeadNotification();
         unsubscribeToEnemyAllDeadNotification();
         this.gameOver();
+        setGamePhase(new GameOverPhase());
     }
 
     public boolean getGameOver() {
@@ -620,5 +619,11 @@ public class FinalRealityController {
         enemy.setDamage(damage);
     }
 
+    public void setInitialPlayerCharacterList() {
+        this.initialPlayerCharacterList.putAll( this.getAlivePlayerCharacterList());
+    }
 
+    public void setInitialEnemyList() {
+        this.initialEnemyList.putAll(this.getAliveEnemyList());
+    }
 }

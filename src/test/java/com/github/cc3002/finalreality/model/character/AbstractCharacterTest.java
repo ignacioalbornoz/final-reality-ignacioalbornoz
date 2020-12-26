@@ -11,8 +11,7 @@ import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Abstract class containing the common tests for all the types of characters.
@@ -90,6 +89,8 @@ public abstract class AbstractCharacterTest {
 
     assertNotEquals(testEqualCharacter, differentClassCharacter);
     assertNotEquals(testEqualCharacter.hashCode(), differentClassCharacter.hashCode());
+
+
   }
 
   /**
@@ -100,10 +101,12 @@ public abstract class AbstractCharacterTest {
     testCharacters = new ArrayList<>();
   }
 
-  protected void checkAttack(final ICharacter expectedCharacter, final ICharacter testEqualCharacter,final ICharacter differentClassCharacter) {
+  protected void checkAttack(final ICharacter expectedCharacter, final ICharacter testEqualCharacter,
+                             final ICharacter differentClassCharacter) {
   }
 
-  protected void checkLethalAttack(final ICharacter expectedCharacter, final ICharacter testEqualCharacter, final ICharacter differentClassCharacter) {
+  protected void checkLethalAttack(final ICharacter expectedCharacter, final ICharacter testEqualCharacter,
+                                   final ICharacter differentClassCharacter) {
 
   }
 }

@@ -1,10 +1,11 @@
 package com.github.cc3002.finalreality.model.character;
 
 import com.github.ignacioalbornoz.finalreality.model.character.ICharacter;
+import com.github.ignacioalbornoz.finalreality.model.character.IEnemy;
+import com.github.ignacioalbornoz.finalreality.model.character.player.IPlayerCharacter;
 import com.github.ignacioalbornoz.finalreality.model.weapon.WeaponNull;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 public abstract class AbstractPlayerCharacterTest extends AbstractCharacterTest{
 
@@ -44,6 +45,14 @@ public abstract class AbstractPlayerCharacterTest extends AbstractCharacterTest{
         assertFalse(expectedCharacter.getCanContinue());
         testEqualCharacter.equip(new WeaponNull());
         assertEquals(testEqualCharacter.getEquippedWeapon(),expectedCharacter.getEquippedWeapon());
+    }
+
+    protected void checkDeathNotification(final IPlayerCharacter expectedCharacter,
+                                          final IPlayerCharacter testEqualCharacter){
+        assertNotNull(expectedCharacter.getPlayerCharacterDeathNotification());
+        assertNotNull(testEqualCharacter.getPlayerCharacterDeathNotification());
+        assertNotEquals(expectedCharacter.getPlayerCharacterDeathNotification(),
+                testEqualCharacter.getPlayerCharacterDeathNotification());
     }
 
 }

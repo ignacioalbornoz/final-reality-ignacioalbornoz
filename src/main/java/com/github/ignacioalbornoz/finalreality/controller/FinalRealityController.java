@@ -53,8 +53,9 @@ public class FinalRealityController {
     private String weaponSelected;
     private int numberOfWeaponSelected;
 
-    private String characterSelected;
-    private int numberOfCharacterSelected;
+
+    private String playerCharacterSelected;
+    private int numberOfPlayerCharacterSelected;
 
     private IGamePhase gamePhase;
 
@@ -73,32 +74,48 @@ public class FinalRealityController {
         enemySelected = "Select an enemy";
         numberOfEnemySelected = 1;
 
+        playerCharacterSelected = "Select a player character";
+        numberOfPlayerCharacterSelected = 1;
+
+        weaponSelected = "Select a player character";
+        numberOfWeaponSelected = 1;
+
     }
 
 
-    private List<String> getSortedListAliveEnemy() {
-        List<String> list = new ArrayList<String>(this.getCopyOfSetOfAliveEnemyCharacters());
+
+
+
+    public String getWeaponSelected() {
+        return weaponSelected;
+    }
+
+
+    public String getPlayerCharacterSelected() {
+        return playerCharacterSelected;
+    }
+
+
+
+    private List<String> getSortedListWeapon() {
+        List<String> list = new ArrayList<>(this.getSetOfWeaponNames());
         Collections.sort(list);
         return list;
     }
 
-    public void setPreviousEnemy() {
-        List<String> list = getSortedListAliveEnemy();
-        var i = numberOfEnemySelected;
-        if (i>0){
-            i = i-1;
-            enemySelected = list.get(i);
-            numberOfEnemySelected = i;}
+    private List<String> getSortedListAlivePlayerCharacter() {
+        List<String> list = new ArrayList<>(this.getCopyOfSetOfAlivePlayerCharacters());
+        Collections.sort(list);
+        return list;
     }
 
-    public void setNextEnemy() {
-        List<String> list = getSortedListAliveEnemy();
-        var i = numberOfEnemySelected;
-        if (i <list.size()-1){
-            i = i+1;
-            enemySelected = list.get(i);
-            numberOfEnemySelected = i;}
+
+    private List<String> getSortedListAliveEnemy() {
+        List<String> list = new ArrayList<>(this.getCopyOfSetOfAliveEnemyCharacters());
+        Collections.sort(list);
+        return list;
     }
+
 
     public String getEnemySelected() {
         return this.enemySelected;
@@ -279,13 +296,6 @@ public class FinalRealityController {
     }
 
 
-    private PropertyChangeSupport getPlayerCharacterAllDeadNotification() {
-        return PlayerCharacterAllDeadNotification;
-    }
-
-    private PropertyChangeSupport getEnemyAllDeadNotification() {
-        return EnemyAllDeadNotification;
-    }
 
 
 
@@ -419,7 +429,7 @@ public class FinalRealityController {
         return weaponList.keySet();
     }
 
-    public Collection<String> getCollectionOfEquippedWeapons(){
+    public Collection<String> getCollectionOfNamesEquippedWeapons(){
         return charactersEquippedList.values();
     }
 
@@ -500,13 +510,7 @@ public class FinalRealityController {
         character.attack(characterAttacked);
     }
 
-    public boolean isInParty(IPlayerCharacter character){
-        return initialPlayerCharacterList.containsValue(character);
-    }
 
-    public boolean isInEnemyList(IEnemy enemy){
-        return initialEnemyList.containsValue(enemy);
-    }
 
     public boolean isInWeaponList(IWeapon weapon){
         return weaponList.containsValue(weapon);
@@ -625,5 +629,64 @@ public class FinalRealityController {
 
     public void setInitialEnemyList() {
         this.initialEnemyList.putAll(this.getAliveEnemyList());
+    }
+
+
+
+
+
+    public void setPreviousPlayerCharacter() {
+        List<String> list = getSortedListAlivePlayerCharacter();
+        var i = numberOfPlayerCharacterSelected;
+        if (i>0){
+            i = i-1;
+            playerCharacterSelected = list.get(i);
+            numberOfPlayerCharacterSelected = i;}
+    }
+
+    public void setNextPlayerCharacter() {
+        List<String> list = getSortedListAlivePlayerCharacter();
+        var i = numberOfPlayerCharacterSelected;
+        if (i <list.size()-1){
+            i = i+1;
+            playerCharacterSelected = list.get(i);
+            numberOfPlayerCharacterSelected = i;}
+    }
+
+    public void setPreviousWeapon() {
+        List<String> list = getSortedListWeapon();
+        var i = numberOfWeaponSelected;
+        if (i>0){
+            i = i-1;
+            weaponSelected = list.get(i);
+            numberOfWeaponSelected = i;}
+    }
+
+
+    public void setNextWeapon() {
+        List<String> list = getSortedListWeapon();
+        var i = numberOfWeaponSelected;
+        if (i <list.size()-1){
+            i = i+1;
+            weaponSelected = list.get(i);
+            numberOfWeaponSelected = i;}
+    }
+
+    public void setPreviousEnemy() {
+        List<String> list = getSortedListAliveEnemy();
+        var i = numberOfEnemySelected;
+        if (i>0){
+            i = i-1;
+            enemySelected = list.get(i);
+            numberOfEnemySelected = i;}
+    }
+
+    public void setNextEnemy() {
+        List<String> list = getSortedListAliveEnemy();
+        var i = numberOfEnemySelected;
+        if (i <list.size()-1){
+            i = i+1;
+            enemySelected = list.get(i);
+            numberOfEnemySelected = i;}
     }
 }

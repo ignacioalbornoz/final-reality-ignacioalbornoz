@@ -6,11 +6,7 @@ public class FirstPhase extends AbstractGamePhase{
 
     @Override
     public void doPhaseAction() {
-        if (controller.getGameOver()){
-            controller.setGamePhase(new GameOverPhase());
-        }
-        else{
-            controller.turnStarts();}
+        controller.turnStarts();
     }
 
     public String getType(){

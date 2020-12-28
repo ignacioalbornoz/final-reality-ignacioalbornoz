@@ -1,7 +1,7 @@
 package com.github.cc3002.finalreality.model.controller;
 
 import com.github.ignacioalbornoz.finalreality.controller.FinalRealityController;
-import com.github.ignacioalbornoz.finalreality.controller.gamephases.InvalidTransitionException;
+import com.github.ignacioalbornoz.finalreality.controller.gamephases.*;
 import com.github.ignacioalbornoz.finalreality.model.character.Enemy;
 import com.github.ignacioalbornoz.finalreality.model.character.ICharacter;
 import com.github.ignacioalbornoz.finalreality.model.character.player.IPlayerCharacter;
@@ -32,7 +32,7 @@ public class FinalRealityControllerTest {
         assertTrue(controllerTest.getCollectionOfPlayerCharacters().isEmpty());
         assertTrue(controllerTest.getCollectionOfEnemy().isEmpty());
         assertTrue(controllerTest.getCollectionOfWeapon().isEmpty());
-        assertTrue(controllerTest.getCollectionOfEquippedWeapons().isEmpty());
+        assertTrue(controllerTest.getCollectionOfNamesEquippedWeapons().isEmpty());
         assertTrue(controllerTest.getCopyOfSetOfPlayerCharacterNames().isEmpty());
         assertTrue(controllerTest.getCopyOfSetOfEnemyNames().isEmpty());
         assertTrue(controllerTest.getSetOfWeaponNames().isEmpty());
@@ -356,7 +356,7 @@ public class FinalRealityControllerTest {
         assertTrue(controllerTest.getCollectionOfEnemy().isEmpty());
 
         assertTrue(controllerTest.getCollectionOfWeapon().isEmpty());
-        assertTrue(controllerTest.getCollectionOfEquippedWeapons().isEmpty());
+        assertTrue(controllerTest.getCollectionOfNamesEquippedWeapons().isEmpty());
 
         assertTrue(controllerTest.getCopyOfSetOfPlayerCharacterNames().isEmpty());
         assertTrue(controllerTest.getCopyOfSetOfEnemyNames().isEmpty());
@@ -375,7 +375,7 @@ public class FinalRealityControllerTest {
 
         controllerTest.deleteWeapon("TestWeapon");
         assertFalse(controllerTest.getCollectionOfWeapon().isEmpty());
-        assertFalse(controllerTest.getCollectionOfEquippedWeapons().isEmpty());
+        assertFalse(controllerTest.getCollectionOfNamesEquippedWeapons().isEmpty());
         assertFalse(controllerTest.getSetOfPlayerCharacterEquippedNames().isEmpty());
 
 
@@ -578,6 +578,283 @@ public class FinalRealityControllerTest {
         String expectedMessage = "You must create your characters and the enemies";
         String actualMessage = exception.getMessage();
 
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+
+    @Test
+    public void whenExceptionThrown_thenAssertionSucceedsFour() {
+        Exception exception = assertThrows(InvalidCharacterException.class, () -> {
+            controllerTest.getGamePhase().createEnemy("TestEnemy",10);
+            controllerTest.getGamePhase().createEngineer("TestEngineer");
+            controllerTest.getGamePhase().doPhaseAction();
+            controllerTest.getGamePhase().getAlivePlayerCharacter("TestEnemy");
+        });
+
+        String expectedMessage = "Not even a created player character";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
+    public void whenExceptionThrown_thenAssertionSucceedsFive() {
+        Exception exception = assertThrows(InvalidTransitionException.class, () -> {
+            controllerTest.createEnemy("TestEnemy",2);
+            controllerTest.createBlackMage("TestBlackMage");
+            controllerTest.weaponCreateStaff("TestStaff",100,20);
+
+            var testPlayerCharacter = controllerTest.getAlivePlayerCharacter("TestBlackMage");
+            var testEnemy = controllerTest.getAliveEnemy("TestEnemy");
+            var testWeapon = controllerTest.getWeaponFromList("TestStaff");
+            controllerTest.getGamePhase().setEnemyDamage(testEnemy,101);
+            controllerTest.getGamePhase().equip(testPlayerCharacter,testWeapon);
+            controllerTest.getGamePhase().doPhaseAction();
+            controllerTest.getGamePhase().doPhaseAction();
+            controllerTest.getGamePhase().doPhaseAction();
+        });
+
+
+        String expectedMessage = ("The game is over thanks for playing, " +
+                "I hope you enjoyed it. If you want to play again, " +
+                "you can close the tab and start the application again. " +
+                "You can contact the developer at the email: ignacio.albornoz@ug.uchile.cl");
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+
+
+
+
+    @Test
+    public void whenExceptionThrown_thenAssertionSucceedsSixEnemy() {
+        Exception exception = assertThrows(InvalidPhaseException.class, () -> {
+            controllerTest.createEnemy("TestEnemy",2);
+            controllerTest.createBlackMage("TestBlackMage");
+            controllerTest.weaponCreateStaff("TestStaff",100,20);
+
+            var testPlayerCharacter = controllerTest.getAlivePlayerCharacter("TestBlackMage");
+            var testEnemy = controllerTest.getAliveEnemy("TestEnemy");
+            var testWeapon = controllerTest.getWeaponFromList("TestStaff");
+            controllerTest.getGamePhase().equip(testPlayerCharacter,testWeapon);
+            controllerTest.getGamePhase().doPhaseAction();
+            controllerTest.getGamePhase().createEnemy("secondEnemyTest", 10);
+        });
+
+        String expectedMessage = ("You can only create enemies when you are in \"PreGameStarted Phase\".");
+        String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+
+
+
+
+
+
+
+
+    @Test
+    public void whenExceptionThrown_thenAssertionSucceedsSixBlackMage() {
+        Exception exception = assertThrows(InvalidPhaseException.class, () -> {
+            controllerTest.createEnemy("TestEnemy",2);
+            controllerTest.createBlackMage("TestBlackMage");
+            controllerTest.weaponCreateStaff("TestStaff",100,20);
+
+            var testPlayerCharacter = controllerTest.getAlivePlayerCharacter("TestBlackMage");
+            var testEnemy = controllerTest.getAliveEnemy("TestEnemy");
+            var testWeapon = controllerTest.getWeaponFromList("TestStaff");
+            controllerTest.getGamePhase().equip(testPlayerCharacter,testWeapon);
+            controllerTest.getGamePhase().doPhaseAction();
+            controllerTest.getGamePhase().createBlackMage("testBlackMage");
+        });
+
+        String expectedMessage = ("You must be in \"PreGameStartedPhase\" to create characters.");
+        String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
+    public void whenExceptionThrown_thenAssertionSucceedsSixEngineer() {
+        Exception exception = assertThrows(InvalidPhaseException.class, () -> {
+            controllerTest.createEnemy("TestEnemy",2);
+            controllerTest.createBlackMage("TestBlackMage");
+            controllerTest.weaponCreateStaff("TestStaff",100,20);
+
+            var testPlayerCharacter = controllerTest.getAlivePlayerCharacter("TestBlackMage");
+            var testEnemy = controllerTest.getAliveEnemy("TestEnemy");
+            var testWeapon = controllerTest.getWeaponFromList("TestStaff");
+            controllerTest.getGamePhase().equip(testPlayerCharacter,testWeapon);
+            controllerTest.getGamePhase().doPhaseAction();
+            controllerTest.getGamePhase().createEngineer("testEngineer");
+        });
+
+        String expectedMessage = ("You must be in \"PreGameStartedPhase\" to create characters.");
+        String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
+    public void whenExceptionThrown_thenAssertionSucceedsSixKnight() {
+        Exception exception = assertThrows(InvalidPhaseException.class, () -> {
+            controllerTest.createEnemy("TestEnemy",2);
+            controllerTest.createBlackMage("TestBlackMage");
+            controllerTest.weaponCreateStaff("TestStaff",100,20);
+
+            var testPlayerCharacter = controllerTest.getAlivePlayerCharacter("TestBlackMage");
+            var testEnemy = controllerTest.getAliveEnemy("TestEnemy");
+            var testWeapon = controllerTest.getWeaponFromList("TestStaff");
+            controllerTest.getGamePhase().equip(testPlayerCharacter,testWeapon);
+            controllerTest.getGamePhase().doPhaseAction();
+            controllerTest.getGamePhase().createKnight("testKnight");
+        });
+
+        String expectedMessage = ("You must be in \"PreGameStartedPhase\" to create characters.");
+        String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+
+    @Test
+    public void whenExceptionThrown_thenAssertionSucceedsSixThief() {
+        Exception exception = assertThrows(InvalidPhaseException.class, () -> {
+            controllerTest.createEnemy("TestEnemy",2);
+            controllerTest.createBlackMage("TestBlackMage");
+            controllerTest.weaponCreateStaff("TestStaff",100,20);
+
+            var testPlayerCharacter = controllerTest.getAlivePlayerCharacter("TestBlackMage");
+            var testEnemy = controllerTest.getAliveEnemy("TestEnemy");
+            var testWeapon = controllerTest.getWeaponFromList("TestStaff");
+            controllerTest.getGamePhase().equip(testPlayerCharacter,testWeapon);
+            controllerTest.getGamePhase().doPhaseAction();
+            controllerTest.getGamePhase().createThief("testThief");
+        });
+
+        String expectedMessage = ("You must be in \"PreGameStartedPhase\" to create characters.");
+        String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+
+    @Test
+    public void whenExceptionThrown_thenAssertionSucceedsSixWhiteMage() {
+        Exception exception = assertThrows(InvalidPhaseException.class, () -> {
+            controllerTest.createEnemy("TestEnemy",2);
+            controllerTest.createBlackMage("TestBlackMage");
+            controllerTest.weaponCreateStaff("TestStaff",100,20);
+
+            var testPlayerCharacter = controllerTest.getAlivePlayerCharacter("TestBlackMage");
+            var testEnemy = controllerTest.getAliveEnemy("TestEnemy");
+            var testWeapon = controllerTest.getWeaponFromList("TestStaff");
+            controllerTest.getGamePhase().equip(testPlayerCharacter,testWeapon);
+            controllerTest.getGamePhase().doPhaseAction();
+            controllerTest.getGamePhase().createWhiteMage("testWhiteMage");
+        });
+
+        String expectedMessage = ("You must be in \"PreGameStartedPhase\" to create characters.");
+        String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
+    public void whenExceptionThrown_thenAssertionSucceedsSixAxe() {
+        Exception exception = assertThrows(InvalidPhaseException.class, () -> {
+            controllerTest.createEnemy("TestEnemy",2);
+            controllerTest.createBlackMage("TestBlackMage");
+            controllerTest.weaponCreateStaff("TestStaff",100,20);
+
+            var testPlayerCharacter = controllerTest.getAlivePlayerCharacter("TestBlackMage");
+            var testEnemy = controllerTest.getAliveEnemy("TestEnemy");
+            var testWeapon = controllerTest.getWeaponFromList("TestStaff");
+            controllerTest.getGamePhase().equip(testPlayerCharacter,testWeapon);
+            controllerTest.getGamePhase().doPhaseAction();
+            controllerTest.getGamePhase().weaponCreateAxe("secondTestAxe",1,1);
+        });
+
+        String expectedMessage = ("You must be in \"PreGameStartedPhase\" to create weapons.");
+        String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
+    public void whenExceptionThrown_thenAssertionSucceedsSixBow() {
+        Exception exception = assertThrows(InvalidPhaseException.class, () -> {
+            controllerTest.createEnemy("TestEnemy",2);
+            controllerTest.createBlackMage("TestBlackMage");
+            controllerTest.weaponCreateStaff("TestStaff",100,20);
+
+            var testPlayerCharacter = controllerTest.getAlivePlayerCharacter("TestBlackMage");
+            var testEnemy = controllerTest.getAliveEnemy("TestEnemy");
+            var testWeapon = controllerTest.getWeaponFromList("TestStaff");
+            controllerTest.getGamePhase().equip(testPlayerCharacter,testWeapon);
+            controllerTest.getGamePhase().doPhaseAction();
+            controllerTest.getGamePhase().weaponCreateBow("secondTestBow",1,1);
+        });
+
+        String expectedMessage = ("You must be in \"PreGameStartedPhase\" to create weapons.");
+        String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
+    public void whenExceptionThrown_thenAssertionSucceedsSixKnife() {
+        Exception exception = assertThrows(InvalidPhaseException.class, () -> {
+            controllerTest.createEnemy("TestEnemy",2);
+            controllerTest.createBlackMage("TestBlackMage");
+            controllerTest.weaponCreateStaff("TestStaff",100,20);
+
+            var testPlayerCharacter = controllerTest.getAlivePlayerCharacter("TestBlackMage");
+            var testEnemy = controllerTest.getAliveEnemy("TestEnemy");
+            var testWeapon = controllerTest.getWeaponFromList("TestStaff");
+            controllerTest.getGamePhase().equip(testPlayerCharacter,testWeapon);
+            controllerTest.getGamePhase().doPhaseAction();
+            controllerTest.getGamePhase().weaponCreateKnife("secondTestKnife",1,1);
+        });
+
+        String expectedMessage = ("You must be in \"PreGameStartedPhase\" to create weapons.");
+        String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
+    public void whenExceptionThrown_thenAssertionSucceedsSixStaff() {
+        Exception exception = assertThrows(InvalidPhaseException.class, () -> {
+            controllerTest.createEnemy("TestEnemy",2);
+            controllerTest.createBlackMage("TestBlackMage");
+            controllerTest.weaponCreateStaff("TestStaff",100,20);
+
+            var testPlayerCharacter = controllerTest.getAlivePlayerCharacter("TestBlackMage");
+            var testEnemy = controllerTest.getAliveEnemy("TestEnemy");
+            var testWeapon = controllerTest.getWeaponFromList("TestStaff");
+            controllerTest.getGamePhase().equip(testPlayerCharacter,testWeapon);
+            controllerTest.getGamePhase().doPhaseAction();
+            controllerTest.getGamePhase().weaponCreateStaff("secondTestStaff",1,1);
+        });
+
+        String expectedMessage = ("You must be in \"PreGameStartedPhase\" to create weapons.");
+        String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
+    public void whenExceptionThrown_thenAssertionSucceedsSixSword() {
+        Exception exception = assertThrows(InvalidPhaseException.class, () -> {
+            controllerTest.createEnemy("TestEnemy",2);
+            controllerTest.createBlackMage("TestBlackMage");
+            controllerTest.weaponCreateStaff("TestStaff",100,20);
+
+            var testPlayerCharacter = controllerTest.getAlivePlayerCharacter("TestBlackMage");
+            var testEnemy = controllerTest.getAliveEnemy("TestEnemy");
+            var testWeapon = controllerTest.getWeaponFromList("TestStaff");
+            controllerTest.getGamePhase().equip(testPlayerCharacter,testWeapon);
+            controllerTest.getGamePhase().doPhaseAction();
+            controllerTest.getGamePhase().weaponCreateSword("secondTestSword",1,1);
+        });
+
+        String expectedMessage = ("You must be in \"PreGameStartedPhase\" to create weapons.");
+        String actualMessage = exception.getMessage();
         assertTrue(actualMessage.contains(expectedMessage));
     }
 

@@ -7,12 +7,9 @@ public class SecondPhase extends AbstractGamePhase{
 
     @Override
     public void doPhaseAction() {
-        if (controller.getGameOver()){
-            controller.setGamePhase(new GameOverPhase());
-        }
-        else {
-            controller.turnEnds();}
+        controller.turnEnds();
     }
+
 
     public String getType(){
         return "SecondPhase";

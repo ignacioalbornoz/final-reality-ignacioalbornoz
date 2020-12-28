@@ -1,6 +1,8 @@
 package com.github.ignacioalbornoz.finalreality.controller.gamephases;
 
 import com.github.ignacioalbornoz.finalreality.model.character.ICharacter;
+import com.github.ignacioalbornoz.finalreality.model.character.player.IPlayerCharacter;
+import com.github.ignacioalbornoz.finalreality.model.weapon.IWeapon;
 
 public class SelectingAttackTargetPhase extends AbstractGamePhase{
 
@@ -34,6 +36,20 @@ public class SelectingAttackTargetPhase extends AbstractGamePhase{
         else{
             throw new InvalidTargetException("Enemy no available");
         }
+    }
+
+    @Override
+    public void equipToCharacterInTurn(IWeapon weapon) throws InvalidTargetException, InvalidCharacterException, InvalidPhaseException, InvalidAliveCharacterException, InvalidTransitionException {
+        var characterInTurnPhase = this.getAlivePlayerCharacter(this.getNameOfCharacterInTurn());
+            controller.equipController(characterInTurnPhase, weapon);
+            if(!(controller.getEquippedWeaponController(characterInTurnPhase)==weapon)){
+                throw new InvalidTargetException("You cannot equip the weapon to this character.");
+            }
+    }
+
+    @Override
+    public void unEquip(IPlayerCharacter playerCharacter) {
+        controller.unEquipController(playerCharacter);
     }
 
     public String getType(){

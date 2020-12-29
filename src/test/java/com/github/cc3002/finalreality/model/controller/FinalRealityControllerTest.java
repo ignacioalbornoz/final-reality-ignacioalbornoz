@@ -615,12 +615,13 @@ public class FinalRealityControllerTest {
         });
 
 
-        String expectedMessage = ("The game is over thanks for playing, " +
-                "I hope you enjoyed it. If you want to play again, " +
-                "you can close the tab and start the application again. " +
-                "You can contact the developer at the email: ignacio.albornoz@ug.uchile.cl");
+        String expectedMessage = ("The game is over, I hope you enjoyed it. " +
+                "If you want to play again, " +
+                "you can close the tab and start the application again. " +"\n"+
+                "You can contact the developer at: ignacio.albornoz@ug.uchile.cl");
         String actualMessage = exception.getMessage();
 
+        assertEquals(controllerTest.getGamePhase().getType(),"GameOver");
         assertTrue(actualMessage.contains(expectedMessage));
     }
 

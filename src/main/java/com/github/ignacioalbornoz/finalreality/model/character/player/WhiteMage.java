@@ -29,12 +29,19 @@ public class WhiteMage extends AbstractMage {
         return "WHITE_MAGE";
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void attack(ICharacter character) {
         character.attackedByWhiteMage(this);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void equip(IWeapon weapon) {
-        weapon.equippedByWhiteMage(this);}
+        weapon.equippedByWhiteMage(this);
+    }
 }

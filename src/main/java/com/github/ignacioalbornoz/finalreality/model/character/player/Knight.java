@@ -29,12 +29,18 @@ public class Knight extends AbstractNonMage {
         return "KNIGHT";
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void attack(ICharacter character) {
         character.attackedByKnight(this);
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void equip(IWeapon weapon) {
         weapon.equippedByKnight(this);}

@@ -60,26 +60,39 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
     this.waitTurnPlayer();
   }
 
-
+  /**
+   * {@inheritDoc}
+   */
   public void addPlayerCharacterDeathListener(PropertyChangeListener listener) {
     this.PlayerCharacterDeathNotification.addPropertyChangeListener(listener);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void removePlayerCharacterDeathListener(PropertyChangeListener listener) {
     this.PlayerCharacterDeathNotification.removePropertyChangeListener(listener);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public PropertyChangeSupport getPlayerCharacterDeathNotification() {
     return PlayerCharacterDeathNotification;
   }
 
-
+  /**
+   * Fire the notification when a player character dies.
+   */
   public void fireDeathOfPlayerCharacterEvent() {
       PlayerCharacterDeathNotification.firePropertyChange(new PropertyChangeEvent(this,
               "Your character has died", null,null));}
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void setHP(int HP) {
     if (0 >= HP){

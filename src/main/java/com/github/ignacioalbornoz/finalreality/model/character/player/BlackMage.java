@@ -29,11 +29,17 @@ public class BlackMage extends AbstractMage {
         return "BLACK_MAGE";
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void attack(ICharacter character) {
         character.attackedByBlackMage(this);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void equip(IWeapon weapon) {
         weapon.equippedByBlackMage(this);}

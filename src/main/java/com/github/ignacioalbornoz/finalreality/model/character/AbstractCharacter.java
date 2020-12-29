@@ -114,54 +114,82 @@ public abstract class AbstractCharacter implements ICharacter {
    */
   public abstract void respondWaitTurn();
 
-
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void attackedByBlackMage(BlackMage character) {
-    this.attackedBy(realDamage(character));
+    this.attackedBy(realDamageByPlayerCharacter(character));
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void attackedByWhiteMage(WhiteMage character) {
-    this.attackedBy(realDamage(character));
-
+    this.attackedBy(realDamageByPlayerCharacter(character));
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void attackedByEngineer(Engineer character) {
-    this.attackedBy(realDamage(character));
-
+    this.attackedBy(realDamageByPlayerCharacter(character));
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void attackedByKnight(Knight character) {
-    this.attackedBy(realDamage(character));
-
+    this.attackedBy(realDamageByPlayerCharacter(character));
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void attackedByThief(Thief character) {
-    this.attackedBy(realDamage(character));
-
+    this.attackedBy(realDamageByPlayerCharacter(character));
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void attackedByEnemy(IEnemy enemy) {
-    this.attackedBy(realDamageEnemy(enemy));
+    this.attackedBy(realDamageByEnemy(enemy));
   }
 
-
+  /**
+   * {@inheritDoc}
+   */
+  @Override
   public int getDefense() {
     return defense;
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
   public int getHP() {
     return HP;
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
   public boolean getCanContinue() {
     return canContinue;
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
   public void setHP(int HP) {
   }
 
@@ -169,23 +197,29 @@ public abstract class AbstractCharacter implements ICharacter {
     this.setHP(this.getHP()-realDamage);
   }
 
-  int realDamage(ICharacter character){
+  int realDamageByPlayerCharacter(ICharacter character){
     return ((character.getEquippedWeapon().getDamage())-this.getDefense());
   }
 
-  int realDamageEnemy(IEnemy enemy){
+  int realDamageByEnemy(IEnemy enemy){
     return (enemy.getDamage()-this.getDefense());
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
   public void setEquippedWeapon(IWeapon weapon) {
       this.equippedWeapon = weapon;
     }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void setCanContinue(boolean canContinue) {
     this.canContinue = canContinue;
   }
-
 }
 
 

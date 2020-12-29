@@ -11,10 +11,10 @@ public class GameOverPhase extends AbstractGamePhase{
 
     @Override
     public void doPhaseAction() throws InvalidTransitionException {
-        throw new InvalidTransitionException("The game is over thanks for playing, " +
-                "I hope you enjoyed it. If you want to play again, " +
-                "you can close the tab and start the application again. " +
-                "You can contact the developer at the email: ignacio.albornoz@ug.uchile.cl");
+        throw new InvalidTransitionException("The game is over, I hope you enjoyed it. " +
+                "If you want to play again, " +
+                "you can close the tab and start the application again. " +"\n"+
+                "You can contact the developer at: ignacio.albornoz@ug.uchile.cl");
     }
 
     @Override
@@ -22,27 +22,4 @@ public class GameOverPhase extends AbstractGamePhase{
         return "GameOver";
     }
 
-    @Override
-    public void attack(ICharacter character, ICharacter attackedCharacter) throws InvalidTargetException, InvalidAliveCharacterException, InvalidCharacterException, InvalidTransitionException {
-        throw new InvalidTransitionException("The game is over thanks for playing, " +
-                "I hope you enjoyed it. If you want to play again, " +
-                "you can close the tab and start the application again. " +
-                "You can contact the developer at the email: ignacio.albornoz@ug.uchile.cl");
-    }
-
-    @Override
-    public IPlayerCharacter getAlivePlayerCharacter(String nameOfPlayerCharacter) throws InvalidTransitionException {
-        throw new InvalidTransitionException("The game is over thanks for playing, " +
-                "I hope you enjoyed it. If you want to play again, " +
-                "you can close the tab and start the application again. " +
-                "You can contact the developer at the email: ignacio.albornoz@ug.uchile.cl");
-    }
-
-    @Override
-    public IEnemy getAliveEnemy(String nameOfEnemy) throws InvalidTransitionException {
-        throw new InvalidTransitionException("The game is over thanks for playing, " +
-                "I hope you enjoyed it. If you want to play again, " +
-                "you can close the tab and start the application again. " +
-                "You can contact the developer at the email: ignacio.albornoz@ug.uchile.cl");
-    }
 }

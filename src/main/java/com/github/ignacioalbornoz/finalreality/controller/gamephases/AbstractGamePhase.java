@@ -40,9 +40,9 @@ public abstract class AbstractGamePhase implements IGamePhase {
         return this.controller;
     }
 
+
     @Override
-    public void attack(ICharacter character, ICharacter attackedCharacter) throws InvalidTargetException,
-            InvalidAliveCharacterException, InvalidCharacterException, InvalidTransitionException, InvalidPhaseException {
+    public void attackToEnemySelected(ICharacter character) throws InvalidPhaseException, InvalidAliveCharacterException, InvalidCharacterException, InvalidTransitionException, InvalidTargetException {
         throw new InvalidPhaseException("You must be in \"SelectingAttackTargetPhase\" to be able to attack an enemy.");
     }
 
@@ -106,8 +106,10 @@ public abstract class AbstractGamePhase implements IGamePhase {
     }
 
     @Override
-    public void setEnemyDamage(IEnemy enemySelected, int i) throws InvalidPhaseException, InvalidCharacterException {
-        throw new InvalidPhaseException("You can only modify the enemies when you are in \"PreGameStarted Phase\".");
+    public void setEnemyDamage(IEnemy enemySelected, int i) throws InvalidPhaseException,
+            InvalidCharacterException {
+        throw new InvalidPhaseException("You can only modify the " +
+                "enemies when you are in \"PreGameStarted Phase\".");
     }
 
 
@@ -204,8 +206,9 @@ public abstract class AbstractGamePhase implements IGamePhase {
     }
 
     @Override
-    public void unEquip(IPlayerCharacter playerCharacterSelected) throws InvalidPhaseException, InvalidCharacterException {
-        throw new InvalidPhaseException("You must be in \"PreGameStartedPhase\" or \"SelectingAttackTargetPhase\" to unequip weapons.");
+    public void unEquip(IPlayerCharacter playerCharacterSelected) throws InvalidPhaseException, InvalidCharacterException, InvalidTargetException {
+        throw new InvalidPhaseException("You must be in \"PreGameStartedPhase\" " +
+                "or \"SelectingAttackTargetPhase\" to unequip weapons.");
     }
 
     @Override
@@ -216,7 +219,8 @@ public abstract class AbstractGamePhase implements IGamePhase {
     public void equipToCharacterInTurn(IWeapon weapon) throws InvalidPhaseException,
             InvalidTargetException, InvalidCharacterException, InvalidAliveCharacterException,
             InvalidTransitionException {
-        throw new InvalidPhaseException("You must be in \"SelectingAttackTargetPhase\" to equip the character in turn.");
+        throw new InvalidPhaseException("You must be " +
+                "in \"SelectingAttackTargetPhase\" to equip the character in turn.");
 
     }
 
@@ -237,11 +241,11 @@ public abstract class AbstractGamePhase implements IGamePhase {
     }
 
     @Override
-    public String getWeaponSelected() throws InvalidCharacterException {
+    public String getWeaponSelected() throws InvalidWeaponException {
         if (controller.getSetOfWeaponNames().contains(controller.getWeaponSelected())){
             return controller.getWeaponSelected();
         }
-        else {throw new InvalidCharacterException("You must select a valid weapon.");}
+        else {throw new InvalidWeaponException("You must select a valid weapon.");}
     }
 
 

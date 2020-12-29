@@ -123,9 +123,9 @@ public class PreGameStartedPhase extends AbstractGamePhase{
     }
 
     @Override
-    public void unEquip(IPlayerCharacter playerCharacterSelected) throws InvalidCharacterException {
+    public void unEquip(IPlayerCharacter playerCharacterSelected) throws InvalidTargetException {
         if (playerCharacterSelected==null){
-            throw new InvalidCharacterException("You must select a valid character.");
+            throw new InvalidTargetException("You must select a valid character.");
         } else{
             controller.unEquipController(playerCharacterSelected);
         }
@@ -139,15 +139,9 @@ public class PreGameStartedPhase extends AbstractGamePhase{
             controller.setInitialEnemyList();
             controller.gameStarted();
         }
-        else if(!(controller.getAliveEnemyList().size()>0 && controller.getAlivePlayerCharacterList().size()>0)){
-            throw new InvalidTransitionException("You must create your characters and the enemies");
+        else {
+            throw new InvalidTransitionException("You must create your characters and the enemies.");
         }
-
-        else if(!(controller.getAliveEnemyList().size()>0)){throw new InvalidTransitionException("You must create enemies");}
-
-        else if(!(controller.getAlivePlayerCharacterList().size()>0)){throw new InvalidTransitionException("You must create your characters.");}
-
-
     }
 
     public String getType(){

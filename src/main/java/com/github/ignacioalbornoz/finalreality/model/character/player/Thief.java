@@ -29,13 +29,19 @@ public class Thief extends AbstractNonMage {
         return "THIEF";
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void attack(ICharacter character) {
         character.attackedByThief(this);
-
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void equip(IWeapon weapon) {
-        weapon.equippedByThief(this);}
+        weapon.equippedByThief(this);
+    }
 }

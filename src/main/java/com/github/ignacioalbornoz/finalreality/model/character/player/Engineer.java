@@ -29,11 +29,17 @@ public class Engineer extends AbstractNonMage {
         return "ENGINEER";
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void attack(ICharacter character) {
         character.attackedByEngineer(this);
-
     }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void equip(IWeapon weapon) {
         weapon.equippedByEngineer(this);}

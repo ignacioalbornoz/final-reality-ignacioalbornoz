@@ -64,6 +64,8 @@ public interface ICharacter {
   void attackedByEnemy(IEnemy enemy);
 
   void setHP(int HP);
+
+  int getDefense();
 }
 
 

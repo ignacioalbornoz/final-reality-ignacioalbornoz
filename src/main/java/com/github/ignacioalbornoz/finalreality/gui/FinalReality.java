@@ -201,14 +201,8 @@ public class FinalReality extends Application {
       } catch (InvalidAliveCharacterException | InvalidCharacterException | InvalidTransitionException e) {
         System.out.println(e.getMessage());
       }
-      IEnemy enemySelected = null;
       try {
-        enemySelected = controller.getGamePhase().getAliveEnemy(controller.getEnemySelected());
-      } catch (InvalidAliveCharacterException | InvalidCharacterException | InvalidTransitionException e) {
-        System.out.println(e.getMessage());
-      }
-      try {
-        controller.getGamePhase().attack(playerCharacterAttacker,enemySelected);
+        controller.getGamePhase().attackToEnemySelected(playerCharacterAttacker);
       } catch (InvalidTargetException | InvalidAliveCharacterException | InvalidCharacterException | InvalidTransitionException | InvalidPhaseException e) {
         System.out.println(e.getMessage());
       }
@@ -598,7 +592,7 @@ public class FinalReality extends Application {
       String weaponSelectedNameGui = null;
       try {
         weaponSelectedNameGui = controller.getGamePhase().getWeaponSelected();
-      } catch (InvalidCharacterException e) {
+      } catch (InvalidCharacterException | InvalidWeaponException e) {
         System.out.println(e.getMessage());
       }
 
@@ -609,7 +603,7 @@ public class FinalReality extends Application {
       }
       try {
         controller.getGamePhase().unEquip(playerCharacterSelected);
-      } catch (InvalidPhaseException | InvalidCharacterException e) {
+      } catch (InvalidPhaseException | InvalidCharacterException | InvalidTargetException e) {
         System.out.println(e.getMessage());
       }
 
@@ -642,14 +636,14 @@ public class FinalReality extends Application {
       String weaponName = null;
       try {
         weaponName = controller.getGamePhase().getWeaponSelected();
-      } catch (InvalidCharacterException e) {
+      } catch (InvalidCharacterException | InvalidWeaponException e) {
         System.out.println(e.getMessage());
       }
       var weapon = controller.getGamePhase().getWeapon(weaponName);
 
       try {
         controller.getGamePhase().unEquip(playerCharacterSelected);
-      } catch (InvalidPhaseException | InvalidCharacterException e) {
+      } catch (InvalidPhaseException | InvalidCharacterException | InvalidTargetException e) {
         System.out.println(e.getMessage());
       }
       try {

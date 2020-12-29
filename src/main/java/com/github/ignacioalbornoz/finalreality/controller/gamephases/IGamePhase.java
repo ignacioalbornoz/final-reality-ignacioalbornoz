@@ -18,7 +18,6 @@ public interface IGamePhase {
 
     String getType();
 
-    void attack(ICharacter character, ICharacter attackedCharacter) throws InvalidTargetException, InvalidAliveCharacterException, InvalidCharacterException, InvalidTransitionException, InvalidPhaseException;
 
     IPlayerCharacter getAlivePlayerCharacter(String nameOfPlayerCharacter) throws InvalidAliveCharacterException, InvalidCharacterException, InvalidTransitionException;
 
@@ -39,7 +38,7 @@ public interface IGamePhase {
 
     void equip(IPlayerCharacter playerCharacter, IWeapon weapon) throws InvalidPhaseException, InvalidTargetException, InvalidCharacterException, InvalidWeaponException;
 
-    void unEquip(IPlayerCharacter playerCharacterSelected) throws InvalidPhaseException, InvalidCharacterException;
+    void unEquip(IPlayerCharacter playerCharacterSelected) throws InvalidPhaseException, InvalidCharacterException, InvalidTargetException;
 
     IWeapon getWeapon(String weaponSelected);
 
@@ -78,6 +77,10 @@ public interface IGamePhase {
 
     String getPlayerCharacterSelected() throws InvalidCharacterException;
 
-    String getWeaponSelected() throws InvalidCharacterException;
+    String getWeaponSelected() throws InvalidCharacterException, InvalidWeaponException;
+
+    void attackToEnemySelected(ICharacter character) throws InvalidPhaseException, InvalidAliveCharacterException,
+            InvalidCharacterException, InvalidTransitionException, InvalidTargetException;
 
 }
+

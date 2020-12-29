@@ -13,28 +13,26 @@ public class SelectingAttackTargetPhase extends AbstractGamePhase{
 
     @Override
     public void doPhaseAction() throws InvalidTransitionException {
-        if (controller.getGameOver()){
-            controller.setGamePhase(new GameOverPhase());
-        }
-        else{throw new InvalidTransitionException("You must attack");}
+        throw new InvalidTransitionException("You must attack.");
     }
 
     @Override
-    public void attack(ICharacter character, ICharacter characterAttacked) throws InvalidTargetException,
-            InvalidAliveCharacterException, InvalidCharacterException, InvalidTransitionException {
+    public void attackToEnemySelected(ICharacter character) throws InvalidAliveCharacterException,
+            InvalidCharacterException, InvalidTransitionException, InvalidTargetException {
 
         var nameOfEnemyToAttack = controller.getEnemySelected();
         if(!controller.isNameEnemyDisponible(nameOfEnemyToAttack)){
             if(controller.isInAliveEnemyList(controller.getEnemyFromInitialList(nameOfEnemyToAttack))){
                 var enemyToAttack = getAliveEnemy(nameOfEnemyToAttack);
                 controller.controllerAttack(character, enemyToAttack);
-                if (!controller.getGameOver()){
-                    controller.setGamePhase(new SecondPhase());
-                }
+                controller.setGamePhase(new SecondPhase());
+            }
+            else{
+                throw new InvalidAliveCharacterException("The selected enemy is already dead.");
             }
         }
         else{
-            throw new InvalidTargetException("Enemy no available");
+            throw new InvalidTargetException("Enemy no available.");
         }
     }
 
@@ -48,8 +46,12 @@ public class SelectingAttackTargetPhase extends AbstractGamePhase{
     }
 
     @Override
-    public void unEquip(IPlayerCharacter playerCharacter) {
-        controller.unEquipController(playerCharacter);
+    public void unEquip(IPlayerCharacter playerCharacter) throws InvalidCharacterException {
+        if (playerCharacter==null){
+            throw new InvalidCharacterException("You must select a valid character.");
+        } else{
+            controller.unEquipController(playerCharacter);
+        }
     }
 
     public String getType(){

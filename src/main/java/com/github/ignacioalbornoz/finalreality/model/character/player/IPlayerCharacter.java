@@ -12,10 +12,20 @@ import java.beans.PropertyChangeSupport;
  * @author Ignacio Albornoz Alfaro.
  */
 public interface IPlayerCharacter extends ICharacter {
+
+    /**
+     * Adds a player character listener to a character, that notifies its death.
+     */
     void addPlayerCharacterDeathListener(PropertyChangeListener listener);
 
+    /**
+     * Removes the listener from the character.
+     */
     void removePlayerCharacterDeathListener(PropertyChangeListener listener);
 
+    /**
+     * Returns the notification that fires when a character dies.
+     */
     PropertyChangeSupport getPlayerCharacterDeathNotification();
 
 }
